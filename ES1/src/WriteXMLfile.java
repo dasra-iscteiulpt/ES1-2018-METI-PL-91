@@ -1,4 +1,5 @@
 import java.io.File;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,9 +30,13 @@ public class WriteXMLfile {
 			Element userElement = doc.createElement("users");
 			doc.appendChild(userElement);
 
-			//set attributes to users
+			//Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
 			userElement.appendChild(getUser(doc, "1", "dasra@iscte-iul.pt", "dasra", "dasra123", "BDA"));
-			userElement.appendChild(getUser(doc, "2", "dasra@facebook.com", "dasra-fb", "dasra123", "Facebook"));
+			userElement.appendChild(getUser(doc, "2", "diana.es.pl.91@gmail.com", "dasra.es.pl.91@gmail.com", "engenhariasoftware", "Email"));
+
+			//Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
+			userElement.appendChild(getFilter(doc, "1", "Diana_Salvador@iscte-iul.pt", "exame", "2018-10-04 00:00:00", "2018-10-07 00:00:00", "email"));
+			userElement.appendChild(getFilter(doc, "2", "diana.es.pl.91@gmail.com", "horário", "2018-10-01 00:00:00", "2018-10-03 00:00:00", "twitter"));
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -39,11 +44,11 @@ public class WriteXMLfile {
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(new File("config.xml"));
 			transformer.transform(source, result);
-			
+
 			//check current directory
 			//String workingDir = System.getProperty("user.dir");
 			//System.out.println("Current working directory : " + workingDir);
-			   
+
 			System.out.println("File saved!");
 
 		} catch (ParserConfigurationException pce) {
@@ -74,11 +79,42 @@ public class WriteXMLfile {
 		return user;
 	}
 
+	private static Node getFilter(Document doc, String id, String from, String keyword, String timeFilterFrom, String timeFilterTo, String service) {
+		Element filter = doc.createElement("Filter");
+
+		//set id attribute
+		filter.setAttribute("filter", id);
+
+		//create from element
+		filter.appendChild(getFilterElements(doc, filter, "from", from));
+
+		//create keyword element
+		filter.appendChild(getFilterElements(doc, filter, "keyword", keyword));
+
+		//create timeFilter element
+		filter.appendChild(getFilterElements(doc, filter, "timeFilterFrom", timeFilterFrom));
+
+		//create timeFilter element
+		filter.appendChild(getFilterElements(doc, filter, "timeFilterTo", timeFilterTo));
+
+		//create service element
+		filter.appendChild(getUserElements(doc, filter, "service", service));
+				
+		return filter;
+	}
+
 	//utility method to create text node
 	private static Node getUserElements(Document doc, Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));
 		return node;
 	}
+
+	private static Node getFilterElements(Document doc, Element element, String name, String value) {
+		Element node = doc.createElement(name);
+		node.appendChild(doc.createTextNode(value));
+		return node;
+	}
+
 }
 

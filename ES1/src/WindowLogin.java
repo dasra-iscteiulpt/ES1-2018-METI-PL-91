@@ -72,7 +72,7 @@ public class WindowLogin {
 					JOptionPane.showMessageDialog(null, "Existem campos por preencher.");
 				} else {
 					// Caso o username e password constem da lista e o serviço seja "BDA", o login é efectuado com sucesso
-					if(r.validateUser(userName.getText(),passWord.getText())==true) {
+					if(r.validateUserBDA(userName.getText(),passWord.getText())==true) {
 					JOptionPane.showMessageDialog(null, "Login efetuado c/ sucesso.");
 					windowLogin.setVisible(false);
 					@SuppressWarnings("unused")
