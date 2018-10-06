@@ -38,7 +38,6 @@ public class ReadXMLfile {
 			e1.printStackTrace();
 		}
 		return usersList;
-
 	}
 
 	public List<Attributes> readFiltersXMLfile(String xml) {
