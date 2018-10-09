@@ -35,8 +35,13 @@ public class WriteXMLfile {
 			userElement.appendChild(getUser(doc, "2", "diana.es.pl.91@gmail.com", "dasra.es.pl.91@gmail.com", "engenhariasoftware", "Email"));
 
 			//Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
-			userElement.appendChild(getFilter(doc, "1", "Diana_Salvador@iscte-iul.pt", "exame", "2018-10-04 00:00:00", "2018-10-07 00:00:00", "email"));
-			userElement.appendChild(getFilter(doc, "2", "diana.es.pl.91@gmail.com", "horário", "2018-10-01 00:00:00", "2018-10-03 00:00:00", "twitter"));
+
+			userElement.appendChild(getFilter(doc, "ISCTE"));
+			userElement.appendChild(getFilter(doc, "exame"));
+			userElement.appendChild(getFilter(doc, "aula"));
+			userElement.appendChild(getFilter(doc, "universidade"));
+			userElement.appendChild(getFilter(doc, "disciplina"));
+			userElement.appendChild(getFilter(doc, "projecto"));
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -79,27 +84,15 @@ public class WriteXMLfile {
 		return user;
 	}
 
-	private static Node getFilter(Document doc, String id, String from, String keyword, String timeFilterFrom, String timeFilterTo, String service) {
+	private static Node getFilter(Document doc, String keyword) {
 		Element filter = doc.createElement("Filter");
 
 		//set id attribute
-		filter.setAttribute("filter", id);
-
-		//create from element
-		filter.appendChild(getFilterElements(doc, filter, "from", from));
+		filter.setAttribute("keyword", keyword);
 
 		//create keyword element
-		filter.appendChild(getFilterElements(doc, filter, "keyword", keyword));
+		//filter.appendChild(getFilterElements(doc, filter, "keyword", keyword));
 
-		//create timeFilter element
-		filter.appendChild(getFilterElements(doc, filter, "timeFilterFrom", timeFilterFrom));
-
-		//create timeFilter element
-		filter.appendChild(getFilterElements(doc, filter, "timeFilterTo", timeFilterTo));
-
-		//create service element
-		filter.appendChild(getUserElements(doc, filter, "service", service));
-				
 		return filter;
 	}
 

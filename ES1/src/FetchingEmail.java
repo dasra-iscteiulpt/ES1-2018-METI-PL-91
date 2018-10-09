@@ -1,23 +1,14 @@
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Date;
 import java.util.Properties;
 
-import javax.mail.Address;
+import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.NoSuchProviderException;
-import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.mail.internet.MimeMultipart;
 
 public class FetchingEmail {
 
@@ -27,8 +18,7 @@ public class FetchingEmail {
 			String from = "Diana_Salvador@iscte-iul.pt"; //From filter
 			String keyword = "exame"; //Keyword filter
 			String f = "";
-			String k = "";
-
+			
 			// create properties field
 			Properties properties = new Properties();
 			properties.put("mail.store.protocol", "imaps");
@@ -49,7 +39,7 @@ public class FetchingEmail {
 
 			// retrieve the messages from the folder in an array and print it
 			Message[] messages = emailFolder.getMessages();
-			System.out.println("messages.length---" + messages.length);
+			//System.out.println("messages.length---" + messages.length);
 
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];
@@ -58,11 +48,9 @@ public class FetchingEmail {
 				else {
 					f = message.getFrom()[0].toString();
 				}
-				validationKeyword(message,keyword);
-				/*if(f.equals(from) & validationKeyword(message,keyword)==true) {
-					System.out.println("Email Number " + (i + 1));
-					System.out.println("i was here ");
-				}*/
+				if(f.equals(from) & keywordValidation(writePart(message),keyword)==true) {
+					System.out.println("Email number " + i + writePart(message) );
+				}
 			}
 			emailFolder.close(false);
 			store.close();
@@ -71,14 +59,13 @@ public class FetchingEmail {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		} /*catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-		}*/ catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	public static void main(String[] args) {
-
 		String host = "imap.gmail.com";
 		String mailStoreType = "imaps3";
 		String username = "diana.es.pl.91@gmail.com";// change accordingly
@@ -88,16 +75,39 @@ public class FetchingEmail {
 		fetch(host, mailStoreType, username, password);
 	}
 
-	public static boolean validationKeyword(Part p, String keyword) throws Exception {
-		String a = "";
-		if (p.isMimeType("text/plain")) {
-			a=(String) p.getContent();
-			System.out.println(a);
-			if(a.contains(keyword))
-				return true;
+	public static String writePart(Message m) throws Exception {
+		String body = "";
+		if (m.isMimeType("text/plain")) {
+			body = m.getContent().toString();
 		}
-		return false;
+		else if (m.isMimeType("multipart/*")) {
+			MimeMultipart mimeMultipart = (MimeMultipart) m.getContent();
+			body = getTextFromMimeMultipart(mimeMultipart);
+		}
+		return body;
 	}
 
+	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+		String body = "";
+		int count = mimeMultipart.getCount();
+		for (int i = 0; i < count; i++) {
+			BodyPart bodyPart = mimeMultipart.getBodyPart(i);
+			if (bodyPart.isMimeType("text/plain")) {
+				body = body + "\n" + bodyPart.getContent();
+				break; // without break same text appears twice in my tests
+			} else if (bodyPart.isMimeType("text/html")) {
+				String html = (String) bodyPart.getContent();
+				body= body + "\n" + org.jsoup.Jsoup.parse(html).text();
+			} else if (bodyPart.getContent() instanceof MimeMultipart){
+				body = body + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
+			}
+		}
+		return body;
+	}
 
+	public static boolean keywordValidation(String body, String keyword) throws Exception {
+		if (body.contains(keyword)) 
+			return true;
+		return false; 
+	}
 }

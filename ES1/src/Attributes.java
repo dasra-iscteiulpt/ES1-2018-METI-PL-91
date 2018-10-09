@@ -27,12 +27,6 @@ public class Attributes {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFrom() {
-		return from;
-	}
-	public void setFrom(String from) {
-		this.from = from;
-	}
 	public String getService() {
 		return service;
 	}
@@ -44,18 +38,6 @@ public class Attributes {
 	}
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
-	}
-	public String getTimeFilterFrom() {
-		return timeFilterFrom;
-	}
-	public void setTimeFilterFrom(String timeFilterFrom) {
-		this.timeFilterFrom = timeFilterFrom;
-	}
-	public String getTimeFilterTo() {
-		return timeFilterTo;
-	}
-	public void setTimeFilterTo(String timeFilterTo) {
-		this.timeFilterTo = timeFilterTo;
 	}
 	
 	/*public String toString() {

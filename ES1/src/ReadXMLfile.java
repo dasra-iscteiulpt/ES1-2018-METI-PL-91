@@ -80,11 +80,9 @@ public class ReadXMLfile {
 		Attributes filter = new Attributes();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			Element element = (Element) node;
-			filter.setFrom(getTagValue("from", element));
 			filter.setKeyword(getTagValue("keyword", element));
-			filter.setTimeFilterFrom(getTagValue("timeFilterFrom", element));
-			filter.setTimeFilterTo(getTagValue("timeFilterTo", element));
-			filter.setService(getTagValue("service", element));
+			System.out.println(getTagValue("keyword", element));
+
 		}
 		return filter;
 	}
@@ -95,6 +93,7 @@ public class ReadXMLfile {
 		Node node = (Node) nodeList.item(0);
 		return node.getNodeValue();
 	}
+
 
 	//Validates if the username and password introduced are in the XML file and if the login type (service) is "BDA"
 	public boolean validateUserBDA(String username, String password) {
@@ -132,6 +131,6 @@ public class ReadXMLfile {
 		}
 		return false;
 	}
-	
+
 }
 
