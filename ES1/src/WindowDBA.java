@@ -1,6 +1,11 @@
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
@@ -9,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class WindowDBA {
 
@@ -17,7 +23,8 @@ public class WindowDBA {
 		
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
-		configWindow();
+		startConfigWindow();
+		endConfigWindow();
 	}
 	
 	// GETTERS
@@ -38,7 +45,7 @@ public class WindowDBA {
 		panels.add(new JPanel()); // 3 NORTH
 	}
 	
-	private void configWindow() {
+	private void startConfigWindow() {
 		addPanels();
 		windowFrame.setSize(500, 500);
 		// CONFIGURAÇÃO JPANEL NA WINDOWFRAME
@@ -53,7 +60,8 @@ public class WindowDBA {
 		JMenu editMenu = new JMenu("Sort");
 		JMenu aboutMenu = new JMenu("More");
 		
-		JMenuItem refresh = new JMenuItem("Refresh");
+		JMenuItem workOnline = new JMenuItem("Work online");
+		workOnline.setEnabled(false);
 		JMenuItem workOffline = new JMenuItem("Work offline");
 		JMenuItem exit = new JMenuItem("Exit");
 		JMenuItem moreRecent = new JMenuItem("More recent");
@@ -61,7 +69,7 @@ public class WindowDBA {
 		JMenuItem about = new JMenuItem("About");
 		JMenuItem help = new JMenuItem("Help");
 
-		fileMenu.add(refresh);
+		fileMenu.add(workOnline);
 		fileMenu.add(workOffline);
 		fileMenu.add(exit);
 		editMenu.add(moreRecent);
@@ -86,12 +94,21 @@ public class WindowDBA {
 		panels.get(3).add(sortTwo);
 
 		// CONFIGURAÇÃO DA TABELA
-		JTable tableContent = new JTable(0,4);
+		JTable tableContent = new JTable(0,5);
+		panels.get(3).add(tableContent);
+
 		DefaultTableModel modelTable = (DefaultTableModel) tableContent.getModel();
 		modelTable.insertRow(0, new String[]{"Data", "Canal", "Origem", "Subject", "Content"});
-
-		panels.get(3).add(tableContent);
 		
+		modelTable.insertRow(1, new String[]{"T0", "T0.1", "T0.2", "T0.3", "T0.4"});
+		modelTable.insertRow(2, new String[]{"T1", "T1.1", "T1.2", "T1.3", "T1.4"});
+		modelTable.insertRow(3, new String[]{"T2", "T2.1", "T2.2", "T2.3", "T2.4"});
+		modelTable.insertRow(4, new String[]{"T3", "T3.1", "T3.2", "T3.3", "T3.4"});
+
+		buttonsMenuConfig(generalMenu, sortOne, sortTwo, tableContent);
+	}
+
+	private void endConfigWindow() {
 		// CONFIGURAÇÃO WINDOW FRAME
 		windowFrame.setLocationRelativeTo(null);
 		windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,5 +116,89 @@ public class WindowDBA {
 		windowFrame.validate();
 		windowFrame.setVisible(true);
 	}
-
-}
+	
+	private void buttonsMenuConfig(JMenuBar gM, JRadioButton MR, JRadioButton MO, JTable TC) {
+		
+		// WORKONLINE BUTTON ACTION
+		gM.getMenu(0).getItem(0).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Iniciada nova sincronização.");
+				gM.getMenu(0).getItem(0).setEnabled(false);
+				gM.getMenu(0).getItem(1).setEnabled(true);
+			}
+		});
+		
+		// WORKOFFLINE BUTTON ACTION
+		gM.getMenu(0).getItem(1).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Acesso limitado ao conteúdo local.");
+				gM.getMenu(0).getItem(0).setEnabled(true);
+				gM.getMenu(0).getItem(1).setEnabled(false);
+			}
+		});
+		
+		// EXIT BUTTON ACTION
+		gM.getMenu(0).getItem(2).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				windowFrame.setVisible(false);
+			}
+		});
+		
+		// MORE RECENT ACTION
+		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if( !MR.isSelected() ) {
+					MR.setSelected(true);
+				}
+			}
+		});
+		
+		// MORE OLD ACTION
+		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if( !MO.isSelected() ) {
+					MO.setSelected(true);
+				}
+			}
+		});
+		
+		// ABOUT BUTTON ACTION
+		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String lineSep = System.lineSeparator();
+				String infoUC = "Engenharia de Software I - Docente Vitor Basto Fernandes";
+				String numberGroup = "Grupo 91 - Constituido por:" + lineSep;
+				String infoGroup = "68092 - Diana Salvador" + lineSep + "69980 - Diogo Reis" + lineSep + "65799 - Ricardo Ferreira" + lineSep + "73422 - Ivo Carvalho";
+				String toolsProj = "Ferramentas utilizadas: Git, Trello.";
+				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);
+			}
+		});
+		
+		// HELP BUTTON ACTION
+		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String lineSep = System.lineSeparator();
+				String infoHelp = "Página em manutenção" + lineSep + "Em breve terá conteúdos de apoio (SWING, Java DOCS, etc).";
+				JOptionPane.showMessageDialog(null, infoHelp);
+			}
+		});
+		
+		// CLICK TABLE ACTION
+	    TC.addMouseListener(new MouseAdapter() {
+	         public void mouseClicked(MouseEvent e) {
+	            if (e.getClickCount() == 1) {
+	            	if( !(TC.getSelectedRow() == 0) ) {
+			        	String dateM = TC.getModel().getValueAt(TC.getSelectedRow(),0).toString();
+			        	String canalM = TC.getModel().getValueAt(TC.getSelectedRow(),1).toString();
+			        	String fromM = TC.getModel().getValueAt(TC.getSelectedRow(),2).toString();
+			        	String titleM = TC.getModel().getValueAt(TC.getSelectedRow(),3).toString();
+			        	String contentM = TC.getModel().getValueAt(TC.getSelectedRow(),4).toString();
+			        	@SuppressWarnings("unused")
+						WindowMessage windMess = new WindowMessage(dateM, canalM, fromM, titleM, contentM);
+	            	}
+	            }
+	         }
+	      });
+	   }
+		
+	}

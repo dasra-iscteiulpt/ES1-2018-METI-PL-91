@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +16,7 @@ public class WindowLogin {
 
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
-	ReadXMLfile r = new  ReadXMLfile();
+	ReadXMLfile r = new ReadXMLfile();
 
 	public WindowLogin(String title) {
 		windowLogin = new JFrame(title);
@@ -72,7 +73,8 @@ public class WindowLogin {
 					JOptionPane.showMessageDialog(null, "Existem campos por preencher.");
 				} else {
 					// Caso o username e password constem da lista e o serviço seja "BDA", o login é efectuado com sucesso
-					if(r.validateUserBDA(userName.getText(),passWord.getText())==true) {
+					
+					if(r.validateUser(userName.getText(),passWord.getText().toString()) == true) {
 					JOptionPane.showMessageDialog(null, "Login efetuado c/ sucesso.");
 					windowLogin.setVisible(false);
 					@SuppressWarnings("unused")
