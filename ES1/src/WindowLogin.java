@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,8 +19,10 @@ public class WindowLogin {
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
 	ReadXMLfile r = new ReadXMLfile();
-
+	private int tentativesLog;
+	
 	public WindowLogin(String title) {
+		tentativesLog = 0;
 		windowLogin = new JFrame(title);
 		configWindow();
 	}
@@ -54,8 +58,8 @@ public class WindowLogin {
 		JPanel panelCenter = new JPanel(new FlowLayout());
 		windowLogin.add(panelCenter);
 
-		JTextField userName = new JTextField("Username");
-		JPasswordField passWord = new JPasswordField("Password");
+		JTextField userName = new JTextField("                     ");
+		JPasswordField passWord = new JPasswordField("*************");
 		JLabel labEmail = new JLabel("@iscte-iul.pt");
 		JLabel labPass = new JLabel("Password");
 		JButton btNlog = new JButton("Login");
@@ -66,30 +70,48 @@ public class WindowLogin {
 		panelCenter.add(labPass);
 		panelCenter.add(btNlog);
 
+		// CLICK ON TEXTFIELD USERNAME
+        userName.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                userName.setText("");
+            }
+        });
+        
+		// CLICK ON TEXTFIELD PASSWORD
+        passWord.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                passWord.setText("");
+            }
+        });
+            
+		// CLICK ON BUTTON LOGIN
 		btNlog.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Existem campos por preencher.");
+					JOptionPane.showMessageDialog(null, "There are fields to fill.");
 				} else {
-					// Caso o username e password constem da lista e o serviço seja "BDA", o login é efectuado com sucesso
-					
+					// CASO USER E PASSWORD CONSTAM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
 					if(r.validateUser(userName.getText(),passWord.getText().toString()) == true) {
-					JOptionPane.showMessageDialog(null, "Login efetuado c/ sucesso.");
+					JOptionPane.showMessageDialog(null, "Login successfully completed.");
 					windowLogin.setVisible(false);
 					@SuppressWarnings("unused")
-					WindowDBA w = new WindowDBA("Bom dia Academia!");
-					}
-					// Caso contrário é mostrada uma mensagem de login inválido
-					else {						
-						JOptionPane.showMessageDialog(null, "Login incorrecto. Por favor reveja os dados de acesso.");
+					WindowDBA w = new WindowDBA("Good Morning Academy!");
+					} else {
+						tentativesLog++;
+						if(tentativesLog == 3) {
+							windowLogin.setVisible(false);
+							JOptionPane.showMessageDialog(null, "Login attempts exceeded.");
+						} else {
+							JOptionPane.showMessageDialog(null, "Incorrect login. Please review the access data.");
+						}
 					}
 				}
 			}
 		});
 
 		// CONFIGURAÇÃO WINDOW FRAME
-		windowLogin.setSize(190, 125);
+		windowLogin.setSize(250, 120);
 		windowLogin.setLocationRelativeTo(null);
 		windowLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowLogin.setResizable(false);

@@ -83,8 +83,8 @@ public class WindowDBA {
 		windowFrame.add(generalMenu, BorderLayout.NORTH);
 		
 		// CONFIGURAÇÃO DOS RADIO BUTTON
-		JRadioButton sortOne = new JRadioButton("Mais recente");
-		JRadioButton sortTwo = new JRadioButton("Mais antigo");
+		JRadioButton sortOne = new JRadioButton("More Recent");
+		JRadioButton sortTwo = new JRadioButton("More Old");
 		
 		ButtonGroup sortOptions = new ButtonGroup();
 		sortOptions.add(sortOne);
@@ -98,7 +98,7 @@ public class WindowDBA {
 		panels.get(3).add(tableContent);
 
 		DefaultTableModel modelTable = (DefaultTableModel) tableContent.getModel();
-		modelTable.insertRow(0, new String[]{"Data", "Canal", "Origem", "Subject", "Content"});
+		modelTable.insertRow(0, new String[]{"Date", "Channel", "From", "Subject", "Content"});
 		
 		modelTable.insertRow(1, new String[]{"T0", "T0.1", "T0.2", "T0.3", "T0.4"});
 		modelTable.insertRow(2, new String[]{"T1", "T1.1", "T1.2", "T1.3", "T1.4"});
@@ -122,7 +122,7 @@ public class WindowDBA {
 		// WORKONLINE BUTTON ACTION
 		gM.getMenu(0).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Iniciada nova sincronização.");
+				JOptionPane.showMessageDialog(null, "New sync started");
 				gM.getMenu(0).getItem(0).setEnabled(false);
 				gM.getMenu(0).getItem(1).setEnabled(true);
 			}
@@ -131,7 +131,7 @@ public class WindowDBA {
 		// WORKOFFLINE BUTTON ACTION
 		gM.getMenu(0).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Acesso limitado ao conteúdo local.");
+				JOptionPane.showMessageDialog(null, "Limited access to local content");
 				gM.getMenu(0).getItem(0).setEnabled(true);
 				gM.getMenu(0).getItem(1).setEnabled(false);
 			}
@@ -166,10 +166,10 @@ public class WindowDBA {
 		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
-				String infoUC = "Engenharia de Software I - Docente Vitor Basto Fernandes";
-				String numberGroup = "Grupo 91 - Constituido por:" + lineSep;
+				String infoUC = "Software Engineering I - Teacher Vitor Basto Fernandes";
+				String numberGroup = "Group 91 - Constituted by:" + lineSep;
 				String infoGroup = "68092 - Diana Salvador" + lineSep + "69980 - Diogo Reis" + lineSep + "65799 - Ricardo Ferreira" + lineSep + "73422 - Ivo Carvalho";
-				String toolsProj = "Ferramentas utilizadas: Git, Trello.";
+				String toolsProj = "Tools used: Git, Trello.";
 				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);
 			}
 		});
@@ -178,7 +178,7 @@ public class WindowDBA {
 		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
-				String infoHelp = "Página em manutenção" + lineSep + "Em breve terá conteúdos de apoio (SWING, Java DOCS, etc).";
+				String infoHelp = "Maintenance page" + lineSep + "You will soon have support content (SWING, Java DOCS, etc).";
 				JOptionPane.showMessageDialog(null, infoHelp);
 			}
 		});

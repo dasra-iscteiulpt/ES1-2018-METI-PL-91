@@ -71,14 +71,14 @@ public class WindowMessage {
 			
 			sendM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String emailTo = JOptionPane.showInputDialog(null, "Indique o e-mail para envio:");
+					String emailTo = JOptionPane.showInputDialog(null, "Write the email to send:");
 					try {
 					if(!emailTo.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "E-mail enviado para: " + emailTo);
+						JOptionPane.showMessageDialog(null, "E-mail sent to: " + emailTo);
 						windowFrame.setVisible(false);
 					}
-					} catch (Exception e2) {
-						System.out.println("Cancel" + e);
+					} catch (Exception excep) {
+						System.out.println("Button cancel." + excep);
 					}
 				}
 		});
