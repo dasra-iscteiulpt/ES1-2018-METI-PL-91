@@ -28,7 +28,7 @@ public class WindowMessage {
 			fromM = new JLabel("From: " + from);
 			titleM = new JLabel("Subject: " + title);
 			contentM = new JTextField(content);
-			sendM = new JButton("Send");
+			sendM = new JButton("Reply");
 			configWindow();
 			endConfigWindow();
 		}
@@ -69,14 +69,30 @@ public class WindowMessage {
 			windowFrame.validate();
 			windowFrame.setVisible(true);
 			
+			
 			sendM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String emailTo = JOptionPane.showInputDialog(null, "Write the email to send:");
+					
+					// JOPTION PANE
+					JTextField emailTo = new JTextField();
+					JTextField contentTo = new JTextField();
+					Object[] f = {"E-mail to: ", emailTo, "Content reply: ", contentTo};
+					int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
+
+					String toEmail = emailTo.getText().toString();
+					String toContent = contentTo.getText().toString();
+
 					try {
-					if(!emailTo.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "E-mail sent to: " + emailTo);
-						windowFrame.setVisible(false);
-					}
+						if(okOrCancel == JOptionPane.CANCEL_OPTION) {
+							windowFrame.setVisible(false);
+						} else {
+							if(!toEmail.isEmpty() && !toContent.isEmpty()) {
+								JOptionPane.showMessageDialog(null, "E-mail sent to: " + toEmail + " and content is " + toContent);
+							} else {
+								JOptionPane.showMessageDialog(null, "Campos por preencher");
+								sendM.doClick();
+							}
+						}
 					} catch (Exception excep) {
 						System.out.println("Button cancel." + excep);
 					}

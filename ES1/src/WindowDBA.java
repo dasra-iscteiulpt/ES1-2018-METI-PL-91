@@ -1,4 +1,3 @@
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import java.awt.BorderLayout;
@@ -9,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
@@ -65,7 +65,7 @@ public class WindowDBA {
 		JMenuItem workOffline = new JMenuItem("Work offline");
 		JMenuItem exit = new JMenuItem("Exit");
 		JMenuItem moreRecent = new JMenuItem("More recent");
-		JMenuItem moreOld = new JMenuItem("More old");
+		JMenuItem moreOlder = new JMenuItem("More older");
 		JMenuItem about = new JMenuItem("About");
 		JMenuItem help = new JMenuItem("Help");
 
@@ -73,7 +73,7 @@ public class WindowDBA {
 		fileMenu.add(workOffline);
 		fileMenu.add(exit);
 		editMenu.add(moreRecent);
-		editMenu.add(moreOld);
+		editMenu.add(moreOlder);
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		
@@ -82,9 +82,15 @@ public class WindowDBA {
 		generalMenu.add(aboutMenu);
 		windowFrame.add(generalMenu, BorderLayout.NORTH);
 		
-		// CONFIGURAÇÃO DOS RADIO BUTTON
+		// CONFIGURAÇÃO DOS RADIO BUTTON & COMBOBOX
 		JRadioButton sortOne = new JRadioButton("More Recent");
 		JRadioButton sortTwo = new JRadioButton("More Old");
+		
+		JComboBox<String> chkDate = new JComboBox<String>();
+		chkDate.addItem("24 horas");
+		chkDate.addItem("7 dias");
+		chkDate.addItem("Mês atual");
+		chkDate.addItem("Ano atual");
 		
 		ButtonGroup sortOptions = new ButtonGroup();
 		sortOptions.add(sortOne);
@@ -92,19 +98,18 @@ public class WindowDBA {
 		
 		panels.get(3).add(sortOne);
 		panels.get(3).add(sortTwo);
+		panels.get(3).add(chkDate);
+
 
 		// CONFIGURAÇÃO DA TABELA
-		JTable tableContent = new JTable(0,5);
+		JTable tableContent = new JTable(0,6);
 		panels.get(3).add(tableContent);
 
 		DefaultTableModel modelTable = (DefaultTableModel) tableContent.getModel();
-		modelTable.insertRow(0, new String[]{"Date", "Channel", "From", "Subject", "Content"});
+		modelTable.addRow(new String[]{"Id", "Date", "Channel", "From", "Subject", "Content"});
 		
-		modelTable.insertRow(1, new String[]{"T0", "T0.1", "T0.2", "T0.3", "T0.4"});
-		modelTable.insertRow(2, new String[]{"T1", "T1.1", "T1.2", "T1.3", "T1.4"});
-		modelTable.insertRow(3, new String[]{"T2", "T2.1", "T2.2", "T2.3", "T2.4"});
-		modelTable.insertRow(4, new String[]{"T3", "T3.1", "T3.2", "T3.3", "T3.4"});
-
+		getAndFillNewsOnTable(modelTable);
+		
 		buttonsMenuConfig(generalMenu, sortOne, sortTwo, tableContent);
 	}
 
@@ -200,5 +205,26 @@ public class WindowDBA {
 	         }
 	      });
 	   }
+	
+	// MÉTODO PRINCIPAL PARA RECOLHA DE NOTÍCIAS
+	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
 		
+		/*ArrayList<Mensagem> listMens = new ArrayList<Mensagem>();
+
+		// MENSAGENS DE TESTE!
+		Mensagem M1 = new Mensagem(0, "T0", "T0.1", "T0.2", "T0.3", "T0.4");
+		Mensagem M2 = new Mensagem(1, "T1", "T1.1", "T1.2", "T1.3", "T1.4");
+		Mensagem M3 = new Mensagem(2, "T2", "T2.1", "T2.2", "T2.3", "T2.4");
+		Mensagem M4 = new Mensagem(3, "T3", "T3.1", "T3.2", "T3.3", "T3.4");
+		
+		listMens.add(M1);
+		listMens.add(M2);
+		listMens.add(M3);
+		listMens.add(M4);
+		
+		for(Mensagem m : listMens) {
+			modelTable.addRow(new String[] {Integer.toString(m.getId()), m.getData(), m.getCanal(), m.getOrigem(), m.getTitulo(), m.getConteudo()});*/
+		}
 	}
+		
+	
