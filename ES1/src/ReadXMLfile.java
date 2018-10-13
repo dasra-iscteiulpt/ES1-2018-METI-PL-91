@@ -15,10 +15,11 @@ import java.util.List;
 
 public class ReadXMLfile {
 
-	List<Attributes> usersList = new ArrayList<Attributes>();
+	static List<Attributes> usersList = new ArrayList<Attributes>();
 	List<Attributes> filtersList = new ArrayList<Attributes>();
-
-	public List<Attributes> readUsersXMLfile(String xml) {
+	static ReadEmails r = new ReadEmails();
+	
+	public static List<Attributes> readUsersXMLfile(String xml) {
 
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -68,9 +69,10 @@ public class ReadXMLfile {
 		Attributes user = new Attributes();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			Element element = (Element) node;
-			user.setEmail(getTagValue("email", element));
 			user.setUsername(getTagValue("username", element));
 			user.setPassword(getTagValue("password", element));
+			user.setEmail(getTagValue("email", element));
+			user.setPasswordEmail(getTagValue("passwordEmail", element));
 			user.setService(getTagValue("service", element));
 		}
 		return user;
@@ -81,7 +83,7 @@ public class ReadXMLfile {
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			Element element = (Element) node;
 			filter.setKeyword(getTagValue("keyword", element));
-			System.out.println(getTagValue("keyword", element));
+			//System.out.println(getTagValue("keyword", element));
 
 		}
 		return filter;
@@ -101,14 +103,29 @@ public class ReadXMLfile {
 		String user = new String();
 		String pw = new String();
 		String sr = new String();
+		String em = new String();
 		for (int i=0;i < usersList.size();i++)
 		{
 			user = usersList.get(i).getUsername();
 			pw = usersList.get(i).getPassword();
 			sr = usersList.get(i).getService();
-
-			if(user.equals(username) & pw.equals(password) & sr.equals("BDA"))
+			em = usersList.get(i).getEmail();
+			if(user.equals(username) & pw.equals(password) & sr.equals("BDA"))			{
+				authenticateUserEmail(em,usersList);
 				return true;
+			}
+		}
+		return false;
+	}
+	//Searches for the email associated to the username and read the messages in the inbox using the filters in XML file
+	public static boolean authenticateUserEmail(String email, List<Attributes> usersList) {
+		String s = "";
+		for (int i = 0; i < usersList.size(); i++) {
+			s = usersList.get(i).getEmail();
+			if (email.equals(s)) {
+				r.readMessages("imap.gmail.com", "imaps3", usersList.get(i).getEmail(), usersList.get(i).getPasswordEmail());
+				return true; 
+			}
 		}
 		return false;
 	}
@@ -124,7 +141,6 @@ public class ReadXMLfile {
 			e = usersList.get(i).getEmail();
 			pw = usersList.get(i).getPassword();
 			sr = usersList.get(i).getService();
-
 			if(email.equals(e) & pw.equals(password) & sr.equals("Email")) {
 				return true;
 			}

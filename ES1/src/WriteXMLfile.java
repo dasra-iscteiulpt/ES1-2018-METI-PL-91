@@ -31,8 +31,10 @@ public class WriteXMLfile {
 			doc.appendChild(userElement);
 
 			//Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
-			userElement.appendChild(getUser(doc, "1", "dasra@iscte-iul.pt", "dasra", "dasra123", "BDA"));
-			userElement.appendChild(getUser(doc, "2", "diana.es.pl.91@gmail.com", "dasra.es.pl.91@gmail.com", "engenhariasoftware", "Email"));
+			userElement.appendChild(getUser(doc, "1", "dasra", "dasra123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
+			userElement.appendChild(getUser(doc, "2", "rjfae1", "rjfae123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
+			userElement.appendChild(getUser(doc, "3", "dgprs", "dgprs123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
+			userElement.appendChild(getUser(doc, "4", "iccco", "iccco123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
 
 			//Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
 
@@ -63,20 +65,23 @@ public class WriteXMLfile {
 		}
 	}
 
-	private static Node getUser(Document doc, String id, String email, String username, String password, String service) {
+	private static Node getUser(Document doc, String id, String username, String password, String email, String passwordEmail, String service) {
 		Element user = doc.createElement("User");
 
 		//set id attribute
 		user.setAttribute("id", id);
-
-		//create email element
-		user.appendChild(getUserElements(doc, user, "email", email));
 
 		//create username element
 		user.appendChild(getUserElements(doc, user, "username", username));
 
 		//create password element
 		user.appendChild(getUserElements(doc, user, "password", password));
+
+		//create email element
+		user.appendChild(getUserElements(doc, user, "email", email));
+
+		//create password email element
+		user.appendChild(getUserElements(doc, user, "passwordEmail", passwordEmail));
 
 		//create service element
 		user.appendChild(getUserElements(doc, user, "service", service));
@@ -88,10 +93,11 @@ public class WriteXMLfile {
 		Element filter = doc.createElement("Filter");
 
 		//set id attribute
-		filter.setAttribute("keyword", keyword);
+		//filter.setAttribute("keyword", keyword);
+
 
 		//create keyword element
-		//filter.appendChild(getFilterElements(doc, filter, "keyword", keyword));
+		filter.appendChild(getFilterElements(doc, filter, "keyword", keyword));
 
 		return filter;
 	}

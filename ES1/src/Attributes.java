@@ -4,10 +4,8 @@ public class Attributes {
 	private String username;
 	private String password;
 	private String service;
-	private String from;
 	private String keyword;
-	private String timeFilterFrom;
-	private String timeFilterTo;
+	private String passwordEmail;
 	
 	public String getEmail() {
 		return email;
@@ -39,7 +37,12 @@ public class Attributes {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	
+	public String getPasswordEmail() {
+		return passwordEmail;
+	}
+	public void setPasswordEmail(String passwordEmail) {
+		this.passwordEmail = passwordEmail;
+	}
 	/*public String toString() {
 		return "User: Email=" + this.email + " Username=" + this.username + " Password=" + this.password +
 				" Service=" + this.service;
