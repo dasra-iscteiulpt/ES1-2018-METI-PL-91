@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -92,7 +91,7 @@ public class WindowLogin {
 					JOptionPane.showMessageDialog(null, "There are fields to fill.");
 				} else {
 					// CASO USER E PASSWORD CONSTAM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
-					if(r.validateUser(userName.getText(),passWord.getText().toString()) == true) {
+					if(r.validateUser(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
 					JOptionPane.showMessageDialog(null, "Login successfully completed.");
 					windowLogin.setVisible(false);
 					@SuppressWarnings("unused")
