@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import javax.mail.Message;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -20,22 +21,23 @@ public class WindowDBA {
 
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
-		
+	private static ReadEmails r = new ReadEmails();
+
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
 		startConfigWindow();
 		endConfigWindow();
 	}
-	
+
 	// GETTERS
 	public JFrame getFrame() {
 		return windowFrame;
 	}
-	
+
 	public ArrayList<JPanel> getPanels() {
 		return panels;
 	}
-	
+
 	// MÉTODOS AUXILIARES
 	private void addPanels() {
 		panels = new ArrayList<>();
@@ -44,7 +46,7 @@ public class WindowDBA {
 		panels.add(new JPanel()); // 2 EAST
 		panels.add(new JPanel()); // 3 NORTH
 	}
-	
+
 	private void startConfigWindow() {
 		addPanels();
 		windowFrame.setSize(500, 500);
@@ -53,13 +55,13 @@ public class WindowDBA {
 		windowFrame.add(panels.get(1), BorderLayout.WEST);
 		windowFrame.add(panels.get(2), BorderLayout.EAST);
 		windowFrame.add(panels.get(3), BorderLayout.CENTER);
-		
+
 		// CONFIGURAÇÃO DO MENU
 		JMenuBar generalMenu = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Sort");
 		JMenu aboutMenu = new JMenu("More");
-		
+
 		JMenuItem workOnline = new JMenuItem("Work online");
 		workOnline.setEnabled(false);
 		JMenuItem workOffline = new JMenuItem("Work offline");
@@ -76,26 +78,26 @@ public class WindowDBA {
 		editMenu.add(moreOlder);
 		aboutMenu.add(about);
 		aboutMenu.add(help);
-		
+
 		generalMenu.add(fileMenu);
 		generalMenu.add(editMenu);
 		generalMenu.add(aboutMenu);
 		windowFrame.add(generalMenu, BorderLayout.NORTH);
-		
+
 		// CONFIGURAÇÃO DOS RADIO BUTTON & COMBOBOX
 		JRadioButton sortOne = new JRadioButton("More Recent");
 		JRadioButton sortTwo = new JRadioButton("More Old");
-		
+
 		JComboBox<String> chkDate = new JComboBox<String>();
 		chkDate.addItem("24 horas");
 		chkDate.addItem("7 dias");
 		chkDate.addItem("Mês atual");
 		chkDate.addItem("Ano atual");
-		
+
 		ButtonGroup sortOptions = new ButtonGroup();
 		sortOptions.add(sortOne);
 		sortOptions.add(sortTwo);
-		
+
 		panels.get(3).add(sortOne);
 		panels.get(3).add(sortTwo);
 		panels.get(3).add(chkDate);
@@ -107,9 +109,9 @@ public class WindowDBA {
 
 		DefaultTableModel modelTable = (DefaultTableModel) tableContent.getModel();
 		modelTable.addRow(new String[]{"Id", "Date", "Channel", "From", "Subject", "Content"});
-		
+
 		getAndFillNewsOnTable(modelTable);
-		
+
 		buttonsMenuConfig(generalMenu, sortOne, sortTwo, tableContent);
 	}
 
@@ -121,9 +123,9 @@ public class WindowDBA {
 		windowFrame.validate();
 		windowFrame.setVisible(true);
 	}
-	
+
 	private void buttonsMenuConfig(JMenuBar gM, JRadioButton MR, JRadioButton MO, JTable TC) {
-		
+
 		// WORKONLINE BUTTON ACTION
 		gM.getMenu(0).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +134,7 @@ public class WindowDBA {
 				gM.getMenu(0).getItem(1).setEnabled(true);
 			}
 		});
-		
+
 		// WORKOFFLINE BUTTON ACTION
 		gM.getMenu(0).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -141,14 +143,14 @@ public class WindowDBA {
 				gM.getMenu(0).getItem(1).setEnabled(false);
 			}
 		});
-		
+
 		// EXIT BUTTON ACTION
 		gM.getMenu(0).getItem(2).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				windowFrame.setVisible(false);
 			}
 		});
-		
+
 		// MORE RECENT ACTION
 		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -157,7 +159,7 @@ public class WindowDBA {
 				}
 			}
 		});
-		
+
 		// MORE OLD ACTION
 		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -166,7 +168,7 @@ public class WindowDBA {
 				}
 			}
 		});
-		
+
 		// ABOUT BUTTON ACTION
 		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -178,7 +180,7 @@ public class WindowDBA {
 				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);
 			}
 		});
-		
+
 		// HELP BUTTON ACTION
 		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -187,44 +189,45 @@ public class WindowDBA {
 				JOptionPane.showMessageDialog(null, infoHelp);
 			}
 		});
-		
+
 		// CLICK TABLE ACTION
-	    TC.addMouseListener(new MouseAdapter() {
-	         public void mouseClicked(MouseEvent e) {
-	            if (e.getClickCount() == 1) {
-	            	if( !(TC.getSelectedRow() == 0) ) {
-			        	String dateM = TC.getModel().getValueAt(TC.getSelectedRow(),0).toString();
-			        	String canalM = TC.getModel().getValueAt(TC.getSelectedRow(),1).toString();
-			        	String fromM = TC.getModel().getValueAt(TC.getSelectedRow(),2).toString();
-			        	String titleM = TC.getModel().getValueAt(TC.getSelectedRow(),3).toString();
-			        	String contentM = TC.getModel().getValueAt(TC.getSelectedRow(),4).toString();
-			        	@SuppressWarnings("unused")
+		TC.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					if( !(TC.getSelectedRow() == 0) ) {
+						String dateM = TC.getModel().getValueAt(TC.getSelectedRow(),0).toString();
+						String canalM = TC.getModel().getValueAt(TC.getSelectedRow(),1).toString();
+						String fromM = TC.getModel().getValueAt(TC.getSelectedRow(),2).toString();
+						String titleM = TC.getModel().getValueAt(TC.getSelectedRow(),3).toString();
+						String contentM = TC.getModel().getValueAt(TC.getSelectedRow(),4).toString();
+						@SuppressWarnings("unused")
 						WindowMessage windMess = new WindowMessage(dateM, canalM, fromM, titleM, contentM);
-	            	}
-	            }
-	         }
-	      });
-	   }
-	
+					}
+				}
+			}
+		});
+	}
+
 	// MÉTODO PRINCIPAL PARA RECOLHA DE NOTÍCIAS
 	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
-		
-		/*ArrayList<Mensagem> listMens = new ArrayList<Mensagem>();
+		ReadEmails rMails = new ReadEmails();
+		Message[] messagesMail = rMails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
 
-		// MENSAGENS DE TESTE!
-		Mensagem M1 = new Mensagem(0, "T0", "T0.1", "T0.2", "T0.3", "T0.4");
-		Mensagem M2 = new Mensagem(1, "T1", "T1.1", "T1.2", "T1.3", "T1.4");
-		Mensagem M3 = new Mensagem(2, "T2", "T2.1", "T2.2", "T2.3", "T2.4");
-		Mensagem M4 = new Mensagem(3, "T3", "T3.1", "T3.2", "T3.3", "T3.4");
-		
-		listMens.add(M1);
-		listMens.add(M2);
-		listMens.add(M3);
-		listMens.add(M4);
-		
-		for(Mensagem m : listMens) {
-			modelTable.addRow(new String[] {Integer.toString(m.getId()), m.getData(), m.getCanal(), m.getOrigem(), m.getTitulo(), m.getConteudo()});*/
+		int count = 0;
+		try {
+
+			for (int i = 0; i < messagesMail.length; i++) {
+				String dateM = messagesMail[i].getReceivedDate().toString();
+				String channelM = "EM";
+				String fromM = messagesMail[i].getFrom().toString();
+				String subjectM = messagesMail[i].getSubject();
+				String contentM = messagesMail[i].getContent().toString();
+				modelTable.addRow(new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+				count++;
+			}
+		} catch(Exception e) {
+			System.out.print("Erro a ler e-mails: " + e.toString());
 		}
 	}
-		
-	
+}
+
