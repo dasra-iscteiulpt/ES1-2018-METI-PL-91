@@ -1,152 +1,215 @@
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
+import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
-public class ReadXMLfile {
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.*;
+import javax.mail.Address;
+import javax.mail.BodyPart;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.internet.MimeMultipart;
 
-	static List<Attributes> usersList = new ArrayList<Attributes>();
-	List<Attributes> filtersList = new ArrayList<Attributes>();
-	static ReadEmails r = new ReadEmails();
-	
-	public static List<Attributes> readUsersXMLfile(String xml) {
+public class ReadEmails {
+	private int id;
+	private String date;
+	private String service;
+	private String from;
+	private String to;
+	private String subject;
+	private String body;
+	private static ReadXMLfile r = new ReadXMLfile();
+	//static String fr ="Diana_Salvador@iscte-iul.pt";
 
-		// Make an  instance of the DocumentBuilderFactory
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	public Message[] readMessages(String imapHost, String storeType, String user, String password) {
+		Message[] content = new Message[1];
+		Message[] m = new Message[100];
 		try {
-			// use the factory to take an instance of the document builder
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			// parse using the builder to get the DOM mapping of the XML file
-			Document doc = db.parse(xml);
-			doc.getDocumentElement().normalize();
+			// Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
+			String f = "";
+			int j=1;
+			// create properties field
+			Properties properties = new Properties();
+			properties.put("mail.store.protocol", "imaps");
+			properties.put("mail.imaps.host", imapHost);
+			properties.put("mail.imaps.port", "993");
+			properties.put("mail.imaps.starttls.enable", "true");
+			Session emailSession = Session.getDefaultInstance(properties);
+			// emailSession.setDebug(true);
 
-			//adds the user attributes to the array
-			NodeList userList = doc.getElementsByTagName("User");
-			for (int i = 0; i < userList.getLength(); i++) {
-				usersList.add(getUserAttributes(userList.item(i)));
+			// create the POP3 store object and connect with the pop server
+			Store store = emailSession.getStore("imaps");
+
+			store.connect(imapHost, user, password);
+
+			// create the folder object and open it
+			Folder emailFolder = store.getFolder("INBOX");
+			emailFolder.open(Folder.READ_ONLY);
+
+			// retrieve the messages from the folder in an array and print it
+			Message[] messages = emailFolder.getMessages();
+			List<Attributes> filtersList = new ArrayList<Attributes>();
+			filtersList = r.readFiltersXMLfile("config.xml");
+			for (int i = 0; i < messages.length; i++) {
+				Message message = messages[i];				
+				/*if(message.getFrom()[0].toString().contains("<"))
+					f = message.getFrom()[0].toString().substring(message.getFrom()[0].toString().indexOf("<") + 1, message.getFrom()[0].toString().indexOf(">"));
+				else {
+					f = message.getFrom()[0].toString();
+				}
+				if(f.equals(fr) & */
+				if(keywordValidation(getBodyTESTE(message), filtersList)==true) {
+					m = (Message[]) Arrays.copyOf(content, j);
+					m[j-1]=message;
+					System.out.println("Email number " + getId(i));
+					System.out.println(getService());
+					System.out.println(getFromTESTE(m[j-1]));
+					System.out.println(getToTESTE(m[j-1]));
+					System.out.println(getDateTESTE(m[j-1]));
+					System.out.println(getSubjectTESTE(m[j-1]));
+					System.out.println(getBodyTESTE(m[j-1]));
+					j++;
+				}
 			}
-		} catch (SAXException | ParserConfigurationException | IOException e1) {
-			e1.printStackTrace();
+			emailFolder.close(false);
+			store.close();
+		} catch (NoSuchProviderException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return usersList;
+
+		return m;
 	}
 
-	public List<Attributes> readFiltersXMLfile(String xml) {
-
-		// Make an  instance of the DocumentBuilderFactory
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		try {
-			// use the factory to take an instance of the document builder
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			// parse using the builder to get the DOM mapping of the XML file
-			Document doc = db.parse(xml);
-			doc.getDocumentElement().normalize();
-
-			//adds the filters to the array
-			NodeList filterList = doc.getElementsByTagName("Filter");
-			for (int i = 0; i < filterList.getLength(); i++) {
-				filtersList.add(getFilterAttributes(filterList.item(i)));
-			}
-
-		} catch (SAXException | ParserConfigurationException | IOException e1) {
-			e1.printStackTrace();
-		}
-		return filtersList;
-	}
-
-	//Gets all the user attributes: email, username, password and service
-	private static Attributes getUserAttributes(Node node) {
-		Attributes user = new Attributes();
-		if (node.getNodeType() == Node.ELEMENT_NODE) {
-			Element element = (Element) node;
-			user.setUsername(getTagValue("username", element));
-			user.setPassword(getTagValue("password", element));
-			user.setEmail(getTagValue("email", element));
-			user.setPasswordEmail(getTagValue("passwordEmail", element));
-			user.setService(getTagValue("service", element));
-		}
-		return user;
-	}
-
-	private static Attributes getFilterAttributes(Node node) {
-		Attributes filter = new Attributes();
-		if (node.getNodeType() == Node.ELEMENT_NODE) {
-			Element element = (Element) node;
-			filter.setKeyword(getTagValue("keyword", element));
-			//System.out.println(getTagValue("keyword", element));
-
-		}
-		return filter;
-	}
-
-	//Gets a specific user attribute based on a Tag
-	private static String getTagValue(String tag, Element element) {
-		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-		Node node = (Node) nodeList.item(0);
-		return node.getNodeValue();
-	}
-
-
-	//Validates if the username and password introduced are in the XML file and if the login type (service) is "BDA"
-	public boolean validateUserBDA(String username, String password) {
-		readUsersXMLfile("config.xml");
-		String user = new String();
-		String pw = new String();
-		String sr = new String();
-		String em = new String();
-		for (int i=0;i < usersList.size();i++)
-		{
-			user = usersList.get(i).getUsername();
-			pw = usersList.get(i).getPassword();
-			sr = usersList.get(i).getService();
-			em = usersList.get(i).getEmail();
-			if(user.equals(username) & pw.equals(password) & sr.equals("BDA"))			{
-				authenticateUserEmail(em,usersList);
-				return true;
-			}
-		}
-		return false;
-	}
-	//Searches for the email associated to the username and read the messages in the inbox using the filters in XML file
-	public static boolean authenticateUserEmail(String email, List<Attributes> usersList) {
+	public static boolean keywordValidation(String body, List<Attributes> list) throws Exception {
 		String s = "";
-		for (int i = 0; i < usersList.size(); i++) {
-			s = usersList.get(i).getEmail();
-			if (email.equals(s)) {
-				r.readMessages("imap.gmail.com", "imaps3", usersList.get(i).getEmail(), usersList.get(i).getPasswordEmail());
+		for (int i = 0; i < list.size(); i++) {
+			s =list.get(i).getKeyword();
+			if (body.contains(s)) {
 				return true; 
 			}
 		}
-		return false;
+		return false; 
 	}
 
-	//Validates if the username and password introduced are in the XML file and if the login type (service) is "Email"
-	public boolean validateUserEmail(String email, String password) {
-		readUsersXMLfile("config.xml");
-		String e = new String();
-		String pw = new String();
-		String sr = new String();
+	public static int getId(int i) throws Exception {
+		return i+1;
+	}
 
-		for (int i=0;i < usersList.size();i++){
-			e = usersList.get(i).getEmail();
-			pw = usersList.get(i).getPassword();
-			sr = usersList.get(i).getService();
-			if(email.equals(e) & pw.equals(password) & sr.equals("Email")) {
-				return true;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public static String getService() throws Exception {
+		String s="email";
+		return s;
+	}
+
+	public void setService(String service) {
+		this.service = service;
+	}
+
+	public String getFromTESTE(Message m) throws Exception {
+		Address[] a;
+		String s="";
+		// FROM
+		if ((a = m.getFrom()) != null) {
+			s=a[0].toString();
+			//System.out.println("FROM: " + a[0].toString());
+		}
+		return s;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public String getToTESTE(Message m) throws Exception {
+		Address[] a;
+		String s="";
+		// TO
+		if ((a = m.getRecipients(Message.RecipientType.TO)) != null) {
+			s=a[0].toString();
+			//System.out.println("TO: " + a[0].toString());
+		}
+		return s;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
+	public String getDateTESTE(Message m) throws Exception {
+		// DATE
+		String s="";
+		if (m.getReceivedDate() != null)
+			s=m.getReceivedDate().toString();
+		//System.out.println("Date: " + m.getReceivedDate().toString());
+		return s;	
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getSubjectTESTE(Message m) throws Exception {
+		// SUBJECT
+		String s="";
+		if (m.getSubject() != null)
+			s=m.getSubject();
+		//System.out.println("SUBJECT: " + m.getSubject());
+		return s;	
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	private  String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+		String body = "";
+		int count = mimeMultipart.getCount();
+
+		for (int i = 0; i < count; i++) {
+			BodyPart bodyPart = mimeMultipart.getBodyPart(i);
+			if (bodyPart.isMimeType("text/plain")) {
+				body = body + "\n" + bodyPart.getContent();
+				break; // without break same text appears twice in my tests
+			} else if (bodyPart.isMimeType("text/html")) {
+				String html = (String) bodyPart.getContent();
+				body= body + "\n" + org.jsoup.Jsoup.parse(html).text();
+			} else if (bodyPart.getContent() instanceof MimeMultipart){
+				body = body + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
 			}
 		}
-		return false;
+		return body;
+	}
+
+	public String getBodyTESTE(Message m) throws Exception {
+		String body = "";
+		if (m.isMimeType("text/plain")) {
+			body = m.getContent().toString();
+		}
+		else if (m.isMimeType("multipart/*")) {
+			MimeMultipart mimeMultipart = (MimeMultipart) m.getContent();
+			body = getTextFromMimeMultipart(mimeMultipart);
+		}
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 }
-

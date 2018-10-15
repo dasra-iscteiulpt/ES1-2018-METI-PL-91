@@ -16,8 +16,6 @@ import javax.mail.internet.MimeMultipart;
 
 public class ReadEmails {
 	
-	
-	//TESTE
 	private int id;
 	private String date;
 	private String service;
