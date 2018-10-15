@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.*;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
@@ -15,7 +18,6 @@ import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 
 public class ReadEmails {
-	
 	private int id;
 	private String date;
 	private String service;
@@ -28,6 +30,7 @@ public class ReadEmails {
 
 	public Message[] readMessages(String imapHost, String storeType, String user, String password) {
 		Message[] content = new Message[1];
+		Message[] m = new Message[100];
 		try {
 			// Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
 			String f = "";
@@ -54,7 +57,6 @@ public class ReadEmails {
 			Message[] messages = emailFolder.getMessages();
 			List<Attributes> filtersList = new ArrayList<Attributes>();
 			filtersList = r.readFiltersXMLfile("config.xml");
-
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];				
 				/*if(message.getFrom()[0].toString().contains("<"))
@@ -63,22 +65,21 @@ public class ReadEmails {
 					f = message.getFrom()[0].toString();
 				}
 				if(f.equals(fr) & */
-				if(keywordValidation(getBody(message), filtersList)==true) {
-					Message[] m = (Message[]) Arrays.copyOf(content, j);
+				if(keywordValidation(getBodyTESTE(message), filtersList)==true) {
+					m = (Message[]) Arrays.copyOf(content, j);
 					m[j-1]=message;
 					System.out.println("Email number " + getId(i));
 					System.out.println(getService());
-					System.out.println(getFrom(m[j-1]));
-					System.out.println(getTo(m[j-1]));
-					System.out.println(getDate(m[j-1]));
-					System.out.println(getSubject(m[j-1]));
-					System.out.println(getBody(m[j-1]));
+					System.out.println(getFromTESTE(m[j-1]));
+					System.out.println(getToTESTE(m[j-1]));
+					System.out.println(getDateTESTE(m[j-1]));
+					System.out.println(getSubjectTESTE(m[j-1]));
+					System.out.println(getBodyTESTE(m[j-1]));
 					j++;
 				}
 			}
 			emailFolder.close(false);
 			store.close();
-
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
@@ -88,7 +89,8 @@ public class ReadEmails {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return content;
+
+		return m;
 	}
 
 	public static boolean keywordValidation(String body, List<Attributes> list) throws Exception {
@@ -119,7 +121,7 @@ public class ReadEmails {
 		this.service = service;
 	}
 
-	public static String getFrom(Message m) throws Exception {
+	public String getFromTESTE(Message m) throws Exception {
 		Address[] a;
 		String s="";
 		// FROM
@@ -134,7 +136,7 @@ public class ReadEmails {
 		this.from = from;
 	}
 
-	public static String getTo(Message m) throws Exception {
+	public String getToTESTE(Message m) throws Exception {
 		Address[] a;
 		String s="";
 		// TO
@@ -149,7 +151,7 @@ public class ReadEmails {
 		this.to = to;
 	}
 
-	public static String getDate(Message m) throws Exception {
+	public String getDateTESTE(Message m) throws Exception {
 		// DATE
 		String s="";
 		if (m.getReceivedDate() != null)
@@ -162,7 +164,7 @@ public class ReadEmails {
 		this.date = date;
 	}
 
-	public static String getSubject(Message m) throws Exception {
+	public String getSubjectTESTE(Message m) throws Exception {
 		// SUBJECT
 		String s="";
 		if (m.getSubject() != null)
@@ -175,7 +177,7 @@ public class ReadEmails {
 		this.subject = subject;
 	}
 
-	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+	private  String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
 		String body = "";
 		int count = mimeMultipart.getCount();
 
@@ -194,7 +196,7 @@ public class ReadEmails {
 		return body;
 	}
 
-	public static String getBody(Message m) throws Exception {
+	public String getBodyTESTE(Message m) throws Exception {
 		String body = "";
 		if (m.isMimeType("text/plain")) {
 			body = m.getContent().toString();
