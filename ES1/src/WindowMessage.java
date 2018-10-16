@@ -76,7 +76,7 @@ public class WindowMessage {
 					// JOPTION PANE
 					JTextField emailTo = new JTextField();
 					JTextField contentTo = new JTextField();
-					Object[] f = {"E-mail to: ", emailTo, "Content reply: ", contentTo};
+					Object[] f = {"E-mail to: ", emailTo, "Comments: ", contentTo};
 					int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
 
 					String toEmail = emailTo.getText().toString();
