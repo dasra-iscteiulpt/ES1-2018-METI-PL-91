@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -20,7 +19,7 @@ public class WindowLogin {
 	private ArrayList<JPanel> panels;
 	ReadXMLfile r = new ReadXMLfile();
 	private int tentativesLog;
-
+	
 	public WindowLogin(String title) {
 		tentativesLog = 0;
 		windowLogin = new JFrame(title);
@@ -71,19 +70,19 @@ public class WindowLogin {
 		panelCenter.add(btNlog);
 
 		// CLICK ON TEXTFIELD USERNAME
-		userName.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				userName.setText("");
-			}
-		});
-
+        userName.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                userName.setText("");
+            }
+        });
+        
 		// CLICK ON TEXTFIELD PASSWORD
-		passWord.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				passWord.setText("");
-			}
-		});
-
+        passWord.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                passWord.setText("");
+            }
+        });
+            
 		// CLICK ON BUTTON LOGIN
 		btNlog.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
@@ -92,12 +91,11 @@ public class WindowLogin {
 					JOptionPane.showMessageDialog(null, "There are fields to fill.");
 				} else {
 					// CASO USER E PASSWORD CONSTAM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
-					if(r.validateUserBDA(userName.getText(),passWord.getText().toString()) == true) {
-						JOptionPane.showMessageDialog(null, "Login successfully completed.");
-						windowLogin.setVisible(false);
-						@SuppressWarnings("unused")
-						WindowDBA w = new WindowDBA("Good Morning Academy!");
-
+					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
+					JOptionPane.showMessageDialog(null, "Login successfully completed.");
+					windowLogin.setVisible(false);
+					@SuppressWarnings("unused")
+					WindowDBA w = new WindowDBA("Good Morning Academy!");
 					} else {
 						tentativesLog++;
 						if(tentativesLog == 3) {
@@ -119,4 +117,5 @@ public class WindowLogin {
 		windowLogin.validate();
 		windowLogin.setVisible(true);
 	}
+
 }

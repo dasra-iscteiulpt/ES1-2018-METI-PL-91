@@ -18,8 +18,7 @@ public class ReadXMLfile {
 	static List<Attributes> usersList = new ArrayList<Attributes>();
 	List<Attributes> filtersList = new ArrayList<Attributes>();
 	static ReadEmails r = new ReadEmails();
-	
-	public static List<Attributes> readUsersXMLfile(String xml) {
+	public static List<Attributes> readUsersXMLfile() {
 
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -27,7 +26,7 @@ public class ReadXMLfile {
 			// use the factory to take an instance of the document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			// parse using the builder to get the DOM mapping of the XML file
-			Document doc = db.parse(xml);
+			Document doc = db.parse("config.xml");
 			doc.getDocumentElement().normalize();
 
 			//adds the user attributes to the array
@@ -96,10 +95,9 @@ public class ReadXMLfile {
 		return node.getNodeValue();
 	}
 
-
 	//Validates if the username and password introduced are in the XML file and if the login type (service) is "BDA"
 	public boolean validateUserBDA(String username, String password) {
-		readUsersXMLfile("config.xml");
+		readUsersXMLfile();
 		String user = new String();
 		String pw = new String();
 		String sr = new String();
@@ -130,22 +128,5 @@ public class ReadXMLfile {
 		return false;
 	}
 
-	//Validates if the username and password introduced are in the XML file and if the login type (service) is "Email"
-	public boolean validateUserEmail(String email, String password) {
-		readUsersXMLfile("config.xml");
-		String e = new String();
-		String pw = new String();
-		String sr = new String();
-
-		for (int i=0;i < usersList.size();i++){
-			e = usersList.get(i).getEmail();
-			pw = usersList.get(i).getPassword();
-			sr = usersList.get(i).getService();
-			if(email.equals(e) & pw.equals(password) & sr.equals("Email")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 }
+
