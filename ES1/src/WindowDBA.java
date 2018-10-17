@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.swing.JPanel;
 import javax.mail.Message;
 import javax.swing.ButtonGroup;
@@ -28,7 +27,8 @@ public class WindowDBA {
 	private ArrayList<Message> messagesMail;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
-		
+	
+	// CONSTRUTOR
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
 		startConfigWindow();
