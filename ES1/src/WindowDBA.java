@@ -25,9 +25,11 @@ public class WindowDBA {
 
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
+	private ArrayList<Message> messagesMail;
 	private JComboBox<String> chkDate;
 	private DefaultTableModel modelTable;
-	
+	private int indicatorFilters = 0;
+
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
 		startConfigWindow();
@@ -97,13 +99,14 @@ public class WindowDBA {
 
 		// CONFIGURAÇÃO DOS RADIO BUTTON & COMBOBOX
 		JRadioButton sortOne = new JRadioButton("More Recent");
-		JRadioButton sortTwo = new JRadioButton("More Old");
+		JRadioButton sortTwo = new JRadioButton("Older");
 
 		chkDate = new JComboBox<String>();
+		chkDate.addItem("All");
 		chkDate.addItem("Last 24h");
 		chkDate.addItem("Last 48h");
-		chkDate.addItem("Last week");
-		chkDate.addItem("Last month");
+		chkDate.addItem("Last 7 days");
+		chkDate.addItem("Last 30 days");
 
 		ButtonGroup sortOptions = new ButtonGroup();
 		sortOptions.add(sortOne);

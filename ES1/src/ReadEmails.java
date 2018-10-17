@@ -43,7 +43,7 @@ public class ReadEmails {
 			filtersList = r.readFiltersXMLfile("config.xml");
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];				
-				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {
+				if(keywordValidation(getBodyTESTE(message), filtersList)==true) {
 					m.add(messages[i]);
 					System.out.println("Email number " + i);
 					System.out.println(message.getFrom().toString());
@@ -63,17 +63,18 @@ public class ReadEmails {
 		return m;
 	}
 
-	public static boolean keywordValidation(String body, String subject, List<Attributes> list) throws Exception {
+	public static boolean keywordValidation(String body, List<Attributes> list) throws Exception {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {
 			s =list.get(i).getKeyword();
-			if (body.toLowerCase().contains(s.toLowerCase()) || subject.toLowerCase().contains(s.toLowerCase())) {
+			if (body.contains(s)) {
 				return true; 
 			}
 		}
 		return false; 
 	}
-		private  String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+	
+	private  String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
 		String body = "";
 		int count = mimeMultipart.getCount();
 
@@ -92,7 +93,7 @@ public class ReadEmails {
 		return body;
 	}
 
-	public String getBody(Message m) throws Exception {
+	public String getBodyTESTE(Message m) throws Exception {
 		String body = "";
 		if (m.isMimeType("text/plain")) {
 			body = m.getContent().toString();
@@ -104,12 +105,4 @@ public class ReadEmails {
 		return body;
 	}
 
-	public static String getSubject(Message m) throws Exception {
-		// SUBJECT
-		String s="";
-		if (m.getSubject() != null)
-			s=m.getSubject();
-		//System.out.println("SUBJECT: " + m.getSubject());
-		return s;	
-	}
 }

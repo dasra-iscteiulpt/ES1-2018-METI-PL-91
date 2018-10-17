@@ -14,15 +14,14 @@ public class WindowMessage {
 
 		private JFrame windowFrame;
 		private JLabel dateM;
-		private JLabel canalM;
 		private JLabel fromM;
 		private JLabel titleM;
 		private JTextField contentM;
 		private JButton sendM;
 		private ArrayList<JPanel> panels;
 
-		public WindowMessage(String date, String canal, String from, String title, String content) {
-			windowFrame = new JFrame();
+		public WindowMessage(String date, String from, String title, String content, String canal) {
+			windowFrame = new JFrame(canal);
 			dateM = new JLabel("Date: " + date);
 			canalM = new JLabel("Channel: " + canal);
 			fromM = new JLabel("From: " + from);
@@ -44,7 +43,7 @@ public class WindowMessage {
 		
 		private void configWindow() {
 			addPanels();
-			windowFrame.setSize(400, 300);
+			windowFrame.setSize(700, 200);
 			
 			// CONFIGURAÇÃO JPANEL NA WINDOWFRAME
 			windowFrame.add(panels.get(0), BorderLayout.SOUTH);
@@ -69,14 +68,15 @@ public class WindowMessage {
 			windowFrame.validate();
 			windowFrame.setVisible(true);
 			
-			
 			sendM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+
+					SendEmail sMail = new SendEmail();
 					
 					// JOPTION PANE
 					JTextField emailTo = new JTextField();
 					JTextField contentTo = new JTextField();
-					Object[] f = {"E-mail to: ", emailTo, "Comments: ", contentTo};
+					Object[] f = {"E-mail to: ", emailTo, "Content reply: ", contentTo};
 					int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
 
 					String toEmail = emailTo.getText().toString();
@@ -87,7 +87,16 @@ public class WindowMessage {
 							windowFrame.setVisible(false);
 						} else {
 							if(!toEmail.isEmpty() && !toContent.isEmpty()) {
-								JOptionPane.showMessageDialog(null, "E-mail sent to: " + toEmail + " and content is " + toContent);
+								// fromEmail && fromPWEmail estão aqui como teste apenas
+								String fromEmail = "diana.es.pl.91@gmail.com";
+								String fromPWEmail = "engenhariasoftware";
+								int resultMail = sMail.senderMail(toEmail, fromEmail, fromPWEmail, toContent, titleM.getText());
+								if(resultMail == 1) {
+									JOptionPane.showMessageDialog(null, "E-mail sent to: " + toEmail + " and content is " + toContent);
+									windowFrame.setVisible(false);
+								} else {
+									JOptionPane.showMessageDialog(null, "E-mail não enviado. Tente novamente.");
+								}
 							} else {
 								JOptionPane.showMessageDialog(null, "Campos por preencher");
 								sendM.doClick();
