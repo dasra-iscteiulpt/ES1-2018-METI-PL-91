@@ -6,6 +6,7 @@ public class Attributes {
 	private String service;
 	private String keyword;
 	private String passwordEmail;
+	private String keyword2;
 	
 	public String getEmail() {
 		return email;
@@ -20,6 +21,9 @@ public class Attributes {
 		this.username = username;
 	}
 	public String getPassword() {
+		return password;
+	}
+	public String getPassword2() {
 		return password;
 	}
 	public void setPassword(String password) {
