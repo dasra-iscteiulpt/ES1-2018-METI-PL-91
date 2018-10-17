@@ -15,21 +15,34 @@ import java.util.List;
 
 public class ReadXMLfile {
 
+	// ATRIBUTOS
 	static List<Attributes> usersList = new ArrayList<Attributes>();
 	List<Attributes> filtersList = new ArrayList<Attributes>();
 	static ReadEmails r = new ReadEmails();
+	
+	// CONSTRUTOR
+	public ReadXMLfile() {
+		
+	}
+	
+	/** 
+	* Read users who are in config.xml file
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @return A list of all users
+	*/
 	public static List<Attributes> readUsersXMLfile() {
-
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			// use the factory to take an instance of the document builder
+			// Use the factory to take an instance of the document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			// parse using the builder to get the DOM mapping of the XML file
+			// Parse using the builder to get the DOM mapping of the XML file
 			Document doc = db.parse("config.xml");
 			doc.getDocumentElement().normalize();
 
-			//adds the user attributes to the array
+			// Adds the user attributes to the array
 			NodeList userList = doc.getElementsByTagName("User");
 			for (int i = 0; i < userList.getLength(); i++) {
 				usersList.add(getUserAttributes(userList.item(i)));
@@ -40,18 +53,28 @@ public class ReadXMLfile {
 		return usersList;
 	}
 
+	/** 
+	* Read filters who are in config.xml file
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param XML file path
+	* @return A list of all filters
+	*/
 	public List<Attributes> readFiltersXMLfile(String xml) {
 
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			// use the factory to take an instance of the document builder
+			
+			// Use the factory to take an instance of the document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			// parse using the builder to get the DOM mapping of the XML file
+			
+			// Parse using the builder to get the DOM mapping of the XML file
 			Document doc = db.parse(xml);
 			doc.getDocumentElement().normalize();
 
-			//adds the filters to the array
+			// Adds the filters to the array
 			NodeList filterList = doc.getElementsByTagName("Filter");
 			for (int i = 0; i < filterList.getLength(); i++) {
 				filtersList.add(getFilterAttributes(filterList.item(i)));
@@ -63,7 +86,8 @@ public class ReadXMLfile {
 		return filtersList;
 	}
 
-	//Gets all the user attributes: email, username, password and service
+	
+	// Gets all the user attributes: email, user, password and service
 	private static Attributes getUserAttributes(Node node) {
 		Attributes user = new Attributes();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -82,20 +106,18 @@ public class ReadXMLfile {
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			Element element = (Element) node;
 			filter.setKeyword(getTagValue("keyword", element));
-			//System.out.println(getTagValue("keyword", element));
-
 		}
 		return filter;
 	}
 
-	//Gets a specific user attribute based on a Tag
+	// Gets a specific user attribute based on a Tag
 	private static String getTagValue(String tag, Element element) {
 		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
 		Node node = (Node) nodeList.item(0);
 		return node.getNodeValue();
 	}
 
-	//Validates if the username and password introduced are in the XML file and if the login type (service) is "BDA"
+	// Validates if the user and password introduced are in the XML file and if the login type (service) is "BDA"
 	public boolean validateUserBDA(String username, String password) {
 		readUsersXMLfile();
 		String user = new String();
@@ -115,7 +137,8 @@ public class ReadXMLfile {
 		}
 		return false;
 	}
-	//Searches for the email associated to the username and read the messages in the inbox using the filters in XML file
+	
+	// Searches for the email associated to the user and read the messages in the box using the filters in XML file
 	public static boolean authenticateUserEmail(String email, List<Attributes> usersList) {
 		String s = "";
 		for (int i = 0; i < usersList.size(); i++) {
@@ -129,4 +152,3 @@ public class ReadXMLfile {
 	}
 
 }
-

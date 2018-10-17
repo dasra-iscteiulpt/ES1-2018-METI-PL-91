@@ -14,6 +14,14 @@ public class SendEmail {
 		
 	}
 	
+	/** 
+ 	* Send E-mails
+	* @author GROUP 91
+	* @version 1.0
+	* @since September 
+	* @param toEmail, fromEmail, fromPWEmail, contentEmail and subjectEmail are the required data for sending e-mail
+	* @return Returns 1 case email is successfully sent and 0 otherwise
+	*/
 	public int senderMail(String toEmail, String fromEmail, String fromPWEmail, String contentEmail, String subjectEmail) {
 
 		Properties props = new Properties();

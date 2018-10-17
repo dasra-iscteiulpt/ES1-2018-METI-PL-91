@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import javax.swing.JPanel;
 import javax.mail.Message;
 import javax.swing.ButtonGroup;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 
 public class WindowDBA {
 
+	// ATRIBUTOS
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
 	private ArrayList<Message> messagesMail;
@@ -261,9 +263,8 @@ public class WindowDBA {
 	    });
 	}
 
-
 	/** 
-	* Main method for collecting news
+	* Main method for collecting messages
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -293,6 +294,13 @@ public class WindowDBA {
 
 	}
 	
+	/** 
+	* Method to filter news from the last 24 hours
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void filterEmailsLast24Hours(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
@@ -321,6 +329,13 @@ public class WindowDBA {
 		}
 	}
 	
+	/** 
+	* Method to filter news from the last 48 hours
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void filterEmailsLast48Hours(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();	
@@ -349,6 +364,13 @@ public class WindowDBA {
 		}
 	}
 	
+	/** 
+	* Method to filter news from the last Week
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void filterEmailsLastWeek(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
@@ -378,6 +400,13 @@ public class WindowDBA {
 		}
 	}
 	
+	/** 
+	* Method to filter news from the last Month
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void filterEmailsLastMonth(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
@@ -407,6 +436,13 @@ public class WindowDBA {
 		
 	}
 	
+	/** 
+	* Method shows all messages
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void filterEmailsAll(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -429,6 +465,13 @@ public class WindowDBA {
 		}
 	}
 	
+	/** 
+	* Auxiliary method to control date filters
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void removeRows(DefaultTableModel modelTable) {
 		int linhasNaTabela = indicatorFilters;
 		for(int i = linhasNaTabela; i > 0; i--) {

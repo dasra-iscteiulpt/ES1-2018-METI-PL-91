@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +11,7 @@ import javax.swing.JTextField;
 
 public class WindowMessage {
 
+		// ATRIBUTOS
 		private JFrame windowFrame;
 		private JLabel dateM;
 		private JLabel fromM;
@@ -20,10 +20,10 @@ public class WindowMessage {
 		private JButton sendM;
 		private ArrayList<JPanel> panels;
 
+		// CONSTRUTOR
 		public WindowMessage(String date, String from, String title, String content, String canal) {
 			windowFrame = new JFrame(canal);
 			dateM = new JLabel("Date: " + date);
-			canalM = new JLabel("Channel: " + canal);
 			fromM = new JLabel("From: " + from);
 			titleM = new JLabel("Subject: " + title);
 			contentM = new JTextField(content);
@@ -41,6 +41,12 @@ public class WindowMessage {
 			panels.add(new JPanel()); // 3 NORTH
 		}
 		
+		/** 
+		* Construction of the main window structure
+		* @author GROUP 91
+		* @version 1.0
+		* @since September
+		*/
 		private void configWindow() {
 			addPanels();
 			windowFrame.setSize(700, 200);
@@ -53,13 +59,18 @@ public class WindowMessage {
 			
 			// CONFIGURAÇÃO DOS COMPONENTES
 			panels.get(3).add(dateM);
-			panels.get(3).add(canalM);
 			panels.get(3).add(fromM);
 			panels.get(3).add(titleM);
 			windowFrame.add(contentM, BorderLayout.CENTER);
 			panels.get(0).add(sendM);
 		}
 		
+		/** 
+	 	* Construction of the main window structure
+		* @author GROUP 91
+		* @version 1.0
+		* @since September
+		*/
 		private void endConfigWindow() {
 			// CONFIGURAÇÃO WINDOW FRAME
 			windowFrame.setLocationRelativeTo(null);
@@ -67,7 +78,7 @@ public class WindowMessage {
 			windowFrame.setResizable(false);
 			windowFrame.validate();
 			windowFrame.setVisible(true);
-			
+
 			sendM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 

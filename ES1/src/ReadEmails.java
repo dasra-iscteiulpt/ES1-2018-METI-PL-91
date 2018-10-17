@@ -12,38 +12,52 @@ import javax.mail.internet.MimeMultipart;
 
 public class ReadEmails {
 
+	// ATRIBUTOS
 	private static ReadXMLfile r = new ReadXMLfile();
 
+	// CONSTRUTOR
+	public ReadEmails() {
+		
+	}
+	
+	/** 
+ 	* Connects to the Email API and saves all messages that contain academic filters in an array
+	* @author GROUP 91
+	* @version 1.0
+	* @since September 
+	* @param ImapHost are StoreType API parameters email
+	* @param User and Password are the access data to the email
+	* @return An array with all academic messages
+	*/
 	public ArrayList<Message> readMessages(String imapHost, String storeType, String user, String password) {
 		ArrayList<Message> m = new ArrayList<Message>();
 		try {
 
-			// create properties field
+			// Create properties field
 			Properties properties = new Properties();
 			properties.put("mail.store.protocol", "imaps");
 			properties.put("mail.imaps.host", imapHost);
 			properties.put("mail.imaps.port", "993");
 			properties.put("mail.imaps.starttls.enable", "true");
 			Session emailSession = Session.getDefaultInstance(properties);
-			// emailSession.setDebug(true);
-
-			// create the POP3 store object and connect with the pop server
+			
+			// Create the POP3 store object and connect with the pop server
 			Store store = emailSession.getStore("imaps");
 
 			store.connect(imapHost, user, password);
 
-			// create the folder object and open it
+			// Create the folder object and open it
 			Folder emailFolder = store.getFolder("INBOX");
 			emailFolder.open(Folder.READ_ONLY);
 
-			// retrieve the messages from the folder in an array and print it
+			// Retrieve the messages from the folder in an array and print it
 			Message[] messages = emailFolder.getMessages();
 			System.out.println(messages.length);
 			List<Attributes> filtersList = new ArrayList<Attributes>();
 			filtersList = r.readFiltersXMLfile("config.xml");
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];				
-				if(keywordValidation(getBodyTESTE(message), filtersList)==true) {
+				if(keywordValidation(getBody(message), filtersList)==true) {
 					m.add(messages[i]);
 					System.out.println("Email number " + i);
 					System.out.println(message.getFrom().toString());
@@ -63,6 +77,14 @@ public class ReadEmails {
 		return m;
 	}
 
+	/** 
+ 	* Check for academic key words
+	* @author GROUP 91
+	* @version 1.0
+	* @since September 
+	* @param Body is the content of the message and list is the list of keywords
+	* @return True if the message contains academic keywords
+	*/
 	public static boolean keywordValidation(String body, List<Attributes> list) throws Exception {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {
@@ -74,7 +96,8 @@ public class ReadEmails {
 		return false; 
 	}
 	
-	private  String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+	// MÉTODOS AINDA EM CONSTRUÇÃO - JAVADOC POR CONSTRUIR
+	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException{
 		String body = "";
 		int count = mimeMultipart.getCount();
 
@@ -93,7 +116,7 @@ public class ReadEmails {
 		return body;
 	}
 
-	public String getBodyTESTE(Message m) throws Exception {
+	public static String getBody(Message m) throws Exception {
 		String body = "";
 		if (m.isMimeType("text/plain")) {
 			body = m.getContent().toString();
