@@ -17,18 +17,18 @@ public class ReadEmails {
 
 	// CONSTRUTOR
 	public ReadEmails() {
-		
+
 	}
-	
+
 	/** 
- 	* Connects to the Email API and saves all messages that contain academic filters in an array
-	* @author GROUP 91
-	* @version 1.0
-	* @since September 
-	* @param ImapHost are StoreType API parameters email
-	* @param User and Password are the access data to the email
-	* @return An array with all academic messages
-	*/
+	 * Connects to the Email API and saves all messages that contain academic filters in an array
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param ImapHost are StoreType API parameters email
+	 * @param User and Password are the access data to the email
+	 * @return An array with all academic messages
+	 */
 	public ArrayList<Message> readMessages(String imapHost, String storeType, String user, String password) {
 		ArrayList<Message> m = new ArrayList<Message>();
 		try {
@@ -40,7 +40,7 @@ public class ReadEmails {
 			properties.put("mail.imaps.port", "993");
 			properties.put("mail.imaps.starttls.enable", "true");
 			Session emailSession = Session.getDefaultInstance(properties);
-			
+
 			// Create the POP3 store object and connect with the pop server
 			Store store = emailSession.getStore("imaps");
 
@@ -57,7 +57,7 @@ public class ReadEmails {
 			filtersList = r.readFiltersXMLfile("config.xml");
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];				
-				if(keywordValidation(getBody(message), filtersList)==true) {
+				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {
 					m.add(messages[i]);
 					System.out.println("Email number " + i);
 					System.out.println(message.getFrom().toString());
@@ -78,22 +78,31 @@ public class ReadEmails {
 	}
 
 	/** 
- 	* Check for academic key words
-	* @author GROUP 91
-	* @version 1.0
-	* @since September 
-	* @param Body is the content of the message and list is the list of keywords
-	* @return True if the message contains academic keywords
-	*/
-	public static boolean keywordValidation(String body, List<Attributes> list) throws Exception {
+	 * Check for academic key words
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param Body is the content of the message and list is the list of keywords
+	 * @return True if the message contains academic keywords
+	 */
+	public static boolean keywordValidation(String body, String subject, List<Attributes> list) throws Exception {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {
 			s =list.get(i).getKeyword();
-			if (body.contains(s)) {
+			if (body.toLowerCase().contains(s.toLowerCase()) || subject.toLowerCase().contains(s.toLowerCase())) {
 				return true; 
 			}
 		}
 		return false; 
+	}
+
+	public static String getSubject(Message m) throws Exception {
+		// SUBJECT
+		String s="";
+		if (m.getSubject() != null)
+			s=m.getSubject();
+		//System.out.println("SUBJECT: " + m.getSubject());
+		return s;	
 	}
 	
 	// MÉTODOS AINDA EM CONSTRUÇÃO - JAVADOC POR CONSTRUIR
