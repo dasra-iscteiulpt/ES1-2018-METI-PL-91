@@ -15,11 +15,13 @@ import javax.swing.JTextField;
 
 public class WindowLogin {
 
+	// ATRIBUTOS
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
 	ReadXMLfile r = new ReadXMLfile();
 	private int tentativesLog;
 	
+	// CONSTRUTOR
 	public WindowLogin(String title) {
 		tentativesLog = 0;
 		windowLogin = new JFrame(title);
@@ -44,6 +46,12 @@ public class WindowLogin {
 		panels.add(new JPanel()); // 3 NORTH
 	}
 
+	/** 
+	* Construction of the main window structure
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	*/
 	private void configWindow() {
 		addPanels();
 
@@ -90,7 +98,7 @@ public class WindowLogin {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "There are fields to fill.");
 				} else {
-					// CASO USER E PASSWORD CONSTAM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
+					// CASO USER E PASSWORD CONSTEM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
 					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
 					JOptionPane.showMessageDialog(null, "Login successfully completed.");
 					windowLogin.setVisible(false);

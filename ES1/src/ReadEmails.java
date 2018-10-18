@@ -1,179 +1,103 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-
-import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 
 public class ReadEmails {
-	private int id;
-	private String date;
-	private String service;
-	private String from;
-	private String to;
-	private String subject;
-	private String body;
-	private static ReadXMLfile r = new ReadXMLfile();
-	//static String fr ="Diana_Salvador@iscte-iul.pt";
 
+	// ATRIBUTOS
+	private static ReadXMLfile r = new ReadXMLfile();
+
+	// CONSTRUTOR
+	public ReadEmails() {
+		
+	}
+	
+	/** 
+ 	* Connects to the Email API and saves all messages that contain academic filters in an array
+	* @author GROUP 91
+	* @version 1.0
+	* @since September 
+	* @param ImapHost are StoreType API parameters email
+	* @param User and Password are the access data to the email
+	* @return An array with all academic messages
+	*/
 	public ArrayList<Message> readMessages(String imapHost, String storeType, String user, String password) {
 		ArrayList<Message> m = new ArrayList<Message>();
 		try {
-			// Estes dados têm que ser lidos a partir dos dados introduzidos na GUI
-			String f = "";
-			int j=1;
-			// create properties field
+
+			// Create properties field
 			Properties properties = new Properties();
 			properties.put("mail.store.protocol", "imaps");
 			properties.put("mail.imaps.host", imapHost);
 			properties.put("mail.imaps.port", "993");
 			properties.put("mail.imaps.starttls.enable", "true");
 			Session emailSession = Session.getDefaultInstance(properties);
-			// emailSession.setDebug(true);
-
-			// create the POP3 store object and connect with the pop server
+			
+			// Create the POP3 store object and connect with the pop server
 			Store store = emailSession.getStore("imaps");
 
 			store.connect(imapHost, user, password);
 
-			// create the folder object and open it
+			// Create the folder object and open it
 			Folder emailFolder = store.getFolder("INBOX");
 			emailFolder.open(Folder.READ_ONLY);
 
-			// retrieve the messages from the folder in an array and print it
+			// Retrieve the messages from the folder in an array and print it
 			Message[] messages = emailFolder.getMessages();
 			System.out.println(messages.length);
 			List<Attributes> filtersList = new ArrayList<Attributes>();
 			filtersList = r.readFiltersXMLfile("config.xml");
-
 			for (int i = 0; i < messages.length; i++) {
-				Message message = messages[i];		
-				/*if(message.getFrom()[0].toString().contains("<"))
-					f = message.getFrom()[0].toString().substring(message.getFrom()[0].toString().indexOf("<") + 1, message.getFrom()[0].toString().indexOf(">"));
-				else {
-					f = message.getFrom()[0].toString();
-				}
-				if(f.equals(fr) & */
-				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {
+				Message message = messages[i];				
+				if(keywordValidation(getBody(message), filtersList)==true) {
 					m.add(messages[i]);
-					/*System.out.println("Email number " + i);
+					System.out.println("Email number " + i);
 					System.out.println(message.getFrom().toString());
 					System.out.println(message.getReplyTo().toString());
 					System.out.println(message.getReceivedDate().toString());
 					System.out.println(message.getSubject());
-					System.out.println(message.getContent().toString());*/
+					System.out.println(message.getContent().toString());
 				}
 			}
 			System.out.print(m.size());
 			emailFolder.close(false);
 			store.close();
-
-		}catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Erro: " + e);
 		}
+
 		return m;
 	}
 
-	public static boolean keywordValidation(String body, String subject, List<Attributes> list) throws Exception {
+	/** 
+ 	* Check for academic key words
+	* @author GROUP 91
+	* @version 1.0
+	* @since September 
+	* @param Body is the content of the message and list is the list of keywords
+	* @return True if the message contains academic keywords
+	*/
+	public static boolean keywordValidation(String body, List<Attributes> list) throws Exception {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {
 			s =list.get(i).getKeyword();
-			if (body.toLowerCase().contains(s.toLowerCase()) || subject.toLowerCase().contains(s.toLowerCase())) {
+			if (body.contains(s)) {
 				return true; 
 			}
 		}
 		return false; 
 	}
-
-	public static int getId(int i) throws Exception {
-		return i+1;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public static String getService() throws Exception {
-		String s="email";
-		return s;
-	}
-
-	public void setService(String service) {
-		this.service = service;
-	}
-
-	public static String getFrom(Message m) throws Exception {
-		Address[] a;
-		String s="";
-		// FROM
-		if ((a = m.getFrom()) != null) {
-			s=a[0].toString();
-			//System.out.println("FROM: " + a[0].toString());
-		}
-		return s;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public static String getTo(Message m) throws Exception {
-		Address[] a;
-		String s="";
-		// TO
-		if ((a = m.getRecipients(Message.RecipientType.TO)) != null) {
-			s=a[0].toString();
-			//System.out.println("TO: " + a[0].toString());
-		}
-		return s;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
-	public static String getDate(Message m) throws Exception {
-		// DATE
-		String s="";
-		if (m.getReceivedDate() != null)
-			s=m.getReceivedDate().toString();
-		//System.out.println("Date: " + m.getReceivedDate().toString());
-		return s;	
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public static String getSubject(Message m) throws Exception {
-		// SUBJECT
-		String s="";
-		if (m.getSubject() != null)
-			s=m.getSubject();
-		//System.out.println("SUBJECT: " + m.getSubject());
-		return s;	
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+	
+	// MÉTODOS AINDA EM CONSTRUÇÃO - JAVADOC POR CONSTRUIR
+	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException{
 		String body = "";
 		int count = mimeMultipart.getCount();
 
@@ -202,10 +126,6 @@ public class ReadEmails {
 			body = getTextFromMimeMultipart(mimeMultipart);
 		}
 		return body;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
 	}
 
 }
