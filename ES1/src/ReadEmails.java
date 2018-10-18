@@ -91,7 +91,6 @@ public class ReadEmails {
 
 	public static boolean keywordValidation(String body, String subject, List<Attributes> list) throws Exception {
 		String s = "";
-		System.out.println("hello");
 		for (int i = 0; i < list.size(); i++) {
 			s =list.get(i).getKeyword();
 			if (body.toLowerCase().contains(s.toLowerCase()) || subject.toLowerCase().contains(s.toLowerCase())) {

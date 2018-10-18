@@ -23,9 +23,6 @@ public class Attributes {
 	public String getPassword() {
 		return password;
 	}
-	public String getPassword2() {
-		return password;
-	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
