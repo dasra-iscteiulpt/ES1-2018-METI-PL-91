@@ -271,7 +271,6 @@ public class WindowDBA {
 	 * @since September
 	 */
 	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
-
 		ReadEmails rMails = new ReadEmails();
 		messagesMail = rMails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -284,7 +283,7 @@ public class WindowDBA {
 				String channelM = "EM";
 				String fromM = m.getFrom()[0].toString();
 				String subjectM = m.getSubject().toString();
-				String contentM = m.getContent().toString();
+				String contentM = ReadEmails.getBody(m);
 				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 				count++;
 			}
@@ -318,7 +317,7 @@ public class WindowDBA {
 					String channelM = "EM";
 					String fromM = m.getFrom().toString();
 					String subjectM = m.getSubject();
-					String contentM = m.getContent().toString();
+					String contentM = ReadEmails.getBody(m);
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
 					indicatorFilters++;
@@ -353,7 +352,7 @@ public class WindowDBA {
 					String channelM = "EM";
 					String fromM = m.getFrom().toString();
 					String subjectM = m.getSubject();
-					String contentM = m.getContent().toString();
+					String contentM = ReadEmails.getBody(m);
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
 					indicatorFilters++;
@@ -389,7 +388,7 @@ public class WindowDBA {
 					String channelM = "EM";
 					String fromM = m.getFrom().toString();
 					String subjectM = m.getSubject();
-					String contentM = m.getContent().toString();
+					String contentM = ReadEmails.getBody(m);
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
 					indicatorFilters++;
@@ -424,7 +423,7 @@ public class WindowDBA {
 					String channelM = "EM";
 					String fromM = m.getFrom().toString();
 					String subjectM = m.getSubject();
-					String contentM = m.getContent().toString();
+					String contentM = ReadEmails.getBody(m);
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
 					indicatorFilters++;
@@ -455,7 +454,7 @@ public class WindowDBA {
 				String channelM = "EM";
 				String fromM = m.getFrom().toString();
 				String subjectM = m.getSubject();
-				String contentM = m.getContent().toString();
+				String contentM = ReadEmails.getBody(m).toString();
 				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 				count++;
 				indicatorFilters++;
@@ -487,7 +486,7 @@ public class WindowDBA {
 						String channelM = "EM";
 						String fromM = m.getFrom().toString();
 						String subjectM = m.getSubject();
-						String contentM = m.getContent().toString();
+						String contentM = ReadEmails.getBody(m);
 						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					}
 				}
@@ -520,7 +519,7 @@ public class WindowDBA {
 						String channelM = "EM";
 						String fromM = m.getFrom().toString();
 						String subjectM = m.getSubject();
-						String contentM = m.getContent().toString();
+						String contentM = ReadEmails.getBody(m);
 						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					}
 				}

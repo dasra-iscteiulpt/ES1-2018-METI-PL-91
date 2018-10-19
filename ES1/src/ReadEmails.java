@@ -41,7 +41,7 @@ public class ReadEmails {
 			properties.put("mail.imaps.starttls.enable", "true");
 			Session emailSession = Session.getDefaultInstance(properties);
 
-			// Create the POP3 store object and connect with the pop server
+			// Create the IMAP store object and connect with the server
 			Store store = emailSession.getStore("imaps");
 
 			store.connect(imapHost, user, password);
@@ -59,17 +59,15 @@ public class ReadEmails {
 				Message message = messages[i];				
 				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {
 					m.add(messages[i]);
-					System.out.println("Email number " + i);
+					/*System.out.println("Email number " + i);
 					System.out.println(message.getFrom().toString());
 					System.out.println(message.getReplyTo().toString());
 					System.out.println(message.getReceivedDate().toString());
 					System.out.println(message.getSubject());
-					System.out.println(message.getContent().toString());
+					System.out.println(getBody(message));*/
 				}
 			}
 			System.out.print(m.size());
-			emailFolder.close(false);
-			store.close();
 		} catch (Exception e) {
 			System.out.println("Erro: " + e);
 		}
