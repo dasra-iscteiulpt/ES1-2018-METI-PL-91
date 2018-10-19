@@ -59,12 +59,6 @@ public class ReadEmails {
 				Message message = messages[i];				
 				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {
 					m.add(messages[i]);
-					/*System.out.println("Email number " + i);
-					System.out.println(message.getFrom().toString());
-					System.out.println(message.getReplyTo().toString());
-					System.out.println(message.getReceivedDate().toString());
-					System.out.println(message.getSubject());
-					System.out.println(getBody(message));*/
 				}
 			}
 			System.out.print(m.size());
@@ -94,12 +88,11 @@ public class ReadEmails {
 		return false; 
 	}
 
-	public static String getSubject(Message m) throws Exception {
+	private static String getSubject(Message m) throws Exception {
 		// SUBJECT
 		String s="";
 		if (m.getSubject() != null)
 			s=m.getSubject();
-		//System.out.println("SUBJECT: " + m.getSubject());
 		return s;	
 	}
 	
