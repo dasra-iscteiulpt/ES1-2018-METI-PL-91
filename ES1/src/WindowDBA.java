@@ -30,7 +30,7 @@ public class WindowDBA {
 	private ArrayList<Message> messagesMail;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
-	
+
 	// CONSTRUTOR
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
@@ -295,7 +295,6 @@ public class WindowDBA {
 	* @param modelTable, is the JTABLE that contains the messages
 	*/
 	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
-		
 		ReadEmails rMails = new ReadEmails();
 		messagesMail = rMails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -497,7 +496,7 @@ public class WindowDBA {
 	* @since September
 	* @param modelTable is the JTABLE that contains the messages
 	*/
-	private void sortByMoreRecent(DefaultTableModel modelTable) {
+	private void sortByOlder(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
@@ -538,7 +537,7 @@ public class WindowDBA {
 	* @since September
 	* @param modelTable is the JTABLE that contains the messages
 	*/
-	private void sortByOlder(DefaultTableModel modelTable) {
+	private void sortByMoreRecent(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();

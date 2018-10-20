@@ -92,7 +92,7 @@ public class ReadEmails {
 		return false; 
 	}
 
-	private static String getSubject(Message m) throws Exception {
+	public static String getSubject(Message m) throws Exception {
 		// SUBJECT
 		String s="";
 		if (m.getSubject() != null)
