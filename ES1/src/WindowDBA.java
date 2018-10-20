@@ -150,7 +150,12 @@ public class WindowDBA {
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
-	* @param GM is the general bar, MR and MO are the radioButtons and TC is the table with news
+	* @param gM, is the general bars
+	* @param MR, is the radio button
+	* @param MO, is the radio button
+	* @param TC, is the table with news
+	* @param MT, is the JTABLE that contains the messages
+	* @param CB, is the combo box with filters date
 	*/
 	private void buttonsMenuConfig(JMenuBar gM, JRadioButton MR, JRadioButton MO, JComboBox<String> CB, DefaultTableModel MT, JTable TC) {
 		// WORKONLINE BUTTON ACTION
@@ -287,6 +292,7 @@ public class WindowDBA {
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
+	* @param modelTable, is the JTABLE that contains the messages
 	*/
 	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
 		
@@ -484,7 +490,13 @@ public class WindowDBA {
 		}
 	}
 	
-	// FALTA JAVADOC
+	/** 
+	* Sort messages, from the most recent to the oldest
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void sortByMoreRecent(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -496,7 +508,6 @@ public class WindowDBA {
 			for(Message m: messagesMail) {
 				date=m.getReceivedDate();
 				dateArray.add(date);
-				System.out.println("date = " + date);
 			}
 			Collections.sort(dateArray);
 			indicatorFilters = 0;
@@ -520,13 +531,19 @@ public class WindowDBA {
 		}
 	}
 
+	/** 
+	* Sort messages, from the oldest to the most recent
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	* @param modelTable is the JTABLE that contains the messages
+	*/
 	private void sortByOlder(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 		int count = 1;
 		Date date = new Date();
-		System.out.println("hello + " + messagesMail.size());
 		try {
 			for(Message m: messagesMail) {
 				date=m.getReceivedDate();
@@ -569,7 +586,5 @@ public class WindowDBA {
 			System.out.println("Linha " + i + " eliminada.");
 		}
 	}
-	
-	
 	
 }

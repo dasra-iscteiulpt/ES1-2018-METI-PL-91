@@ -25,8 +25,10 @@ public class ReadEmails {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September 
-	 * @param ImapHost are StoreType API parameters email
-	 * @param User and Password are the access data to the email
+	 * @param imapHost, is the API parameter email
+	 * @param storeType, is the API parameter email
+	 * @param user is the access data to the email
+	 * @param password is the access data to the email
 	 * @return An array with all academic messages
 	 */
 	public ArrayList<Message> readMessages(String imapHost, String storeType, String user, String password) {
@@ -74,10 +76,12 @@ public class ReadEmails {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September 
-	 * @param Body is the content of the message and list is the list of keywords
+	 * @param body, is the content of the message
+	 * @param subject, is the title of the message
+	 * @param list, is the list with keywords
 	 * @return True if the message contains academic keywords
 	 */
-	public static boolean keywordValidation(String body, String subject, List<Attributes> list) throws Exception {
+	public static boolean keywordValidation(String body, String subject, List<Attributes> list) {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {
 			s =list.get(i).getKeyword();

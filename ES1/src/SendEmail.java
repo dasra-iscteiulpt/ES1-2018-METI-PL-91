@@ -19,7 +19,11 @@ public class SendEmail {
 	* @author GROUP 91
 	* @version 1.0
 	* @since September 
-	* @param toEmail, fromEmail, fromPWEmail, contentEmail and subjectEmail are the required data for sending e-mail
+	* @param toEmail, is one of the mandatory parameters for sending the email
+	* @param fromEmail, is one of the mandatory parameters for sending the email
+	* @param fromPWEmail, is one of the mandatory parameters for sending the email
+	* @param contentEmail, is one of the mandatory parameters for sending the email
+	* @param subjectEmail, is one of the mandatory parameters for sending the email
 	* @return Returns 1 case email is successfully sent and 0 otherwise
 	*/
 	public int senderMail(String toEmail, String fromEmail, String fromPWEmail, String contentEmail, String subjectEmail) {
