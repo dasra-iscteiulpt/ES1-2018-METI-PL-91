@@ -55,6 +55,7 @@ public class WindowMessage {
 			windowFrame.add(panels.get(0), BorderLayout.SOUTH);
 			windowFrame.add(panels.get(1), BorderLayout.WEST);
 			windowFrame.add(panels.get(2), BorderLayout.EAST);
+			
 			windowFrame.add(panels.get(3), BorderLayout.NORTH);
 			
 			// CONFIGURAÇÃO DOS COMPONENTES
@@ -87,6 +88,12 @@ public class WindowMessage {
 					// JOPTION PANE
 					JTextField emailTo = new JTextField();
 					JTextField contentTo = new JTextField();
+					
+					String fromMOnlyEmail = fromM.getText().split("<")[1];
+					String emailToFinal = fromMOnlyEmail.substring(0, fromMOnlyEmail.length()-1).toLowerCase();
+					
+					emailTo.setText(emailToFinal);
+					emailTo.setEditable(false);
 					Object[] f = {"E-mail to: ", emailTo, "Content reply: ", contentTo};
 					int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
 
