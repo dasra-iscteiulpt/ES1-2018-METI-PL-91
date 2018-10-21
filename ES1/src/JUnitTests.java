@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import javax.mail.Message;
 import org.junit.jupiter.api.Test;
 
-class JUNIT {
+class JUnitTests {
 	
 	ReadEmails rEmails = new ReadEmails();
 	ReadXMLfile rXML = new ReadXMLfile();
