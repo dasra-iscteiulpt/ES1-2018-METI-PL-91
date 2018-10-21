@@ -22,7 +22,7 @@ class JUnitTests {
 		
 		assertNotEquals(messageArrayOne, messageArrayTwo);
 		assertNotEquals(messageArrayOne.size(), messageArrayTwo.size());
-		assertEquals(messageArrayOne.size(),5);
+		assertEquals(messageArrayOne.size(),6);
 		assertNotEquals(subjectMail, "Exame");
 		assertEquals(subjectMail,"Exame ES1");
 	}
