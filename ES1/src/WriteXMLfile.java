@@ -29,7 +29,7 @@ public class WriteXMLfile {
 
 			// These data have to be read from the data entered in the GUI
 			userElement.appendChild(getUser(doc, "1", "dasra", "dasra123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
-			userElement.appendChild(getUser(doc, "2", "rjfae1", "rjfae123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
+			userElement.appendChild(getUser(doc, "2", "rjfae1", "rjfae123", "ricardo.f.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
 			userElement.appendChild(getUser(doc, "3", "dgprs", "dgprs123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
 			userElement.appendChild(getUser(doc, "4", "iccco", "iccco123", "diana.es.pl.91@gmail.com", "engenhariasoftware","BDA"));
 
@@ -93,6 +93,7 @@ public class WriteXMLfile {
 		return node;
 	}
 
+	// Utility method to create text node
 	private static Node getFilterElements(Document doc, Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));

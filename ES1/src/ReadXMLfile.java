@@ -15,23 +15,24 @@ import java.util.List;
 
 public class ReadXMLfile {
 
-	// ATRIBUTOS
+	// VARIABLES
 	static List<Attributes> usersList = new ArrayList<Attributes>();
 	List<Attributes> filtersList = new ArrayList<Attributes>();
+	static String[] userData = new String[2];
 	static ReadEmails r = new ReadEmails();
-	
-	// CONSTRUTOR
+
+	// CONSTRUCTOR
 	public ReadXMLfile() {
-		
+
 	}
-	
+
 	/** 
-	* Read users who are in config.xml file
-	* @author GROUP 91
-	* @version 1.0
-	* @since September
-	* @return A list of all users
-	*/
+	 * Read all users included in config.xml file
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @return A list of all users
+	 */
 	public static List<Attributes> readUsersXMLfile() {
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -54,22 +55,22 @@ public class ReadXMLfile {
 	}
 
 	/** 
-	* Read filters who are in config.xml file
-	* @author GROUP 91
-	* @version 1.0
-	* @since September
-	* @param XML file path
-	* @return A list of all filters
-	*/
+	 * Read all filters included in config.xml file
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param XML file path
+	 * @return A list of all filters
+	 */
 	public List<Attributes> readFiltersXMLfile(String xml) {
 
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			
+
 			// Use the factory to take an instance of the document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			
+
 			// Parse using the builder to get the DOM mapping of the XML file
 			Document doc = db.parse(xml);
 			doc.getDocumentElement().normalize();
@@ -86,7 +87,7 @@ public class ReadXMLfile {
 		return filtersList;
 	}
 
-	
+
 	// Gets all the user attributes: email, user, password and service
 	private static Attributes getUserAttributes(Node node) {
 		Attributes user = new Attributes();
@@ -101,6 +102,7 @@ public class ReadXMLfile {
 		return user;
 	}
 
+	// Gets the filters: keyword
 	private static Attributes getFilterAttributes(Node node) {
 		Attributes filter = new Attributes();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -124,31 +126,20 @@ public class ReadXMLfile {
 		String pw = new String();
 		String sr = new String();
 		String em = new String();
+		String pwe = new String();
 		for (int i=0;i < usersList.size();i++)
 		{
 			user = usersList.get(i).getUsername();
 			pw = usersList.get(i).getPassword();
 			sr = usersList.get(i).getService();
 			em = usersList.get(i).getEmail();
-			if(user.equals(username) & pw.equals(password) & sr.equals("BDA"))			{
-				authenticateUserEmail(em,usersList);
+			pwe = usersList.get(i).getPasswordEmail();
+			if(user.equals(username) & pw.equals(password) & sr.equals("BDA")){
+				userData[0]=em;
+				userData[1]=pwe;
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	// Searches for the email associated to the user and read the messages in the box using the filters in XML file
-	public static boolean authenticateUserEmail(String email, List<Attributes> usersList) {
-		String s = "";
-		for (int i = 0; i < usersList.size(); i++) {
-			s = usersList.get(i).getEmail();
-			if (email.equals(s)) {
-				r.readMessages("imap.gmail.com", "imaps3", usersList.get(i).getEmail(), usersList.get(i).getPasswordEmail());
-				return true; 
-			}
-		}
-		return false;
-	}
-
 }

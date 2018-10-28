@@ -15,13 +15,13 @@ import javax.swing.JTextField;
 
 public class WindowLogin {
 
-	// ATRIBUTOS
+	// VARIABLES
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
 	ReadXMLfile r = new ReadXMLfile();
 	private int tentativesLog;
 	
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	public WindowLogin(String title) {
 		tentativesLog = 0;
 		windowLogin = new JFrame(title);
@@ -37,7 +37,7 @@ public class WindowLogin {
 		return panels;
 	}
 
-	// MÉTODOS AUXILIARES
+	// AUXILIARY METHODS
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -55,13 +55,13 @@ public class WindowLogin {
 	private void configWindow() {
 		addPanels();
 
-		// CONFIGURAÇÃO JPANEL NA WINDOWLOGIN
+		// JPANEL CONFIGURATION IN WINDOWLOGIN
 		windowLogin.add(panels.get(0), BorderLayout.SOUTH);
 		windowLogin.add(panels.get(1), BorderLayout.WEST);
 		windowLogin.add(panels.get(2), BorderLayout.EAST);
 		windowLogin.add(panels.get(3), BorderLayout.CENTER);
 
-		// CONFIGURAÇÃO DOS COMPONENTES
+		// COMPONENTS CONFIGURATION
 		JPanel panelCenter = new JPanel(new FlowLayout());
 		windowLogin.add(panelCenter);
 
@@ -96,9 +96,9 @@ public class WindowLogin {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "There are fields to fill.");
+					JOptionPane.showMessageDialog(null, "There are empty fields.");
 				} else {
-					// CASO USER E PASSWORD CONSTEM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
+					// IF THE USER AND PASSWORD ARE IN THE XML FILE AND THE SERVICE IS "BDA", THE LOGIN IS SUCCESSFUL
 					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
 					JOptionPane.showMessageDialog(null, "Login successfully completed.");
 					windowLogin.setVisible(false);
@@ -117,7 +117,7 @@ public class WindowLogin {
 			}
 		});
 
-		// CONFIGURAÇÃO WINDOW FRAME
+		// WINDOW FRAME CONFIGURATION
 		windowLogin.setSize(250, 120);
 		windowLogin.setLocationRelativeTo(null);
 		windowLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

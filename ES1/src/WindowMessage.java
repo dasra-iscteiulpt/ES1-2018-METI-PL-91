@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 public class WindowMessage {
 
-	// ATRIBUTOS
+	// VARIABLES
 	private JFrame windowFrame;
 	private JLabel dateM;
 	private JLabel fromM;
@@ -20,7 +20,7 @@ public class WindowMessage {
 	private JButton sendM;
 	private ArrayList<JPanel> panels;
 
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	public WindowMessage(String date, String from, String title, String content, String canal) {
 		windowFrame = new JFrame(canal);
 		dateM = new JLabel("Date: " + date);
@@ -32,7 +32,7 @@ public class WindowMessage {
 		endConfigWindow();
 	}
 
-	// MÉTODOS AUXILIARES
+	// AUXILIARY METHODS
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -51,14 +51,14 @@ public class WindowMessage {
 		addPanels();
 		windowFrame.setSize(700, 200);
 
-		// CONFIGURAÇÃO JPANEL NA WINDOWFRAME
+		// JPANEL CONFIGURATION IN WINDOWFRAME
 		windowFrame.add(panels.get(0), BorderLayout.SOUTH);
 		windowFrame.add(panels.get(1), BorderLayout.WEST);
 		windowFrame.add(panels.get(2), BorderLayout.EAST);
 
 		windowFrame.add(panels.get(3), BorderLayout.NORTH);
 
-		// CONFIGURAÇÃO DOS COMPONENTES
+		// COMPONENTS CONFIGURATION
 		panels.get(3).add(dateM);
 		panels.get(3).add(fromM);
 		panels.get(3).add(titleM);
@@ -73,7 +73,7 @@ public class WindowMessage {
 	 * @since September
 	 */
 	private void endConfigWindow() {
-		// CONFIGURAÇÃO WINDOW FRAME
+		// WINDOW FRAME CONFIGURATION
 		windowFrame.setLocationRelativeTo(null);
 		windowFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		windowFrame.setResizable(false);
@@ -95,7 +95,6 @@ public class WindowMessage {
 				else {
 					String fromMOnlyEmail = fromM.getText().split(" ")[1];
 					emailToFinal = fromMOnlyEmail.substring(0, fromMOnlyEmail.length()).toLowerCase();
-					System.out.println(emailToFinal);
 				}
 				emailTo.setText(emailToFinal);
 				emailTo.setEditable(false);
@@ -110,18 +109,17 @@ public class WindowMessage {
 						windowFrame.setVisible(false);
 					} else {
 						if(!toEmail.isEmpty() && !toContent.isEmpty()) {
-							// fromEmail && fromPWEmail estão aqui como teste apenas
-							String fromEmail = "diana.es.pl.91@gmail.com";
-							String fromPWEmail = "engenhariasoftware";
+							String fromEmail = ReadXMLfile.userData[0];
+							String fromPWEmail = ReadXMLfile.userData[1];
 							int resultMail = sMail.senderMail(toEmail, fromEmail, fromPWEmail, toContent, titleM.getText());
 							if(resultMail == 1) {
 								JOptionPane.showMessageDialog(null, "E-mail sent to: " + toEmail + " and content is " + toContent);
 								windowFrame.setVisible(false);
 							} else {
-								JOptionPane.showMessageDialog(null, "E-mail não enviado. Tente novamente.");
+								JOptionPane.showMessageDialog(null, "E-mail not sent. Please try again.");
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "Campos por preencher");
+							JOptionPane.showMessageDialog(null, "There are empty fields.");
 							sendM.doClick();
 						}
 					}

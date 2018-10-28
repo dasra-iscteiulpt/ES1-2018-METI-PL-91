@@ -12,10 +12,10 @@ import javax.mail.internet.MimeMultipart;
 
 public class ReadEmails {
 
-	// ATRIBUTOS
+	// VARIABLES
 	private static ReadXMLfile r = new ReadXMLfile();
 
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	public ReadEmails() {
 
 	}
@@ -100,7 +100,7 @@ public class ReadEmails {
 		return s;	
 	}
 	
-	// MÉTODOS AINDA EM CONSTRUÇÃO - JAVADOC POR CONSTRUIR
+	// METHODS UNDER CONSTRUCTION - JAVADOC TO BE DONE
 	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException{
 		String body = "";
 		int count = mimeMultipart.getCount();

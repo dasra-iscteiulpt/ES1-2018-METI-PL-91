@@ -24,14 +24,14 @@ import javax.swing.JOptionPane;
 
 public class WindowDBA {
 
-	// ATRIBUTOS
+	// VARIABLES
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
 	private ArrayList<Message> messagesMail;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
-
-	// CONSTRUTOR
+	
+	// CONSTRUCTOR
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
 		startConfigWindow();
@@ -47,7 +47,7 @@ public class WindowDBA {
 		return panels;
 	}
 	
-	// MÉTODOS AUXILIARES
+	// AUXILIARY METHODS
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -81,16 +81,16 @@ public class WindowDBA {
 		workOnline.setEnabled(false);
 		JMenuItem workOffline = new JMenuItem("Work offline");
 		JMenuItem exit = new JMenuItem("Exit");
-		JMenuItem moreRecent = new JMenuItem("More recent");
-		JMenuItem moreOlder = new JMenuItem("More older");
+		JMenuItem newest = new JMenuItem("Newest");
+		JMenuItem oldest = new JMenuItem("Oldest");
 		JMenuItem about = new JMenuItem("About");
 		JMenuItem help = new JMenuItem("Help");
 
 		fileMenu.add(workOnline);
 		fileMenu.add(workOffline);
 		fileMenu.add(exit);
-		editMenu.add(moreRecent);
-		editMenu.add(moreOlder);
+		editMenu.add(newest);
+		editMenu.add(oldest);
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		
@@ -100,8 +100,8 @@ public class WindowDBA {
 		windowFrame.add(generalMenu, BorderLayout.NORTH);
 		
 		// CONFIGURAÇÃO DOS RADIO BUTTON & COMBOBOX
-		JRadioButton sortOne = new JRadioButton("More Recent");
-		JRadioButton sortTwo = new JRadioButton("More Old");
+		JRadioButton sortOne = new JRadioButton("Newest");
+		JRadioButton sortTwo = new JRadioButton("Oldest");
 		
 		JComboBox<String> chkDate = new JComboBox<String>();
 		chkDate.addItem("All");
@@ -146,7 +146,7 @@ public class WindowDBA {
 	}
 	
 	/** 
-	* Setting the menu and various buttons
+	* Setting the menu and different buttons
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -183,22 +183,22 @@ public class WindowDBA {
 			}
 		});
 		
-		// MORE RECENT ACTION
+		// NEWEST ACTION
 		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !MR.isSelected() ) {
 					MR.setSelected(true);
-					sortByMoreRecent(modelTable);
+					sortByNewest(modelTable);
 				}
 			}
 		});
 		
-		// MORE OLD ACTION
+		// OLDEST ACTION
 		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !MO.isSelected() ) {
 					MO.setSelected(true);
-					sortByOlder(modelTable);
+					sortByOldest(modelTable);
 				}
 			}
 		});
@@ -210,7 +210,7 @@ public class WindowDBA {
 				String infoUC = "Software Engineering I - Teacher Vitor Basto Fernandes";
 				String numberGroup = "Group 91 - Constituted by:" + lineSep;
 				String infoGroup = "68092 - Diana Salvador" + lineSep + "69980 - Diogo Reis" + lineSep + "65799 - Ricardo Ferreira" + lineSep + "73422 - Ivo Carvalho";
-				String toolsProj = "Tools used: Git, Trello.";
+				String toolsProj = "Used tools: Git, Trello.";
 				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);
 			}
 		});
@@ -242,19 +242,19 @@ public class WindowDBA {
 	         }
 	      });
 
-		// RADIO BUTTON OLDER
+		// RADIO BUTTON OLDEST
 		MR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					MR.setSelected(true);
-					sortByMoreRecent(modelTable);
+					sortByNewest(modelTable);
 			}
 		});
 		
-		// RADIO BUTTON MORE RECENT
+		// RADIO BUTTON NEWEST
 		MO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					MO.setSelected(true);
-					sortByOlder(modelTable);
+					sortByOldest(modelTable);
 			}
 		});
 	    
@@ -294,9 +294,10 @@ public class WindowDBA {
 	* @since September
 	* @param modelTable, is the JTABLE that contains the messages
 	*/
+
 	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
 		ReadEmails rMails = new ReadEmails();
-		messagesMail = rMails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
+		messagesMail = rMails.readMessages("imap.gmail.com", "imaps3", ReadXMLfile.userData[0], ReadXMLfile.userData[1]);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		System.out.println(messagesMail.size());
@@ -313,13 +314,13 @@ public class WindowDBA {
 			}
 			indicatorFilters = messagesMail.size();
 		} catch(Exception e) {
-			System.out.print("Erro a ler e-mails: " + e.toString());
+			System.out.print("Error in reading emails: " + e.toString());
 		}
 
 	}
 	
 	/** 
-	* Method to filter news from the last 24 hours
+	* Method to filter emails from the last 24 hours
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -349,12 +350,12 @@ public class WindowDBA {
 				}
 			System.out.println("Emails from last 24h");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Method to filter news from the last 48 hours
+	* Method to filter emails from the last 48 hours
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -384,12 +385,12 @@ public class WindowDBA {
 				}
 			System.out.println("Emails from last 48h");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Method to filter news from the last Week
+	* Method to filter emails from the last Week
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -420,12 +421,12 @@ public class WindowDBA {
 				}
 				System.out.println("Emails from last week");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Method to filter news from the last Month
+	* Method to filter emails from the last Month
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -455,13 +456,13 @@ public class WindowDBA {
 			}
 		    System.out.println("Emails from last month");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 		
 	}
 	
 	/** 
-	* Method shows all messages
+	* Method to show all messages
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -485,18 +486,18 @@ public class WindowDBA {
 			}
 		    System.out.println("All Emails");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Sort messages, from the most recent to the oldest
+	* Sort messages, from the oldest to the newest
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
 	* @param modelTable is the JTABLE that contains the messages
 	*/
-	private void sortByOlder(DefaultTableModel modelTable) {
+	private void sortByOldest(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
@@ -524,20 +525,20 @@ public class WindowDBA {
 					}
 				}
 			}
-			System.out.println("Sort by More Recent");
+			System.out.println("Sort by oldest");
 		} catch (Exception e) {
-			System.out.print("Erro a sortear emails mais recentes: " + e.toString());
+			System.out.print("Error in sorting by oldest emails: " + e.toString());
 		}
 	}
 
 	/** 
-	* Sort messages, from the oldest to the most recent
+	* Sort messages, from the newest to the oldest
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
 	* @param modelTable is the JTABLE that contains the messages
 	*/
-	private void sortByMoreRecent(DefaultTableModel modelTable) {
+	private void sortByNewest(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
@@ -565,9 +566,9 @@ public class WindowDBA {
 					}
 				}
 			}
-			System.out.println("Sort by More Recent");
+			System.out.println("Sort by newest");
 		} catch (Exception e) {
-			System.out.print("Erro a sortear emails mais recentes: " + e.toString());
+			System.out.print("Error in sorting by newest emails: " + e.toString());
 		}
 	}
 
@@ -582,7 +583,7 @@ public class WindowDBA {
 		int linhasNaTabela = indicatorFilters;
 		for(int i = linhasNaTabela; i > 0; i--) {
 			modelTable.removeRow(i);
-			System.out.println("Linha " + i + " eliminada.");
+			System.out.println("Row " + i + " deleted.");
 		}
 	}
 	

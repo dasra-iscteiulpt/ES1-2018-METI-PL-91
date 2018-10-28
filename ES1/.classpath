@@ -7,5 +7,7 @@
 	<classpathentry kind="lib" path="C:/Users/Diana Salvador/Downloads/javax.mail.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Diana Salvador/Downloads/jsoup-1.11.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="JARs/twitter4j-4.0.7/lib/twitter4j-core-4.0.7.jar"/>
+	<classpathentry kind="lib" path="JARs/twitter4j-4.0.7/twitter4j-core/twitter4j-core-4.0.7-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
