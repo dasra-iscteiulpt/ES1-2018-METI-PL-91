@@ -29,8 +29,8 @@ public class WriteXMLfile {
 		addUser("dasra", "dasra123", "diana.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N");
 		addUser("rjfae1", "rjfae123", "ricardo.f.es.pl.91@gmail.com", "engenhariasoftware", "DF5DCJ5FACNHxE1tLXZwU6Psb", "IPezOOcIibcLbdGextZlwPrV86f19BuBz4ltTVh2Ki9XSr3X4L", "1056591307521646593-dBBRKbiDGKn7CDqI9x0uu34FybAWeA", "lQfqJuHcliUr0iQdMHh11M8IJMFUW0WBwc898ePUZNaHb");
 		//These data have to be read from the data entered in the GUI	
-		//addFilter("ciencia");
-		//addFilter("biblioteca");
+		addFilter("tecnologia");
+		addFilter("biblioteca");
 
 		//removeUser("rjfae1");
 		//removeFilter("iscte");
@@ -56,7 +56,7 @@ public class WriteXMLfile {
 
 			// Add the new user and filter nodes
 			userElement.appendChild(createUserBDA(doc, "iccco", "iccco123", "ivo.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N"));
-			userElement.appendChild(createFilter(doc,"iscte"));
+			//userElement.appendChild(createFilter(doc,"iscte"));
 			userElement.appendChild(createFilter(doc,"aula"));
 			userElement.appendChild(createFilter(doc,"universidade"));
 			userElement.appendChild(createFilter(doc,"disciplina"));

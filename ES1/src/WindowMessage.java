@@ -22,7 +22,6 @@ public class WindowMessage {
 		private JButton sendM;
 		private ArrayList<JPanel> panels;
 
-		// CONSTRUTOR
 		public WindowMessage(String date, String from, String title, String content, String canal) {
 			windowFrame = new JFrame(canal);
 			dateM = new JLabel("Date: " + date);

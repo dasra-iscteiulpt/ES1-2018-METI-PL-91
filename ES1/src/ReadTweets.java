@@ -1,26 +1,13 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.mail.Message;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import twitter4j.Paging;
-import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class ReadTweets {
@@ -32,7 +19,9 @@ public class ReadTweets {
 		new ReadTweets().readTweets("dasra");
 	}
 
-	public List<Status> readTweets(String username){
+	// Utility method to read ISCTE tweets that contain specific keywords 
+	public ArrayList<Status> readTweets(String username){
+		ArrayList<Status> twitterStatus = new ArrayList<Status>();
 		r.validateUserTwitter(username);
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
@@ -44,18 +33,22 @@ public class ReadTweets {
 		Twitter twitter = tf.getInstance();
 
 		try {
-			List<Status> statusList = twitter.getUserTimeline("iscteiul");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Paging paging = new Paging(1, 200);
+			List<Status> statusList = twitter.getUserTimeline("iscteiul", paging);
 			List<Attributes> filtersList = new ArrayList<Attributes>();
 			filtersList = r.readFiltersXMLfile("config.xml");
 			for (Status status : statusList) {
 				if(keywordValidation(status.getText(), filtersList)) {
-					System.out.println(status.getUser().getName() + " : " + status.getText());
+					twitterStatus.add(status);
+					System.out.println("Tweet from: " + status.getUser().getName() + System.lineSeparator() + "Text : " + status.getText() + System.lineSeparator() + "Id : " + status.getId() + System.lineSeparator() + "Created at : " + sdf.format(status.getCreatedAt()) + System.lineSeparator());
 				}
 			}
-		} catch (TwitterException e) {
-			e.printStackTrace();
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			System.out.println("Failed to read tweets: " + te.getMessage());
 		}
-		return null;
+		return twitterStatus;
 	}
 	public static boolean keywordValidation(String keyword, List<Attributes> list) {
 		String s = "";
@@ -67,5 +60,4 @@ public class ReadTweets {
 		}
 		return false; 
 	}
-
 }

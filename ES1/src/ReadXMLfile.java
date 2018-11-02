@@ -154,7 +154,6 @@ public class ReadXMLfile {
 		String OAuthAccessTokenSecret = new String();
 		for (int i=0;i < usersList.size();i++)
 		{
-			System.out.println(usersList.size());
 			user = usersList.get(i).getUsername();
 			OAuthConsumerKey = usersList.get(i).getOAuthConsumerKey();
 			OAuthConsumerSecret = usersList.get(i).getOAuthConsumerSecret();
