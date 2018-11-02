@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 import javax.mail.Message;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -24,19 +28,18 @@ public class ReadTweets {
 	private static ReadXMLfile r = new ReadXMLfile();
 
 	public static void main(String[] args) throws TwitterException, IOException {
-
-		new ReadTweets().readTweets();
+		//This data has to be read from the GUI
+		new ReadTweets().readTweets("dasra");
 	}
 
-	public void readTweets(){
-
+	public List<Status> readTweets(String username){
+		r.validateUserTwitter(username);
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-
 		cb.setDebugEnabled(true)
-		.setOAuthConsumerKey("dpthvBBPVVsWxWituNu1CBx9h")
-		.setOAuthConsumerSecret("Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W")
-		.setOAuthAccessToken("1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B")
-		.setOAuthAccessTokenSecret("B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N");
+		.setOAuthConsumerKey(ReadXMLfile.twitterData[0])
+		.setOAuthConsumerSecret(ReadXMLfile.twitterData[1])
+		.setOAuthAccessToken(ReadXMLfile.twitterData[2])
+		.setOAuthAccessTokenSecret(ReadXMLfile.twitterData[3]);
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance();
 
@@ -52,6 +55,7 @@ public class ReadTweets {
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	public static boolean keywordValidation(String keyword, List<Attributes> list) {
 		String s = "";
