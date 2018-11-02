@@ -1,1 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><users><User id="1"><username>dasra</username><password>dasra123</password><email>diana.es.pl.91@gmail.com</email><passwordEmail>engenhariasoftware</passwordEmail><service>BDA</service></User><User id="2"><username>rjfae1</username><password>rjfae123</password><email>ricardo.f.es.pl.91@gmail.com</email><passwordEmail>engenhariasoftware</passwordEmail><service>BDA</service></User><User id="3"><username>dgprs</username><password>dgprs123</password><email>diana.es.pl.91@gmail.com</email><passwordEmail>engenhariasoftware</passwordEmail><service>BDA</service></User><User id="4"><username>iccco</username><password>iccco123</password><email>diana.es.pl.91@gmail.com</email><passwordEmail>engenhariasoftware</passwordEmail><service>BDA</service></User><Filter><keyword>ISCTE</keyword></Filter><Filter><keyword>exame</keyword></Filter><Filter><keyword>aula</keyword></Filter><Filter><keyword>universidade</keyword></Filter><Filter><keyword>disciplina</keyword></Filter><Filter><keyword>projecto</keyword></Filter></users>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><users>
+<User Id="iccco">
+<username>iccco</username>
+<password>teste</password>
+<email>ivo.es.pl.91@gmail.com</email>
+<passwordEmail>engenhariasoftware</passwordEmail>
+<OAuthConsumerKey>dpthvBBPVVsWxWituNu1CBx9h</OAuthConsumerKey>
+<OAuthConsumerSecret>Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W</OAuthConsumerSecret>
+<OAuthAccessToken>1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B</OAuthAccessToken>
+<OAuthAccessTokenSecret>B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N</OAuthAccessTokenSecret>
+</User>
+<Filter>
+<keyword>iscte</keyword>
+</Filter>
+<Filter>
+<keyword>aula</keyword>
+</Filter>
+<Filter>
+<keyword>universidade</keyword>
+</Filter>
+<Filter>
+<keyword>disciplina</keyword>
+</Filter>
+<Filter>
+<keyword>projecto</keyword>
+</Filter>
+<User Id="dasra"><username>dasra</username><password>dasra123</password><email>diana.es.pl.91@gmail.com</email><passwordEmail>engenhariasoftware</passwordEmail><OAuthConsumerKey>dpthvBBPVVsWxWituNu1CBx9h</OAuthConsumerKey><OAuthConsumerSecret>Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W</OAuthConsumerSecret><OAuthAccessToken>1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B</OAuthAccessToken><OAuthAccessTokenSecret>B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N</OAuthAccessTokenSecret></User><User Id="rjfae1"><username>rjfae1</username><password>rjfae123</password><email>ricardo.f.es.pl.91@gmail.com</email><passwordEmail>engenhariasoftware</passwordEmail><OAuthConsumerKey>DF5DCJ5FACNHxE1tLXZwU6Psb</OAuthConsumerKey><OAuthConsumerSecret>IPezOOcIibcLbdGextZlwPrV86f19BuBz4ltTVh2Ki9XSr3X4L</OAuthConsumerSecret><OAuthAccessToken>1056591307521646593-dBBRKbiDGKn7CDqI9x0uu34FybAWeA</OAuthAccessToken><OAuthAccessTokenSecret>lQfqJuHcliUr0iQdMHh11M8IJMFUW0WBwc898ePUZNaHb</OAuthAccessTokenSecret></User></users>

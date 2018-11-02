@@ -97,7 +97,6 @@ public class ReadXMLfile {
 			user.setPassword(getTagValue("password", element));
 			user.setEmail(getTagValue("email", element));
 			user.setPasswordEmail(getTagValue("passwordEmail", element));
-			user.setService(getTagValue("service", element));
 		}
 		return user;
 	}
@@ -113,7 +112,7 @@ public class ReadXMLfile {
 	}
 
 	// Gets a specific user attribute based on a Tag
-	private static String getTagValue(String tag, Element element) {
+	static String getTagValue(String tag, Element element) {
 		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
 		Node node = (Node) nodeList.item(0);
 		return node.getNodeValue();
@@ -124,17 +123,15 @@ public class ReadXMLfile {
 		readUsersXMLfile();
 		String user = new String();
 		String pw = new String();
-		String sr = new String();
 		String em = new String();
 		String pwe = new String();
 		for (int i=0;i < usersList.size();i++)
 		{
 			user = usersList.get(i).getUsername();
 			pw = usersList.get(i).getPassword();
-			sr = usersList.get(i).getService();
 			em = usersList.get(i).getEmail();
 			pwe = usersList.get(i).getPasswordEmail();
-			if(user.equals(username) & pw.equals(password) & sr.equals("BDA")){
+			if(user.equals(username) & pw.equals(password)){
 				userData[0]=em;
 				userData[1]=pwe;
 				return true;

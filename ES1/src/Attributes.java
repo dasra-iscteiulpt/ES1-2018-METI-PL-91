@@ -1,12 +1,15 @@
 
 public class Attributes {
+	
 	private String email;
 	private String username;
 	private String password;
-	private String service;
 	private String keyword;
 	private String passwordEmail;
-	private String keyword2;
+	private String OAuthConsumerKey;
+	private String OAuthConsumerSecret;
+	private String OAuthAccessToken;
+	private String OAuthAccessTokenSecret;
 	
 	public String getEmail() {
 		return email;
@@ -26,12 +29,7 @@ public class Attributes {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getService() {
-		return service;
-	}
-	public void setService(String service) {
-		this.service = service;
-	}
+	
 	public String getKeyword() {
 		return keyword;
 	}
@@ -44,10 +42,29 @@ public class Attributes {
 	public void setPasswordEmail(String passwordEmail) {
 		this.passwordEmail = passwordEmail;
 	}
-	/*public String toString() {
-		return "User: Email=" + this.email + " Username=" + this.username + " Password=" + this.password +
-				" Service=" + this.service;
-	}*/
-
+	public String getOAuthConsumerKey() {
+		return OAuthConsumerKey;
+	}
+	public void setOAuthConsumerKey(String OAuthConsumerKey) {
+		this.OAuthConsumerKey = OAuthConsumerKey;
+	}
+	public String getOAuthConsumerSecret() {
+		return OAuthConsumerSecret;
+	}
+	public void setOAuthConsumerSecret(String OAuthConsumerSecret) {
+		this.OAuthConsumerSecret = OAuthConsumerSecret;
+	}
+	public String getOAuthAccessToken() {
+		return OAuthAccessToken;
+	}
+	public void setOAuthAccessToken(String OAuthAccessToken) {
+		this.OAuthAccessToken = OAuthAccessToken;
+	}
+	public String getOAuthAccessTokenSecret() {
+		return OAuthAccessTokenSecret;
+	}
+	public void setOAuthAccessTokenSecret(String OAuthAccessTokenSecret) {
+		this.OAuthAccessTokenSecret = OAuthAccessTokenSecret;
+	}
 }
 
