@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,11 +13,11 @@ import java.util.Collections;
 import java.util.Date;
 
 import javax.swing.JPanel;
-import javax.mail.Message;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import javax.swing.JRadioButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,14 +25,14 @@ import javax.swing.JOptionPane;
 
 public class WindowDBA {
 
-	// ATRIBUTOS
+	// VARIABLES
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
-	private ArrayList<Message> messagesMail;
+	private ArrayList<GenericMessage> genericMessages;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
 	
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
 		startConfigWindow();
@@ -47,7 +48,7 @@ public class WindowDBA {
 		return panels;
 	}
 	
-	// MÉTODOS AUXILIARES
+	// AUXILIARY METHODS
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -81,16 +82,16 @@ public class WindowDBA {
 		workOnline.setEnabled(false);
 		JMenuItem workOffline = new JMenuItem("Work offline");
 		JMenuItem exit = new JMenuItem("Exit");
-		JMenuItem moreRecent = new JMenuItem("More recent");
-		JMenuItem moreOlder = new JMenuItem("More older");
+		JMenuItem newest = new JMenuItem("Newest");
+		JMenuItem oldest = new JMenuItem("Oldest");
 		JMenuItem about = new JMenuItem("About");
 		JMenuItem help = new JMenuItem("Help");
 
 		fileMenu.add(workOnline);
 		fileMenu.add(workOffline);
 		fileMenu.add(exit);
-		editMenu.add(moreRecent);
-		editMenu.add(moreOlder);
+		editMenu.add(newest);
+		editMenu.add(oldest);
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		
@@ -100,8 +101,8 @@ public class WindowDBA {
 		windowFrame.add(generalMenu, BorderLayout.NORTH);
 		
 		// CONFIGURAÇÃO DOS RADIO BUTTON & COMBOBOX
-		JRadioButton sortOne = new JRadioButton("More Recent");
-		JRadioButton sortTwo = new JRadioButton("More Old");
+		JRadioButton sortOne = new JRadioButton("Newest");
+		JRadioButton sortTwo = new JRadioButton("Oldest");
 		
 		JComboBox<String> chkDate = new JComboBox<String>();
 		chkDate.addItem("All");
@@ -146,7 +147,7 @@ public class WindowDBA {
 	}
 	
 	/** 
-	* Setting the menu and various buttons
+	* Setting the menu and different buttons
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -183,22 +184,22 @@ public class WindowDBA {
 			}
 		});
 		
-		// MORE RECENT ACTION
+		// NEWEST ACTION
 		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !MR.isSelected() ) {
 					MR.setSelected(true);
-					sortByMoreRecent(modelTable);
+					sortByNewest(modelTable);
 				}
 			}
 		});
 		
-		// MORE OLD ACTION
+		// OLDEST ACTION
 		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !MO.isSelected() ) {
 					MO.setSelected(true);
-					sortByOlder(modelTable);
+					sortByOldest(modelTable);
 				}
 			}
 		});
@@ -210,7 +211,7 @@ public class WindowDBA {
 				String infoUC = "Software Engineering I - Teacher Vitor Basto Fernandes";
 				String numberGroup = "Group 91 - Constituted by:" + lineSep;
 				String infoGroup = "68092 - Diana Salvador" + lineSep + "69980 - Diogo Reis" + lineSep + "65799 - Ricardo Ferreira" + lineSep + "73422 - Ivo Carvalho";
-				String toolsProj = "Tools used: Git, Trello.";
+				String toolsProj = "Used tools: Git, Trello.";
 				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);
 			}
 		});
@@ -242,19 +243,19 @@ public class WindowDBA {
 	         }
 	      });
 
-		// RADIO BUTTON OLDER
+		// RADIO BUTTON OLDEST
 		MR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					MR.setSelected(true);
-					sortByMoreRecent(modelTable);
+					sortByNewest(modelTable);
 			}
 		});
 		
-		// RADIO BUTTON MORE RECENT
+		// RADIO BUTTON NEWEST
 		MO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					MO.setSelected(true);
-					sortByOlder(modelTable);
+					sortByOldest(modelTable);
 			}
 		});
 	    
@@ -295,32 +296,20 @@ public class WindowDBA {
 	* @param modelTable, is the JTABLE that contains the messages
 	*/
 	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
-		
 		ReadEmails rMails = new ReadEmails();
-		messagesMail = rMails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
-		System.out.println(messagesMail.size());
-	    int count = 1;
-		try {
-			for (Message m: messagesMail) {
-				String dateM = sdf.format(m.getReceivedDate());
-				String channelM = "EM";
-				String fromM = m.getFrom()[0].toString();
-				String subjectM = m.getSubject().toString();
-				String contentM = ReadEmails.getBody(m);
-			    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-			    count++;
-			}
-			indicatorFilters = messagesMail.size();
-		} catch(Exception e) {
-			System.out.print("Erro a ler e-mails: " + e.toString());
-		}
+		ReadTweets rTweets = new ReadTweets();
 
+		ArrayList<GenericMessage> messagesMail = GenericMessage.receiveMailReturnMessage(rMails.readMessages("imap.gmail.com", "imaps3", ReadXMLfile.userData[0], ReadXMLfile.userData[1]));
+		ArrayList<GenericMessage> messagesTwitter = GenericMessage.receiveTweetsReturnMessage(rTweets.readTweets("dasra"));
+		// ArrayList<GenericMessage> messagesFace = GenericMessage.receiveMailReturnMessage(listMail);
+		
+		fillOnTable(messagesMail, messagesTwitter);
+		indicatorFilters = genericMessages.size();
+		
 	}
 	
 	/** 
-	* Method to filter news from the last 24 hours
+	* Method to filter emails from the last 24 hours
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -329,20 +318,21 @@ public class WindowDBA {
 	private void filterEmailsLast24Hours(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
 		indicatorFilters = 0;
 		int count = 1;
 		try {
-			for (Message m: messagesMail) {
+			for (GenericMessage m: genericMessages) {
 					c.setTime(new Date());
 					c.add(Calendar.DATE, -1);
 					Date d = c.getTime();
-					if (m.getReceivedDate().after(d)) {
-						String dateM = sdf.format(m.getReceivedDate());
+					if (df.parse(m.getDateM()).after(d)) {
+						String dateM = m.getDateM();
 						String channelM = "EM";
-						String fromM = m.getFrom()[0].toString();
-						String subjectM = m.getSubject();
-						String contentM = ReadEmails.getBody(m);
+						String fromM = m.getFromM();
+						String subjectM = m.getTitleM();
+						String contentM = m.getContentM();
 					    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					    count++;
 					    indicatorFilters++;
@@ -350,12 +340,12 @@ public class WindowDBA {
 				}
 			System.out.println("Emails from last 24h");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Method to filter news from the last 48 hours
+	* Method to filter emails from the last 48 hours
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -364,20 +354,21 @@ public class WindowDBA {
 	private void filterEmailsLast48Hours(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();	
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
 		indicatorFilters = 0;
 		int count = 1;
 		try {
-			for (Message m: messagesMail) {
+			for (GenericMessage m: genericMessages) {
 				c.setTime(new Date());
 				c.add(Calendar.DATE, -2);
 				Date d = c.getTime();
-				if (m.getReceivedDate().after(d)) {
-					String dateM = sdf.format(m.getReceivedDate());
-					String channelM = "EM";
-					String fromM = m.getFrom()[0].toString();
-					String subjectM = m.getSubject();
-					String contentM = ReadEmails.getBody(m);
+				if (df.parse(m.getDateM()).after(d)) {
+					String dateM = m.getDateM();
+					String channelM = m.getCanalM();
+					String fromM = m.getFromM();
+					String subjectM = m.getTitleM();
+					String contentM = m.getContentM();
 				    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 				    count++;
 					indicatorFilters++;
@@ -385,12 +376,12 @@ public class WindowDBA {
 				}
 			System.out.println("Emails from last 48h");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Method to filter news from the last Week
+	* Method to filter emails from the last Week
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -400,20 +391,22 @@ public class WindowDBA {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
 		indicatorFilters = 0;
 
 		int count = 1;
 		try {
-			for (Message m: messagesMail) {
+			for (GenericMessage m: genericMessages) {
 					c.setTime(new Date());
 					c.add(Calendar.DATE, -7);
 					Date d = c.getTime();
-					if (m.getReceivedDate().after(d)) {
-						String dateM = sdf.format(m.getReceivedDate());
-						String channelM = "EM";
-						String fromM = m.getFrom()[0].toString();
-						String subjectM = m.getSubject();
-						String contentM = ReadEmails.getBody(m);
+					if (df.parse(m.getDateM()).after(d)) {
+						String dateM = m.getDateM();
+						String channelM = m.getCanalM();
+						String fromM = m.getFromM();
+						String subjectM = m.getTitleM();
+						String contentM = m.getContentM();
 					    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 						count++;
 						indicatorFilters++;
@@ -421,12 +414,12 @@ public class WindowDBA {
 				}
 				System.out.println("Emails from last week");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Method to filter news from the last Month
+	* Method to filter emails from the last Month
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -436,19 +429,21 @@ public class WindowDBA {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
 		indicatorFilters = 0;
 		int count = 1;
 		try {
-			for (Message m: messagesMail) {
+			for (GenericMessage m: genericMessages) {
 				c.setTime(new Date());
 				c.add(Calendar.DATE, -30);
 				Date d = c.getTime();
-				if (m.getReceivedDate().after(d)) {
-					String dateM = sdf.format(m.getReceivedDate());
-					String channelM = "EM";
-					String fromM = m.getFrom()[0].toString();
-					String subjectM = m.getSubject();
-					String contentM = ReadEmails.getBody(m);
+				if (df.parse(m.getDateM()).after(d)) {
+					String dateM = m.getDateM();
+					String channelM = m.getCanalM();
+					String fromM = m.getFromM();
+					String subjectM = m.getTitleM();
+					String contentM = m.getContentM();
 				    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 				    count++;
 					indicatorFilters++;
@@ -456,13 +451,13 @@ public class WindowDBA {
 			}
 		    System.out.println("Emails from last month");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 		
 	}
 	
 	/** 
-	* Method shows all messages
+	* Method to show all messages
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -470,108 +465,136 @@ public class WindowDBA {
 	*/
 	private void filterEmailsAll(DefaultTableModel modelTable) {
 		removeRows(modelTable);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		int count = 1;
 		indicatorFilters = 0;
 		try {
-			for (Message m: messagesMail) {
-				String dateM = sdf.format(m.getReceivedDate());
-					String channelM = "EM";
-					String fromM = m.getFrom()[0].toString();
-					String subjectM = m.getSubject();
-					String contentM = ReadEmails.getBody(m);
+			for (GenericMessage m: genericMessages) {
+					String dateM = m.getDateM();
+					String channelM = m.getCanalM();
+					String fromM = m.getFromM();
+					String subjectM = m.getTitleM();
+					String contentM = m.getContentM();
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
 					indicatorFilters++;
 			}
 		    System.out.println("All Emails");
 		} catch (Exception e) {
-			System.out.print("Erro a filtrar por hora: " + e.toString());
+			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Sort messages, from the most recent to the oldest
+	* Sort messages, from the oldest to the newest
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
 	* @param modelTable is the JTABLE that contains the messages
 	*/
-	private void sortByMoreRecent(DefaultTableModel modelTable) {
+	private void sortByOldest(DefaultTableModel modelTable) {
 		removeRows(modelTable);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 		int count = 1;
 		Date date = new Date();
-		System.out.println("hello + " + messagesMail.size());
+		System.out.println("hello + " + genericMessages.size());
 		try {
-			for(Message m: messagesMail) {
-				date=m.getReceivedDate();
+			for(GenericMessage m: genericMessages) {
+				date = df.parse(m.getDateM());
 				dateArray.add(date);
 			}
 			Collections.sort(dateArray);
 			indicatorFilters = 0;
 			for(Date d: dateArray) {
-				for(Message m: messagesMail) {
-					if(m.getReceivedDate().equals(d)) {
-						String dateM = sdf.format(m.getReceivedDate());
-						String channelM = "EM";
-						String fromM = m.getFrom()[0].toString();
-						String subjectM = m.getSubject();
-						String contentM = ReadEmails.getBody(m);
+				for(GenericMessage m: genericMessages) {
+					if(df.parse(m.getDateM()).equals(d)) {
+						String dateM = m.getDateM();
+						String channelM = m.getCanalM();
+						String fromM = m.getFromM();
+						String subjectM = m.getTitleM();
+						String contentM = m.getContentM();
 						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 						count++;
 						indicatorFilters++;
 					}
 				}
 			}
-			System.out.println("Sort by More Recent");
+			System.out.println("Sort by oldest");
 		} catch (Exception e) {
-			System.out.print("Erro a sortear emails mais recentes: " + e.toString());
+			System.out.print("Error in sorting by oldest emails: " + e.toString());
 		}
 	}
 
 	/** 
-	* Sort messages, from the oldest to the most recent
+	* Sort messages, from the newest to the oldest
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
 	* @param modelTable is the JTABLE that contains the messages
 	*/
-	private void sortByOlder(DefaultTableModel modelTable) {
+	private void sortByNewest(DefaultTableModel modelTable) {
 		removeRows(modelTable);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 		int count = 1;
 		Date date = new Date();
 		try {
-			for(Message m: messagesMail) {
-				date=m.getReceivedDate();
+			for(GenericMessage m: genericMessages) {
+				date = df.parse(m.getDateM());
 				dateArray.add(date);
 				System.out.println("date = " + date);
 			}
 			Collections.sort(dateArray, Collections.reverseOrder());
 			indicatorFilters = 0;
 			for(Date d: dateArray) {
-				for(Message m: messagesMail) {
-					if(m.getReceivedDate().equals(d)) {
-						String dateM = sdf.format(m.getReceivedDate());
-						String channelM = "EM";
-						String fromM = m.getFrom()[0].toString();
-						String subjectM = m.getSubject();
-						String contentM = ReadEmails.getBody(m);
+				for(GenericMessage m: genericMessages) {
+					if(df.parse(m.getDateM()).equals(d)) {
+						String dateM = m.getDateM();
+						String channelM = m.getCanalM();
+						String fromM = m.getFromM();
+						String subjectM = m.getTitleM();
+						String contentM = m.getContentM();
 						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 						count++;
 						indicatorFilters++;
 					}
 				}
 			}
-			System.out.println("Sort by More Recent");
+			System.out.println("Sort by newest");
 		} catch (Exception e) {
-			System.out.print("Erro a sortear emails mais recentes: " + e.toString());
+			System.out.print("Error in sorting by newest emails: " + e.toString());
 		}
 	}
 
+	private void fillOnTable(ArrayList<GenericMessage> gM1, ArrayList<GenericMessage> gM2) {
+		int count = 1;
+		try {
+			for (GenericMessage genM: gM1) {
+				String dateM = genM.getDateM();
+				String channelM = genM.getCanalM();
+				String fromM = genM.getFromM();
+				String subjectM = genM.getTitleM();
+				String contentM = genM.getContentM();
+			    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+			    count++;
+			}
+			
+			for (GenericMessage genM: gM2) {
+				String dateM = genM.getDateM();
+				String channelM = genM.getCanalM();
+				String fromM = genM.getFromM();
+				String subjectM = genM.getTitleM();
+				String contentM = genM.getContentM();
+			    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+			    count++;
+			}
+			
+		} catch(Exception e) {
+			System.out.print("Error in reading emails: " + e.toString());
+		}		
+	}
+	
 	/** 
 	* Auxiliary method to control date filters
 	* @author GROUP 91
@@ -583,7 +606,7 @@ public class WindowDBA {
 		int linhasNaTabela = indicatorFilters;
 		for(int i = linhasNaTabela; i > 0; i--) {
 			modelTable.removeRow(i);
-			System.out.println("Linha " + i + " eliminada.");
+			System.out.println("Row " + i + " deleted.");
 		}
 	}
 	

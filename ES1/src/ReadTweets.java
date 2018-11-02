@@ -32,7 +32,7 @@ public class ReadTweets {
 		new ReadTweets().readTweets("dasra");
 	}
 
-	public List<Status> readTweets(String username){
+	public ArrayList<Status> readTweets(String username){
 		r.validateUserTwitter(username);
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)

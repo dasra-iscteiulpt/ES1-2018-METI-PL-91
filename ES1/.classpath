@@ -2,12 +2,11 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Diana Salvador/Downloads/jdom.jar/jdom.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diana Salvador/Downloads/jaf-1_1_1/jaf-1.1.1/activation.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diana Salvador/Downloads/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diana Salvador/Downloads/jsoup-1.11.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="JARs/twitter4j-4.0.7/lib/twitter4j-core-4.0.7.jar"/>
-	<classpathentry kind="lib" path="JARs/twitter4j-4.0.7/twitter4j-core/twitter4j-core-4.0.7-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fadolas/Downloads/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fadolas/Downloads/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fadolas/Downloads/jdom.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fadolas/Downloads/jsoup-1.11.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fadolas/Downloads/twitter4j-core-3.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
