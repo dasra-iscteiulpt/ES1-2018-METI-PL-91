@@ -66,7 +66,7 @@ public class WindowDBA {
 	*/
 	private void startConfigWindow() {
 		addPanels();
-		windowFrame.setSize(500, 500);
+		windowFrame.setSize(500, 700);
 		// CONFIGURAÇÃO JPANEL NA WINDOWFRAME
 		windowFrame.add(panels.get(0), BorderLayout.SOUTH);
 		windowFrame.add(panels.get(1), BorderLayout.WEST);
@@ -230,7 +230,7 @@ public class WindowDBA {
 	    TC.addMouseListener(new MouseAdapter() {
 	         public void mouseClicked(MouseEvent e) {
 	            if (e.getClickCount() == 1) {
-	            	if( !(TC.getSelectedRow() == 0) ) {
+	            	if( !(TC.getSelectedRow() == 0)) {
 			        	String dateM = TC.getModel().getValueAt(TC.getSelectedRow(),1).toString();
 			        	String canalM = TC.getModel().getValueAt(TC.getSelectedRow(),2).toString();
 			        	String fromM = TC.getModel().getValueAt(TC.getSelectedRow(),3).toString();
@@ -310,7 +310,7 @@ public class WindowDBA {
 	}
 	
 	/** 
-	* Method to filter emails from the last 24 hours
+	* Method to filter e-mails from the last 24 hours
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -330,7 +330,7 @@ public class WindowDBA {
 					Date d = c.getTime();
 					if (df.parse(m.getDateM()).after(d)) {
 						String dateM = m.getDateM();
-						String channelM = "EM";
+						String channelM = m.getCanalM();
 						String fromM = m.getFromM();
 						String subjectM = m.getTitleM();
 						String contentM = m.getContentM();
@@ -346,7 +346,7 @@ public class WindowDBA {
 	}
 	
 	/** 
-	* Method to filter emails from the last 48 hours
+	* Method to filter e-mails from the last 48 hours
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -360,7 +360,10 @@ public class WindowDBA {
 		indicatorFilters = 0;
 		int count = 1;
 		try {
+
+			System.out.println(genericMessages.size());
 			for (GenericMessage m: genericMessages) {
+				System.out.println("Entrou no FOR");
 				c.setTime(new Date());
 				c.add(Calendar.DATE, -2);
 				Date d = c.getTime();
@@ -382,7 +385,7 @@ public class WindowDBA {
 	}
 	
 	/** 
-	* Method to filter emails from the last Week
+	* Method to filter e-mails from the last Week
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -391,7 +394,6 @@ public class WindowDBA {
 	private void filterEmailsLastWeek(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 		indicatorFilters = 0;
@@ -402,6 +404,7 @@ public class WindowDBA {
 					c.setTime(new Date());
 					c.add(Calendar.DATE, -7);
 					Date d = c.getTime();
+					System.out.println(df.parse(m.getDateM()));
 					if (df.parse(m.getDateM()).after(d)) {
 						String dateM = m.getDateM();
 						String channelM = m.getCanalM();
@@ -412,15 +415,15 @@ public class WindowDBA {
 						count++;
 						indicatorFilters++;
 					}
-				}
-				System.out.println("Emails from last week");
+			}
+			System.out.println("Emails from last week");
 		} catch (Exception e) {
 			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 	}
 	
 	/** 
-	* Method to filter emails from the last Month
+	* Method to filter e-mails from the last Month
 	* @author GROUP 91
 	* @version 1.0
 	* @since September
@@ -429,7 +432,6 @@ public class WindowDBA {
 	private void filterEmailsLastMonth(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 		indicatorFilters = 0;
@@ -577,6 +579,7 @@ public class WindowDBA {
 				String fromM = genM.getFromM();
 				String subjectM = genM.getTitleM();
 				String contentM = genM.getContentM();
+				genericMessages.add(genM);
 			    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 			    count++;
 			}
@@ -587,6 +590,7 @@ public class WindowDBA {
 				String fromM = genM.getFromM();
 				String subjectM = genM.getTitleM();
 				String contentM = genM.getContentM();
+				genericMessages.add(genM);
 			    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 			    count++;
 			}

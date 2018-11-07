@@ -28,7 +28,11 @@ public class WindowMessage {
 			fromM = new JLabel("From: " + from);
 			titleM = new JLabel("Subject: " + title);
 			contentM = new JTextArea(content);
-			sendM = new JButton("Reply");
+			if(canal.equals("E-Mail")) {
+				sendM = new JButton("Reply");
+			} else if(canal.equals("Twitter")) {
+				sendM = new JButton("Retweet");
+			}
 			configWindow();
 			endConfigWindow();
 		}
@@ -90,8 +94,10 @@ public class WindowMessage {
 			sendM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
+					if(windowFrame.getTitle().equals("E-Mail")) {
+						
 					SendEmail sMail = new SendEmail();
-					
+		
 					// JOPTION PANE
 					JTextField emailTo = new JTextField();
 					JTextField contentTo = new JTextField();
@@ -129,6 +135,19 @@ public class WindowMessage {
 						}
 					} catch (Exception excep) {
 						System.out.println("Button cancel." + excep);
+					}
+					} else if(windowFrame.getTitle().equals("Twitter")) {
+						
+						Retweet rTwitter = new Retweet();
+						String infoRetweet = JOptionPane.showInputDialog(null, "Indique o conteúdo do Retweet:");
+						
+						int sucessOrInsucess = rTwitter.retweet("iscteiul", ReadXMLfile.userData[0], Long.valueOf(titleM.getText().split(" ")[1]), infoRetweet);
+						
+						if(sucessOrInsucess == 0) {
+							System.out.println("Correu tudo bem");
+						} else {
+							System.out.println("Correu tudo mal");
+						}
 					}
 				}
 		});
