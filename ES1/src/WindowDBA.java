@@ -35,6 +35,7 @@ public class WindowDBA {
 	// CONSTRUCTOR
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
+		genericMessages = new ArrayList<GenericMessage>();
 		startConfigWindow();
 		endConfigWindow();
 	}

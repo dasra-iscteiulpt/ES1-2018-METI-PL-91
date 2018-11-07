@@ -12,11 +12,15 @@ public class Retweet {
 
 	public static void main(String[] args) throws TwitterException, IOException {
 		//This data has to be read from the GUI
-		new Retweet().retweet("iscteiul", "dasra", Long.valueOf("978945191842340864"));
+		new Retweet().retweet("iscteiul", "dasra", Long.valueOf("1045712999103770625"), "Teste");
 	}
 
+	// CONSTRUCTOR
+	public Retweet() {
+
+	}
 	// Utility method to retweet ISCTE tweets 
-	public int retweet(String toUser, String fromUser, Long tweetId) {{
+	public int retweet(String toUser, String fromUser, Long tweetId, String comment) {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		r.validateUserTwitter(fromUser);
 		cb.setDebugEnabled(true)
@@ -32,7 +36,9 @@ public class Retweet {
 		twitter.setOAuthAccessToken(accessToken);
 
 		try {
-			twitter.retweetStatus(tweetId);
+			//twitter.retweetStatus(tweetId);
+			twitter.updateStatus(comment + " https://twitter.com/edent/status/" + tweetId);
+
 			System.out.println("Retweet successful");
 			return 0;
 		} catch (TwitterException te) {
@@ -41,7 +47,4 @@ public class Retweet {
 			return 1;
 		}
 	}
-	}
 }
-
-
