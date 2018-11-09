@@ -141,7 +141,7 @@ public class WindowDBA {
 	private void endConfigWindow() {
 		// CONFIGURAÇÃO WINDOW FRAME
 		windowFrame.setLocationRelativeTo(null);
-		windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		windowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		windowFrame.setResizable(false);
 		windowFrame.validate();
 		windowFrame.setVisible(true);
@@ -299,12 +299,13 @@ public class WindowDBA {
 	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
 		ReadEmails rMails = new ReadEmails();
 		ReadTweets rTweets = new ReadTweets();
-
+		ReadPosts rPosts = new ReadPosts();
+		
 		ArrayList<GenericMessage> messagesMail = GenericMessage.receiveMailReturnMessage(rMails.readMessages("imap.gmail.com", "imaps3", ReadXMLfile.userData[0], ReadXMLfile.userData[1]));
 		ArrayList<GenericMessage> messagesTwitter = GenericMessage.receiveTweetsReturnMessage(rTweets.readTweets("dasra"));
-		// ArrayList<GenericMessage> messagesFace = GenericMessage.receiveMailReturnMessage(listMail);
+		ArrayList<GenericMessage> messagesFacebook = GenericMessage.receivePostsReturnMessage(rPosts.readPosts("dasra"));
 		
-		fillOnTable(messagesMail, messagesTwitter);
+		fillOnTable(messagesMail, messagesTwitter, messagesFacebook);
 		indicatorFilters = genericMessages.size();
 		
 	}
@@ -570,10 +571,10 @@ public class WindowDBA {
 		}
 	}
 
-	private void fillOnTable(ArrayList<GenericMessage> gM1, ArrayList<GenericMessage> gM2) {
+	private void fillOnTable(ArrayList<GenericMessage> gMMail, ArrayList<GenericMessage> gMTwitter, ArrayList<GenericMessage> gMFacebook) {
 		int count = 1;
 		try {
-			for (GenericMessage genM: gM1) {
+			for (GenericMessage genM: gMMail) {
 				String dateM = genM.getDateM();
 				String channelM = genM.getCanalM();
 				String fromM = genM.getFromM();
@@ -584,7 +585,18 @@ public class WindowDBA {
 			    count++;
 			}
 			
-			for (GenericMessage genM: gM2) {
+			for (GenericMessage genM: gMTwitter) {
+				String dateM = genM.getDateM();
+				String channelM = genM.getCanalM();
+				String fromM = genM.getFromM();
+				String subjectM = genM.getTitleM();
+				String contentM = genM.getContentM();
+				genericMessages.add(genM);
+			    modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+			    count++;
+			}
+			
+			for (GenericMessage genM: gMFacebook) {
 				String dateM = genM.getDateM();
 				String channelM = genM.getCanalM();
 				String fromM = genM.getFromM();

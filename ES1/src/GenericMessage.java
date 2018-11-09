@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
+
+import com.restfb.types.Post;
 
 import twitter4j.Status;
 
@@ -34,7 +35,7 @@ public class GenericMessage {
 		for(Message mail: listMail) {
 			try {
 				dateM = sdf.format(mail.getReceivedDate());
-				canalM = "EM";
+				canalM = "E-Mail";
 				fromM = mail.getFrom()[0].toString();
 				titleM = mail.getSubject().toString();
 				contentM = ReadEmails.getBody(mail);
@@ -58,10 +59,34 @@ public class GenericMessage {
 		for(Status tweet: listTweets) {
 			try {
 				dateM = sdf.format(tweet.getCreatedAt());
-				canalM = "TW";
+				canalM = "Twitter";
 				fromM = tweet.getUser().getName();
-				titleM = "-----";
+				titleM = Long.toString(tweet.getId());
 				contentM = tweet.getText(); 
+				genMessage.add(new GenericMessage(dateM, canalM, fromM, titleM, contentM));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+		return genMessage;
+	}
+	
+	public static ArrayList<GenericMessage> receivePostsReturnMessage(List<Post> listPosts) {
+		ArrayList<GenericMessage> genMessage = new ArrayList<GenericMessage>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String dateM;
+		String canalM;
+		String fromM;
+		String titleM;
+		String contentM;
+		for(Post post: listPosts) {
+			try {
+				dateM = sdf.format(post.getCreatedTime());
+				canalM = "Facebook";
+				fromM = "Teste";
+				titleM = post.getId();
+				contentM = post.getMessage(); 
 				genMessage.add(new GenericMessage(dateM, canalM, fromM, titleM, contentM));
 			} catch (Exception e) {
 				e.printStackTrace();

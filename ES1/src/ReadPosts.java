@@ -7,11 +7,11 @@ import com.restfb.FacebookClient;
 import com.restfb.Version;
 import com.restfb.types.Post;
 
-public class ReadPostsFacebook {
+public class ReadPosts {
 
 	public static void main(String[] args) throws Exception {
 		//This data has to be read from the GUI
-		new ReadPostsFacebook().readPosts("dasra");
+		new ReadPosts().readPosts("dasra");
 	}
 
 	// Utility method to read posts that contain specific keywords 
@@ -51,4 +51,3 @@ public class ReadPostsFacebook {
 		return false;
 	}
 }
-

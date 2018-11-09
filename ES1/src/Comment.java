@@ -11,11 +11,11 @@ import com.restfb.types.Post;
 
 import twitter4j.TwitterException;
 
-public class SharePostFacebook { 
+public class Comment { 
 
 	public static void main(String[] args) throws TwitterException, IOException {
 		//This data has to be read from the GUI
-		new SharePostFacebook().sharePost(Long.valueOf("122067392127483"), "Teste");
+		new Comment().sharePost(Long.valueOf("122067392127483"), "Teste");
 	}
 
 	public int sharePost(Long postId, String comment) {

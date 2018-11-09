@@ -21,11 +21,9 @@ public class WindowRegister {
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
 	ReadXMLfile r = new ReadXMLfile();
-	private int tentativesLog;
 	
 	// CONSTRUTOR
 	public WindowRegister(JFrame windowLogin) {
-		tentativesLog = 0;
 		this.windowLogin = windowLogin;
 		windowRegister = new JFrame("Register");
 		configWindow();
@@ -75,7 +73,13 @@ public class WindowRegister {
 				JLabel labInfoEmail = new JLabel("E-mail: ");
 				JLabel labInfoEmailPw = new JLabel("E-mail pass: ");
 				JLabel labEmail = new JLabel("@iscte-iul.pt");
-				
+				JLabel labInfo1TokenT = new JLabel("   Token TW: ");
+				JLabel labInfo2TokenT = new JLabel("   Token TW: ");
+				JLabel labInfo3TokenT = new JLabel("   Token TW: ");
+				JLabel labInfo4TokenT = new JLabel("   Token TW: ");
+				JLabel labInfo1TokenF = new JLabel("    Token FB: ");
+				JLabel labInfo2TokenF = new JLabel("    Token FB: ");
+
 				JTextField userName = new JTextField();
 				userName.setPreferredSize(new Dimension(130,20));
 				
@@ -92,6 +96,36 @@ public class WindowRegister {
 				emailPassWord.setPreferredSize(new Dimension(210,20));
 				emailPassWord.setEditable(false);
 
+				JTextField oneTokenTwitter = new JTextField();
+				oneTokenTwitter.setText("dpthvBBPVVsWxWituNu1CBx9h");
+				oneTokenTwitter.setPreferredSize(new Dimension(210,20));
+				oneTokenTwitter.setEditable(false);
+				
+				JTextField twoTokenTwitter = new JTextField();
+				twoTokenTwitter.setText("Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W");
+				twoTokenTwitter.setPreferredSize(new Dimension(210,20));
+				twoTokenTwitter.setEditable(false);
+				
+				JTextField threeTokenTwitter = new JTextField();
+				threeTokenTwitter.setText(">1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B");
+				threeTokenTwitter.setPreferredSize(new Dimension(210,20));
+				threeTokenTwitter.setEditable(false);
+				
+				JTextField fourTokenTwitter = new JTextField();
+				fourTokenTwitter.setText("B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N");
+				fourTokenTwitter.setPreferredSize(new Dimension(210,20));
+				fourTokenTwitter.setEditable(false);
+				
+				JTextField oneTokenFacebook = new JTextField();
+				oneTokenFacebook.setText("");
+				oneTokenFacebook.setPreferredSize(new Dimension(210,20));
+				oneTokenFacebook.setEditable(false);
+				
+				JTextField twoTokenFacebook = new JTextField();
+				twoTokenFacebook.setText("");
+				twoTokenFacebook.setPreferredSize(new Dimension(210,20));
+				twoTokenFacebook.setEditable(false);
+								
 				JButton btNreg = new JButton("Register");
 				JButton btNcancel = new JButton("Cancel");
 
@@ -105,14 +139,26 @@ public class WindowRegister {
 				panelCenter.add(email);
 				panelCenter.add(labInfoEmailPw);
 				panelCenter.add(emailPassWord);
+				panelCenter.add(labInfo1TokenT);
+				panelCenter.add(oneTokenTwitter);
+				panelCenter.add(labInfo2TokenT);
+				panelCenter.add(twoTokenTwitter);
+				panelCenter.add(labInfo3TokenT);
+				panelCenter.add(threeTokenTwitter);
+				panelCenter.add(labInfo4TokenT);
+				panelCenter.add(fourTokenTwitter);
+				panelCenter.add(labInfo1TokenF);
+				panelCenter.add(oneTokenFacebook);
+				panelCenter.add(labInfo2TokenF);
+				panelCenter.add(twoTokenFacebook);
 
 				panels.get(0).add(btNreg);
 				panels.get(0).add(btNcancel);
 				
 				// CONFIGURAÇÃO WINDOW FRAME
-				windowRegister.setSize(320, 200);
+				windowRegister.setSize(320, 350);
 				windowRegister.setLocationRelativeTo(null);
-				windowRegister.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				windowRegister.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				windowRegister.setResizable(false);
 				windowRegister.validate();
 				windowRegister.setVisible(true);

@@ -32,6 +32,8 @@ public class WindowMessage {
 				sendM = new JButton("Reply");
 			} else if(canal.equals("Twitter")) {
 				sendM = new JButton("Retweet");
+			} else if(canal.equals("Facebook")) {
+				sendM = new JButton("Comment");
 			}
 			configWindow();
 			endConfigWindow();
@@ -137,16 +139,50 @@ public class WindowMessage {
 						System.out.println("Button cancel." + excep);
 					}
 					} else if(windowFrame.getTitle().equals("Twitter")) {
-						
-						Retweet rTwitter = new Retweet();
-						String infoRetweet = JOptionPane.showInputDialog(null, "Indique o conteúdo do Retweet:");
-						
-						int sucessOrInsucess = rTwitter.retweet("iscteiul", ReadXMLfile.userData[0], Long.valueOf(titleM.getText().split(" ")[1]), infoRetweet);
-						
-						if(sucessOrInsucess == 0) {
-							System.out.println("Correu tudo bem");
-						} else {
-							System.out.println("Correu tudo mal");
+						JTextField retweet = new JTextField();
+						Object[] f = {"Indique o conteúdo do Retweet:", retweet};
+						int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
+						String retweetText = retweet.getText().toString();
+
+						if(okOrCancel == JOptionPane.CANCEL_OPTION) {
+							windowFrame.setVisible(false);
+						} else {	
+							if(!retweetText.isEmpty()) {
+								Retweet rTwitter = new Retweet();
+								int sucessOrInsucess = rTwitter.retweet("iscteiul", ReadXMLfile.userData[0], Long.valueOf(titleM.getText().split(" ")[1]), retweetText);	
+								if(sucessOrInsucess == 0) {
+									JOptionPane.showMessageDialog(null, "Retweet realizado com sucesso.");
+									windowFrame.setVisible(false);
+								} else {
+									JOptionPane.showMessageDialog(null, "Ocorreu um erro no retweet. Tente novamente.");
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "Campos por preencher");
+								sendM.doClick();
+							}
+						}
+					} else if(windowFrame.getTitle().equals("Facebook")) {
+						JTextField comment = new JTextField();
+						Object[] f = {"Indique o conteúdo do Comentário:", comment};
+						int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
+						String commentText = comment.getText().toString();
+
+						if(okOrCancel == JOptionPane.CANCEL_OPTION) {
+							windowFrame.setVisible(false);
+						} else {	
+							if(!commentText.isEmpty()) {
+								Comment commentFace = new Comment();
+								int sucessOrInsucess = commentFace.sharePost(Long.valueOf("11"), "");
+								if(sucessOrInsucess == 0) {
+									JOptionPane.showMessageDialog(null, "Comentário realizado com sucesso.");
+									windowFrame.setVisible(false);
+								} else {
+									JOptionPane.showMessageDialog(null, "Ocorreu um erro no comentário. Tente novamente.");
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "Campos por preencher");
+								sendM.doClick();
+							}
 						}
 					}
 				}
