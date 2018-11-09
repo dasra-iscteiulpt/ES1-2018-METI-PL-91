@@ -99,7 +99,7 @@ public class ReadEmails {
 			s=m.getSubject();
 		return s;	
 	}
-
+	
 	// METHODS UNDER CONSTRUCTION - JAVADOC TO BE DONE
 	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException{
 		String body = "";

@@ -19,11 +19,6 @@ public class ReadTweets {
 		new ReadTweets().readTweets("dasra");
 	}
 
-	// CONSTRUCTOR
-	public ReadTweets() {
-
-	}
-	
 	// Utility method to read ISCTE tweets that contain specific keywords 
 	public ArrayList<Status> readTweets(String username){
 		ArrayList<Status> twitterStatus = new ArrayList<Status>();
