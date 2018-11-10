@@ -21,6 +21,7 @@ public class ReadXMLfile {
 	List<Attributes> filtersList = new ArrayList<Attributes>();
 	static String[] userData = new String[2];
 	static String[] twitterData = new String[4];
+	static String facebookData = new String();
 	static ReadEmails r = new ReadEmails();
 
 	// CONSTRUCTOR
@@ -103,6 +104,7 @@ public class ReadXMLfile {
 			user.setOAuthConsumerSecret(getTagValue("OAuthConsumerSecret", element));
 			user.setOAuthAccessToken(getTagValue("OAuthAccessToken", element));
 			user.setOAuthAccessTokenSecret(getTagValue("OAuthAccessTokenSecret", element));
+			user.setUserAccessToken(getTagValue("userAccessToken", element));
 		}
 		return user;
 	}
@@ -138,8 +140,8 @@ public class ReadXMLfile {
 			em = usersList.get(i).getEmail();
 			pwe = usersList.get(i).getPasswordEmail();
 			if(user.equals(username) & pw.equals(password)){
-				userData[0]=em;
-				userData[1]=pwe;
+				userData[0] = em;
+				userData[1] = pwe;
 				return true;
 			}
 		}
@@ -161,10 +163,26 @@ public class ReadXMLfile {
 			AuthAccessToken = usersList.get(i).getOAuthAccessToken();
 			OAuthAccessTokenSecret = usersList.get(i).getOAuthAccessTokenSecret();
 			if(user.equals(username)){
-				twitterData[0]=OAuthConsumerKey;
-				twitterData[1]=OAuthConsumerSecret;
-				twitterData[2]=AuthAccessToken;
-				twitterData[3]=OAuthAccessTokenSecret;
+				twitterData[0] = OAuthConsumerKey;
+				twitterData[1] = OAuthConsumerSecret;
+				twitterData[2] = AuthAccessToken;
+				twitterData[3] = OAuthAccessTokenSecret;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean validateUserFacebook(String username) {
+		readUsersXMLfile();
+		String user = new String();
+		String userAccessToken = new String();
+		for (int i=0;i < usersList.size();i++)
+		{
+			user = usersList.get(i).getUsername();
+			userAccessToken = usersList.get(i).getUserAccessToken();
+			if(user.equals(username)){
+				facebookData = userAccessToken;
 				return true;
 			}
 		}

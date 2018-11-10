@@ -1,14 +1,24 @@
 package bda;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
+import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Post;
 
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+
 public class ReadPosts {
+
+	private static ReadXMLfile r = new ReadXMLfile();
 
 	public static void main(String[] args) throws Exception {
 		//This data has to be read from the GUI
@@ -17,12 +27,15 @@ public class ReadPosts {
 
 	// Utility method to read posts that contain specific keywords 
 	public ArrayList<Post> readPosts(String username){
-
-		FacebookClient fbClient = new DefaultFacebookClient("EAAgq4lhYUWYBAAXNa26kJl11NBPtOLllQrHxq6b1WhmT78hOsiFnoBfccD6Q71NEM4ZATBZCiuu6MEg47HZAzxFLocvTbJSWASWnvbKbLgGFJ4eYp6SQ9EgxZAonJBBYJ8I3sdRyhCeZBad7H9Gq7zB9cWC1Vm443XDxVvJukrTWtgqZBzOMXi", Version.VERSION_2_12);
+		r.validateUserFacebook(username);
+		String s= ReadXMLfile.facebookData;
+		FacebookClient fbClient = new DefaultFacebookClient(ReadXMLfile.facebookData, Version.VERSION_2_12);
 		// Connections support paging and are iterable
-		Connection<Post> myFeed = fbClient.fetchConnection("me/feed", Post.class);
-		
+		Connection<Post> myFeed = fbClient.fetchConnection("me/feed", Post.class, Parameter.with("limit",10));
 		ArrayList<Post> fbPosts = new ArrayList<Post>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		List<Attributes> filtersList = new ArrayList<Attributes>();
+		filtersList = r.readFiltersXMLfile("config.xml");	
 		
 		// Iterate over the feed to access the particular pages
 		for (List<Post> myFeedPage : myFeed) {
@@ -30,10 +43,10 @@ public class ReadPosts {
 			for (Post post : myFeedPage) {
 				// Filters only posts that contain the keyword
 				if(post.getMessage() != null) {
-					if (post.getMessage().toLowerCase().contains("mestrado") || post.getMessage().toLowerCase().contains("iscte")) {
+					if (keywordValidation(post.getMessage(), filtersList)) {
 						fbPosts.add(post);
 						System.out.println("---- Post ----");
-						System.out.println("Message: "+ post.getMessage() + System.lineSeparator() + "Id : " + post.getId() + System.lineSeparator() + "Created at : " + post.getCreatedTime());
+						System.out.println("Message: "+ post.getMessage() + System.lineSeparator() + "Id : " + post.getId() + System.lineSeparator() + "Created at : " + sdf.format(post.getCreatedTime()));
 					}
 				}
 			}
@@ -49,6 +62,6 @@ public class ReadPosts {
 				return true; 
 			}
 		}
-		return false;
+		return false; 
 	}
 }

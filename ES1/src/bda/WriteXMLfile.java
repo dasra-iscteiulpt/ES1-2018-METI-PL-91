@@ -27,11 +27,12 @@ public class WriteXMLfile {
 		setupFile();
 
 		//These data have to be read from the data entered in the GUI
-		addUser("dasra", "dasra123", "diana.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N");
-		addUser("rjfae1", "rjfae123", "ricardo.f.es.pl.91@gmail.com", "engenhariasoftware", "DF5DCJ5FACNHxE1tLXZwU6Psb", "IPezOOcIibcLbdGextZlwPrV86f19BuBz4ltTVh2Ki9XSr3X4L", "1056591307521646593-dBBRKbiDGKn7CDqI9x0uu34FybAWeA", "lQfqJuHcliUr0iQdMHh11M8IJMFUW0WBwc898ePUZNaHb");
+		addUser("dasra", "dasra123", "diana.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N", "EAADpFZBDLw5QBAEMZBmYZBMBNjX0yOnpVO2VABZCRXx7gNgZCNx5IBi3HBTCobiQ0nfiYnZAJzmY5kKxeftI5ZCRO1y6xw92l9ozlnZBC3pLF9ZCsJEmK8wRMIS77O0iMLjySJwG0Pgo54vvFIdm5zo7QrrsHK63qSmRypyAW9d5vMBYVVNqZBQ0kF");
+		addUser("rjfae1", "rjfae123", "ricardo.f.es.pl.91@gmail.com", "engenhariasoftware", "DF5DCJ5FACNHxE1tLXZwU6Psb", "IPezOOcIibcLbdGextZlwPrV86f19BuBz4ltTVh2Ki9XSr3X4L", "1056591307521646593-dBBRKbiDGKn7CDqI9x0uu34FybAWeA", "lQfqJuHcliUr0iQdMHh11M8IJMFUW0WBwc898ePUZNaHb", "EAAgq4lhYUWYBAAXNa26kJl11NBPtOLllQrHxq6b1WhmT78hOsiFnoBfccD6Q71NEM4ZATBZCiuu6MEg47HZAzxFLocvTbJSWASWnvbKbLgGFJ4eYp6SQ9EgxZAonJBBYJ8I3sdRyhCeZBad7H9Gq7zB9cWC1Vm443XDxVvJukrTWtgqZBzOMXi");
 		//These data have to be read from the data entered in the GUI	
 		addFilter("tecnologia");
 		addFilter("biblioteca");
+		addFilter("mestrado");
 
 		//removeUser("rjfae1");
 		//removeFilter("iscte");
@@ -56,7 +57,7 @@ public class WriteXMLfile {
 			doc.appendChild(userElement);
 
 			// Add the new user and filter nodes
-			userElement.appendChild(createUserBDA(doc, "iccco", "iccco123", "ivo.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N"));
+			userElement.appendChild(createUserBDA(doc, "iccco", "iccco123", "ivo.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N", "EAAgq4lhYUWYBAAXNa26kJl11NBPtOLllQrHxq6b1WhmT78hOsiFnoBfccD6Q71NEM4ZATBZCiuu6MEg47HZAzxFLocvTbJSWASWnvbKbLgGFJ4eYp6SQ9EgxZAonJBBYJ8I3sdRyhCeZBad7H9Gq7zB9cWC1Vm443XDxVvJukrTWtgqZBzOMXi"));
 			//userElement.appendChild(createFilter(doc,"iscte"));
 			userElement.appendChild(createFilter(doc,"aula"));
 			userElement.appendChild(createFilter(doc,"universidade"));
@@ -79,7 +80,7 @@ public class WriteXMLfile {
 	}
 
 	// Utility method to add an user to an existing XML file
-	private static void addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret){
+	private static void addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken){
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -96,7 +97,7 @@ public class WriteXMLfile {
 			// Add the new root node
 			Node copy = doc.importNode(existingdoc.getDocumentElement(), true);
 			doc.appendChild(copy);
-			copy.appendChild(createUserBDA(doc, username, password, email, passwordEmail, OAuthConsumerKey, OAuthConsumerSecret, OAuthAccessToken, OAuthAccessTokenSecret));
+			copy.appendChild(createUserBDA(doc, username, password, email, passwordEmail, OAuthConsumerKey, OAuthConsumerSecret, OAuthAccessToken, OAuthAccessTokenSecret, userAccessToken));
 
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
@@ -280,7 +281,7 @@ public class WriteXMLfile {
 	}
 
 	// Utility method to create a user
-	private static Node createUserBDA(Document doc, String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret) {
+	private static Node createUserBDA(Document doc, String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken) {
 		Element user = doc.createElement("User");
 
 		// Set id attribute
@@ -309,6 +310,9 @@ public class WriteXMLfile {
 
 		// Create OAuthAccessTokenSecret element
 		user.appendChild(getUserElements(doc, user, "OAuthAccessTokenSecret", OAuthAccessTokenSecret));
+
+		// Create userAccessToken element
+		user.appendChild(getUserElements(doc, user, "userAccessToken", userAccessToken));
 
 		return user;
 	}
