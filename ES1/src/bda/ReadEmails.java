@@ -32,6 +32,7 @@ public class ReadEmails {
 	 * @param password is the access data to the email
 	 * @return An array with all academic messages
 	 */
+	
 	public ArrayList<Message> readMessages(String imapHost, String storeType, String user, String password) {
 		ArrayList<Message> m = new ArrayList<Message>();
 		try {
@@ -73,7 +74,7 @@ public class ReadEmails {
 	}
 
 	/** 
-	 * Check for academic key words
+	 * Check for academic key words in the email
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September 
@@ -82,6 +83,7 @@ public class ReadEmails {
 	 * @param list, is the list with keywords
 	 * @return True if the message contains academic keywords
 	 */
+	
 	public static boolean keywordValidation(String body, String subject, List<Attributes> list) {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {
@@ -93,15 +95,15 @@ public class ReadEmails {
 		return false; 
 	}
 
+	//METHOD TO GET THE SUBJECT OF THE EMAIL
 	public static String getSubject(Message m) throws Exception {
-		// SUBJECT
 		String s="";
 		if (m.getSubject() != null)
 			s=m.getSubject();
 		return s;	
 	}
 	
-	// METHODS UNDER CONSTRUCTION - JAVADOC TO BE DONE
+	//METHOD TO GET TEXT OF THE EMAIL IF THE TYPE IS MIME MILTIPART
 	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException{
 		String body = "";
 		int count = mimeMultipart.getCount();
@@ -110,7 +112,7 @@ public class ReadEmails {
 			BodyPart bodyPart = mimeMultipart.getBodyPart(i);
 			if (bodyPart.isMimeType("text/plain")) {
 				body = body + "\n" + bodyPart.getContent();
-				break; // without break same text appears twice in my tests
+				break; 
 			} else if (bodyPart.isMimeType("text/html")) {
 				String html = (String) bodyPart.getContent();
 				body= body + "\n" + org.jsoup.Jsoup.parse(html).text();
@@ -121,6 +123,7 @@ public class ReadEmails {
 		return body;
 	}
 
+	//METHOD TO GET TEXT FROM THE BODY OF EMAIL
 	public static String getBody(Message m) throws Exception {
 		String body = "";
 		if (m.isMimeType("text/plain")) {

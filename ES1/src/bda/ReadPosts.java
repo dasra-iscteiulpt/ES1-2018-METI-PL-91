@@ -10,27 +10,16 @@ import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Post;
 
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
-
 /** 
-* Read Facebook Posts
-* @author GROUP 91
-* @version 1.0
-* @since September 2018
-*/
+ * Read Facebook Posts
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
 
 public class ReadPosts {
 
 	private static ReadXMLfile r = new ReadXMLfile();
-
-	public static void main(String[] args) throws Exception {
-		//This data has to be read from the GUI
-		new ReadPosts().readPosts("dasra");
-	}
 
 	/**
 	 * Utility method to read posts that contain specific keywords 
@@ -39,7 +28,6 @@ public class ReadPosts {
 	 */
 	public ArrayList<Post> readPosts(String username){
 		r.validateUserFacebook(username);
-		String s= ReadXMLfile.facebookData;
 		FacebookClient fbClient = new DefaultFacebookClient(ReadXMLfile.facebookData, Version.VERSION_2_12);
 		// Connections support paging and are iterable
 		Connection<Post> myFeed = fbClient.fetchConnection("me/feed", Post.class, Parameter.with("limit",10));
@@ -47,7 +35,7 @@ public class ReadPosts {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		List<Attributes> filtersList = new ArrayList<Attributes>();
 		filtersList = r.readFiltersXMLfile("config.xml");	
-		
+
 		// Iterate over the feed to access the particular pages
 		for (List<Post> myFeedPage : myFeed) {
 			// Iterate over the list of contained data to access the individual object
@@ -65,6 +53,15 @@ public class ReadPosts {
 		return fbPosts;	
 	}
 
+	/** 
+	 * Check for academic key words in the post
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param keyword, is the post message
+	 * @param list, is the list with keywords
+	 * @return True if the post contains academic keywords
+	 */
 	public static boolean keywordValidation(String keyword, List<Attributes> list) {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {

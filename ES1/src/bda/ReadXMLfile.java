@@ -19,7 +19,7 @@ public class ReadXMLfile {
 	// VARIABLES
 	static List<Attributes> usersList = new ArrayList<Attributes>();
 	List<Attributes> filtersList = new ArrayList<Attributes>();
-	static String[] userData = new String[2];
+	static String[] userData = new String[3];
 	static String[] twitterData = new String[4];
 	static String facebookData = new String();
 	static ReadEmails r = new ReadEmails();
@@ -126,7 +126,7 @@ public class ReadXMLfile {
 		return node.getNodeValue();
 	}
 
-	// Validates if the user and password introduced are in the XML file and if the login type (service) is "BDA"
+	// Validates if the user and password introduced are in the XML file and setup the user data configuration
 	public boolean validateUserBDA(String username, String password) {
 		readUsersXMLfile();
 		String user = new String();
@@ -142,12 +142,14 @@ public class ReadXMLfile {
 			if(user.equals(username) & pw.equals(password)){
 				userData[0] = em;
 				userData[1] = pwe;
+				userData[2] = user;
 				return true;
 			}
 		}
 		return false;
 	}
-
+	
+	// Validates if the user is in the XML file  and setup the twitter data configuration
 	public boolean validateUserTwitter(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -173,6 +175,7 @@ public class ReadXMLfile {
 		return false;
 	}
 
+	// Validates if the user is in the XML file and setup the facebook data configuration
 	public boolean validateUserFacebook(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -189,6 +192,7 @@ public class ReadXMLfile {
 		return false;
 	}
 	
+	// Method to setup the user data configuration
 	public boolean setupRegister(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -224,6 +228,7 @@ public class ReadXMLfile {
 		return false;
 	}
 	
+	// Validates if a user already exists in the XML file
 	public boolean validateUserRegister(String username) {
 		readUsersXMLfile();
 		String user = new String();

@@ -17,13 +17,13 @@ import javax.swing.JTextField;
 
 public class WindowLogin {
 
-	// ATRIBUTOS
+	// VARIABLES
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
 	ReadXMLfile r = new ReadXMLfile();
 	private int tentativesLog;
 	
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	public WindowLogin(String title) {
 		tentativesLog = 0;
 		windowLogin = new JFrame(title);
@@ -39,7 +39,7 @@ public class WindowLogin {
 		return panels;
 	}
 
-	// MÉTODOS AUXILIARES
+	//AUXILIARY METHODS
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -56,18 +56,18 @@ public class WindowLogin {
 	*/
 	private void configWindow() {
 		addPanels();
-		// CONFIGURAÇÃO JPANEL NA WINDOWLOGIN
+		// JPANEL CONFIGURATION IN THE WINDOWLOGIN
 		windowLogin.add(panels.get(0), BorderLayout.SOUTH);
 		windowLogin.add(panels.get(1), BorderLayout.WEST);
 		windowLogin.add(panels.get(2), BorderLayout.EAST);
 		windowLogin.add(panels.get(3), BorderLayout.NORTH);
 
-		// CONFIGURAÇÃO DOS COMPONENTES
+		// COMPONENTS CONFIGURATION
 		JPanel panelCenter = new JPanel(new FlowLayout());
 		windowLogin.add(panelCenter);
 		
-		JLabel labInfoLog = new JLabel("Está registado? Se sim, introduza os dados de acesso.");
-		JLabel labInfoRegister = new JLabel("Se ainda não está registado, faça já o seu registo.");
+		JLabel labInfoLog = new JLabel("Do you have an account? Please login.");
+		JLabel labInfoRegister = new JLabel("Not registered? Please sign up.");
 		
 		JLabel labInfoUser = new JLabel("Username: ");
 		JLabel labInfoPw = new JLabel("Password: ");
@@ -106,7 +106,6 @@ public class WindowLogin {
                 passWord.setText("");
             }
         });
-           
         
 		// CLICK ON BUTTON REGISTER
 		btNreg.addActionListener(new ActionListener() {
@@ -123,7 +122,7 @@ public class WindowLogin {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "There are fields to fill.");
+					JOptionPane.showMessageDialog(null, "There are empty fields.");
 				} else {
 					// CASO USER E PASSWORD CONSTEM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
 					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
@@ -152,5 +151,4 @@ public class WindowLogin {
 		windowLogin.validate();
 		windowLogin.setVisible(true);
 	}
-
 }

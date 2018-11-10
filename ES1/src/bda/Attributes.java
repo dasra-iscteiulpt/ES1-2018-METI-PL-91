@@ -1,7 +1,7 @@
 package bda;
 
 public class Attributes {
-	
+
 	private String email;
 	private String username;
 	private String password;
@@ -12,7 +12,7 @@ public class Attributes {
 	private String OAuthAccessToken;
 	private String OAuthAccessTokenSecret;
 	private String userAccessToken;
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -31,7 +31,7 @@ public class Attributes {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getKeyword() {
 		return keyword;
 	}
@@ -68,7 +68,6 @@ public class Attributes {
 	public void setOAuthAccessTokenSecret(String OAuthAccessTokenSecret) {
 		this.OAuthAccessTokenSecret = OAuthAccessTokenSecret;
 	}
-	
 	public String getUserAccessToken() {
 		return userAccessToken;
 	}

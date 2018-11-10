@@ -1,9 +1,7 @@
 package bda;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import twitter4j.Paging;
 import twitter4j.Status;
@@ -22,11 +20,6 @@ import twitter4j.conf.ConfigurationBuilder;
 public class ReadTweets {
 
 	private static ReadXMLfile r = new ReadXMLfile();
-
-	public static void main(String[] args) throws TwitterException, IOException {
-		//This data has to be read from the GUI
-		new ReadTweets().readTweets("dasra");
-	}
 
 	/**
 	 * Utility method to read ISCTE tweets that contain specific keywords
@@ -63,6 +56,16 @@ public class ReadTweets {
 		}
 		return twitterStatus;
 	}
+	
+	/** 
+	 * Check for academic key words in the tweet
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param keyword, is the tweet text
+	 * @param list, is the list with keywords
+	 * @return True if the post contains academic keywords
+	 */
 	public static boolean keywordValidation(String keyword, List<Attributes> list) {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {

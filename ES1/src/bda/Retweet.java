@@ -1,6 +1,4 @@
 package bda;
-import java.io.IOException;
-
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -18,13 +16,8 @@ public class Retweet {
 
 	private static ReadXMLfile r = new ReadXMLfile();
 
-	public static void main(String[] args) throws TwitterException, IOException {
-		//This data has to be read from the GUI
-		new Retweet().retweet("iscteiul", "dasra", Long.valueOf("978945191842340864"));
-	}
-
 	/**
-	 * Utility method to retweet ISCTE tweets
+	 * Utility method to retweet to ISCTE tweets
 	 * @param toUser 
 	 * @param fromUser
 	 * @param tweetId

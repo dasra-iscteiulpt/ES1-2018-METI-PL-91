@@ -16,7 +16,7 @@ public class SendEmail {
 	}
 	
 	/** 
- 	* Send E-mails
+ 	* Reply to email
 	* @author GROUP 91
 	* @version 1.0
 	* @since September 
