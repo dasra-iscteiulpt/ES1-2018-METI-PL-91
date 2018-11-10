@@ -79,8 +79,9 @@ public class WindowRegister {
 				JLabel labInfo3TokenT = new JLabel("   Token TW: ");
 				JLabel labInfo4TokenT = new JLabel("   Token TW: ");
 				JLabel labInfo1TokenF = new JLabel("    Token FB: ");
-				JLabel labInfo2TokenF = new JLabel("    Token FB: ");
 
+				r.setupRegister("dasra");
+				
 				JTextField userName = new JTextField();
 				userName.setPreferredSize(new Dimension(130,20));
 				
@@ -88,45 +89,40 @@ public class WindowRegister {
 				passWord.setPreferredSize(new Dimension(204,20));
 
 				JTextField email = new JTextField();
-				email.setText("diana.es.pl.91@gmail.com");
+				email.setText(ReadXMLfile.userData[0]);
 				email.setPreferredSize(new Dimension(180,20));
 				email.setEditable(false);
 				
 				JPasswordField emailPassWord = new JPasswordField();
-				emailPassWord.setText("engenhariasoftware");
+				emailPassWord.setText(ReadXMLfile.userData[1]);
 				emailPassWord.setPreferredSize(new Dimension(210,20));
 				emailPassWord.setEditable(false);
 
 				JTextField oneTokenTwitter = new JTextField();
-				oneTokenTwitter.setText("dpthvBBPVVsWxWituNu1CBx9h");
+				oneTokenTwitter.setText(ReadXMLfile.twitterData[0]);
 				oneTokenTwitter.setPreferredSize(new Dimension(210,20));
 				oneTokenTwitter.setEditable(false);
 				
 				JTextField twoTokenTwitter = new JTextField();
-				twoTokenTwitter.setText("Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W");
+				twoTokenTwitter.setText(ReadXMLfile.twitterData[1]);
 				twoTokenTwitter.setPreferredSize(new Dimension(210,20));
 				twoTokenTwitter.setEditable(false);
 				
 				JTextField threeTokenTwitter = new JTextField();
-				threeTokenTwitter.setText(">1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B");
+				threeTokenTwitter.setText(ReadXMLfile.twitterData[2]);
 				threeTokenTwitter.setPreferredSize(new Dimension(210,20));
 				threeTokenTwitter.setEditable(false);
 				
 				JTextField fourTokenTwitter = new JTextField();
-				fourTokenTwitter.setText("B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N");
+				fourTokenTwitter.setText(ReadXMLfile.twitterData[3]);
 				fourTokenTwitter.setPreferredSize(new Dimension(210,20));
 				fourTokenTwitter.setEditable(false);
 				
 				JTextField oneTokenFacebook = new JTextField();
-				oneTokenFacebook.setText("");
+				oneTokenFacebook.setText(ReadXMLfile.facebookData);
 				oneTokenFacebook.setPreferredSize(new Dimension(210,20));
 				oneTokenFacebook.setEditable(false);
 				
-				JTextField twoTokenFacebook = new JTextField();
-				twoTokenFacebook.setText("");
-				twoTokenFacebook.setPreferredSize(new Dimension(210,20));
-				twoTokenFacebook.setEditable(false);
-								
 				JButton btNreg = new JButton("Register");
 				JButton btNcancel = new JButton("Cancel");
 
@@ -150,8 +146,6 @@ public class WindowRegister {
 				panelCenter.add(fourTokenTwitter);
 				panelCenter.add(labInfo1TokenF);
 				panelCenter.add(oneTokenFacebook);
-				panelCenter.add(labInfo2TokenF);
-				panelCenter.add(twoTokenFacebook);
 
 				panels.get(0).add(btNreg);
 				panels.get(0).add(btNcancel);
@@ -184,11 +178,12 @@ public class WindowRegister {
 						if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty() || email.getText().isEmpty() || emailPassWord.getText().toString().isEmpty() ) {
 							JOptionPane.showMessageDialog(null, "There are fields to fill.");
 						} else {
-							// if() { // CASO USER NÃO EXISTE NO XML
-							
-							// } else {
-								JOptionPane.showMessageDialog(null, "User já existente no sistema.");
-							// }
+							if(r.validateUserRegister(userName.getText().trim())== true) { // CASO USER EXISTA NO XML
+								JOptionPane.showMessageDialog(null, "User já existente no sistema. Por favor tente novamente.");
+							} else {
+								WriteXMLfile.addUser(userName.getText().trim(), passWord.getText().trim(), email.getText().trim(), emailPassWord.getText().trim(), oneTokenTwitter.getText().trim(), twoTokenTwitter.getText().trim(), threeTokenTwitter.getText().trim(), fourTokenTwitter.getText().trim(), oneTokenFacebook.getText().trim());
+								JOptionPane.showMessageDialog(null, "Registo efectuado com sucesso");
+							}
 						}
 						windowRegister.setVisible(false);
 						windowLogin.setVisible(true);
@@ -202,11 +197,9 @@ public class WindowRegister {
 						windowLogin.setVisible(true);
 					}
 				});
-				
 	}
 	
 	public JFrame getWindowFrame() {
 		return windowRegister;
 	}
-
 }

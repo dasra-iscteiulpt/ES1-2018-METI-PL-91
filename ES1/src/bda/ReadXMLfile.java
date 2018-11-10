@@ -23,7 +23,7 @@ public class ReadXMLfile {
 	static String[] twitterData = new String[4];
 	static String facebookData = new String();
 	static ReadEmails r = new ReadEmails();
-
+	
 	// CONSTRUCTOR
 	public ReadXMLfile() {
 
@@ -172,7 +172,7 @@ public class ReadXMLfile {
 		}
 		return false;
 	}
-	
+
 	public boolean validateUserFacebook(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -183,6 +183,54 @@ public class ReadXMLfile {
 			userAccessToken = usersList.get(i).getUserAccessToken();
 			if(user.equals(username)){
 				facebookData = userAccessToken;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean setupRegister(String username) {
+		readUsersXMLfile();
+		String user = new String();
+		String em = new String();
+		String pwe = new String();
+		String OAuthConsumerKey = new String();
+		String OAuthConsumerSecret = new String();
+		String AuthAccessToken = new String();
+		String OAuthAccessTokenSecret = new String();
+		String userAccessToken = new String();
+
+		for (int i=0;i < usersList.size();i++)
+		{
+			user = usersList.get(i).getUsername();
+			em = usersList.get(i).getEmail();
+			pwe = usersList.get(i).getPasswordEmail();
+			OAuthConsumerKey = usersList.get(i).getOAuthConsumerKey();
+			OAuthConsumerSecret = usersList.get(i).getOAuthConsumerSecret();
+			AuthAccessToken = usersList.get(i).getOAuthAccessToken();
+			OAuthAccessTokenSecret = usersList.get(i).getOAuthAccessTokenSecret();
+			userAccessToken = usersList.get(i).getUserAccessToken();
+			if(user.equals(username)){
+				userData[0] = em;
+				userData[1] = pwe;
+				twitterData[0] = OAuthConsumerKey;
+				twitterData[1] = OAuthConsumerSecret;
+				twitterData[2] = AuthAccessToken;
+				twitterData[3] = OAuthAccessTokenSecret;
+				facebookData = userAccessToken;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean validateUserRegister(String username) {
+		readUsersXMLfile();
+		String user = new String();
+		for (int i=0;i < usersList.size();i++)
+		{
+			user = usersList.get(i).getUsername();
+			if(user.equals(username)){
 				return true;
 			}
 		}

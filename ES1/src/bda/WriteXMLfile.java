@@ -33,7 +33,7 @@ public class WriteXMLfile {
 		addFilter("tecnologia");
 		addFilter("biblioteca");
 		addFilter("mestrado");
-
+		removeUser("teste");
 		//removeUser("rjfae1");
 		//removeFilter("iscte");
 
@@ -80,7 +80,7 @@ public class WriteXMLfile {
 	}
 
 	// Utility method to add an user to an existing XML file
-	private static void addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken){
+	public static void addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken){
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
