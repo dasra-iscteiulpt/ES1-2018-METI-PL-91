@@ -12,6 +12,13 @@ import com.restfb.types.Post;
 
 import twitter4j.TwitterException;
 
+/** 
+* Comment
+* @author GROUP 91
+* @version 1.0
+* @since September 2018
+*/
+
 public class Comment { 
 
 	public static void main(String[] args) throws TwitterException, IOException {

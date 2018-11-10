@@ -7,6 +7,13 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
+/** 
+* Response to a specific tweet message
+* @author GROUP 91
+* @version 1.0
+* @since September 2018
+*/
+
 public class Retweet {
 
 	private static ReadXMLfile r = new ReadXMLfile();
@@ -16,7 +23,13 @@ public class Retweet {
 		new Retweet().retweet("iscteiul", "dasra", Long.valueOf("978945191842340864"));
 	}
 
-	// Utility method to retweet ISCTE tweets 
+	/**
+	 * Utility method to retweet ISCTE tweets
+	 * @param toUser 
+	 * @param fromUser
+	 * @param tweetId
+	 * @return int, 0 = successful, 1 = failed
+	 */
 	public int retweet(String toUser, String fromUser, Long tweetId) {{
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		r.validateUserTwitter(fromUser);

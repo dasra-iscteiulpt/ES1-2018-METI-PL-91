@@ -16,6 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+/** 
+* Registration window for new users
+* @author GROUP 91
+* @version 1.0
+* @since September 2018
+*/
+
 public class WindowRegister {
 	// ATRIBUTOS
 	private JFrame windowRegister;
@@ -50,9 +57,6 @@ public class WindowRegister {
 
 	/** 
 	* Construction of the main window structure
-	* @author GROUP 91
-	* @version 1.0
-	* @since September
 	*/
 	private void configWindow() {
 		addPanels();

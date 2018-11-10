@@ -16,6 +16,13 @@ import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+/** 
+* Read Facebook Posts
+* @author GROUP 91
+* @version 1.0
+* @since September 2018
+*/
+
 public class ReadPosts {
 
 	private static ReadXMLfile r = new ReadXMLfile();
@@ -25,7 +32,11 @@ public class ReadPosts {
 		new ReadPosts().readPosts("dasra");
 	}
 
-	// Utility method to read posts that contain specific keywords 
+	/**
+	 * Utility method to read posts that contain specific keywords 
+	 * @param username
+	 * @return fbPosts, ArrayList of Post
+	 */
 	public ArrayList<Post> readPosts(String username){
 		r.validateUserFacebook(username);
 		String s= ReadXMLfile.facebookData;

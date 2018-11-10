@@ -12,6 +12,13 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+/** 
+* Reads Tweets
+* @author GROUP 91
+* @version 1.0
+* @since September 2018
+*/
+
 public class ReadTweets {
 
 	private static ReadXMLfile r = new ReadXMLfile();
@@ -21,7 +28,11 @@ public class ReadTweets {
 		new ReadTweets().readTweets("dasra");
 	}
 
-	// Utility method to read ISCTE tweets that contain specific keywords 
+	/**
+	 * Utility method to read ISCTE tweets that contain specific keywords
+	 * @param username 
+	 * @return ArrayList<Status>
+	 */
 	public ArrayList<Status> readTweets(String username){
 		ArrayList<Status> twitterStatus = new ArrayList<Status>();
 		r.validateUserTwitter(username);
