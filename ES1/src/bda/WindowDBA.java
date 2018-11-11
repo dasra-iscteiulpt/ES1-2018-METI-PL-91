@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 
 import java.awt.BorderLayout;
-
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -31,7 +31,8 @@ import java.util.Date;
 import javax.swing.JPanel;
 
 import javax.swing.ButtonGroup;
-
+import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 
 import javax.swing.JTable;
@@ -41,7 +42,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 import javax.swing.JRadioButton;
-
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JMenuBar;
 
 import javax.swing.JMenuItem;
@@ -54,9 +55,12 @@ public class WindowDBA {
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
 	private ArrayList<GenericMessage> genericMessages;
+	private ArrayList<GenericMessage> messagesMail;
+	private ArrayList<GenericMessage> messagesTwitter;
+	private ArrayList<GenericMessage> messagesFacebook;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
-
+	
 	// CONSTRUCTOR
 	public WindowDBA(String title) {
 		windowFrame = new JFrame(title);
@@ -101,30 +105,47 @@ public class WindowDBA {
 		// MENU CONFIGURATION
 		JMenuBar generalMenu = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
-		JMenu editMenu = new JMenu("Sort");
+		JMenu sortMenu = new JMenu("Sort");
+		JMenu filterMenu = new JMenu("Filters");
+		JMenu servicesMenu = new JMenu("Services");
 		JMenu aboutMenu = new JMenu("More");
 		JMenuItem workOnline = new JMenuItem("Work online");
 		workOnline.setEnabled(false);
 		JMenuItem workOffline = new JMenuItem("Work offline");
 		JMenuItem exit = new JMenuItem("Exit");
-		JMenuItem newest = new JMenuItem("Newest");
-		JMenuItem oldest = new JMenuItem("Oldest");
+		JRadioButtonMenuItem newest = new JRadioButtonMenuItem("Newest");
+		JRadioButtonMenuItem oldest = new JRadioButtonMenuItem("Oldest");
+		JMenuItem addFilter = new JMenuItem("Add");
+		JMenuItem removeFilter = new JMenuItem("Remove");
+		JCheckBoxMenuItem chkboxMail = new JCheckBoxMenuItem("E-Mail");
+		JCheckBoxMenuItem chkboxTwitter = new JCheckBoxMenuItem("Twitter");
+		JCheckBoxMenuItem chkboxFacebook = new JCheckBoxMenuItem("Facebook");
 		JMenuItem about = new JMenuItem("About");
 		JMenuItem help = new JMenuItem("Help");
-
+		
 		fileMenu.add(workOnline);
 		fileMenu.add(workOffline);
 		fileMenu.add(exit);
-		editMenu.add(newest);
-		editMenu.add(oldest);
+		sortMenu.add(newest);
+		sortMenu.add(oldest);
+		filterMenu.add(addFilter);
+		filterMenu.add(removeFilter);
+		servicesMenu.add(chkboxMail);
+		chkboxMail.setSelected(true);
+		servicesMenu.add(chkboxTwitter);
+		chkboxTwitter.setSelected(true);
+		servicesMenu.add(chkboxFacebook);
+		chkboxFacebook.setSelected(true);
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		generalMenu.add(fileMenu);
-		generalMenu.add(editMenu);
+		generalMenu.add(sortMenu);
+		generalMenu.add(filterMenu);
+		generalMenu.add(servicesMenu);
 		generalMenu.add(aboutMenu);
 		windowFrame.add(generalMenu, BorderLayout.NORTH);
 
-		// RADIO BUTTON & COMBOBOX CONFIGURATION
+		// RADIO BUTTON, COMBOBOX & CHECKBOX CONFIGURATION		
 		JRadioButton sortOne = new JRadioButton("Newest");
 		JRadioButton sortTwo = new JRadioButton("Oldest");
 
@@ -139,11 +160,11 @@ public class WindowDBA {
 		ButtonGroup sortOptions = new ButtonGroup();
 		sortOptions.add(sortOne);
 		sortOptions.add(sortTwo);
-
+		
 		panels.get(3).add(sortOne);
 		panels.get(3).add(sortTwo);
 		panels.get(3).add(chkDate);
-
+				
 		// TABLE CONFIGURATION
 		JTable tableContent = new JTable(0,6);
 		panels.get(3).add(tableContent);
@@ -151,7 +172,7 @@ public class WindowDBA {
 		modelTable = (DefaultTableModel) tableContent.getModel();
 		modelTable.addRow(new String[]{"Id", "Date", "Channel", "From", "Subject", "Content"});
 
-		getAndFillNewsOnTable(modelTable);
+		getAndFillNewsOnTable(generalMenu, modelTable);
 		buttonsMenuConfig(generalMenu, sortOne, sortTwo, chkDate, modelTable, tableContent);
 	}
 
@@ -208,28 +229,86 @@ public class WindowDBA {
 			}
 		});
 
-		// NEWEST ACTION
+		// NEWEST ACTION (MR)
 		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !MR.isSelected() ) {
 					MR.setSelected(true);
-					sortByNewest(modelTable);
+					gM.getMenu(1).getItem(1).setSelected(false);
+					sortByNewest(modelTable, gM);
+				} else {
+					gM.getMenu(1).getItem(0).setSelected(true);
 				}
 			}
 		});
 
-		// OLDEST ACTION
+		// OLDEST ACTION (MO)
 		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( !MO.isSelected() ) {
 					MO.setSelected(true);
-					sortByOldest(modelTable);
+					gM.getMenu(1).getItem(0).setSelected(false);
+					sortByOldest(modelTable, gM);
+				} else {
+					gM.getMenu(1).getItem(1).setSelected(true);
 				}
 			}
 		});
 
-		// ABOUT BUTTON ACTION
+		// ADD FILTER
 		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a adicionar:");
+				/* if(FILTRO NÃO EXISTE NO XML) {
+					// ADICIONAR FILTRO
+					JOptionPane.showMessageDialog(null, "Filtro adicionado.");
+				} else {
+					JOptionPane.showMessageDialog(null, "Filtro já existente.");
+				} */
+			}
+		});
+		
+		// REMOVE FILTER
+		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a remover:");
+				/*
+				if(FILTRO EXISTE NO XML) {
+					// REMOVER FILTRO
+					JOptionPane.showMessageDialog(null, "Filtro removido");
+				} else {
+					JOptionPane.showMessageDialog(null, "Filtro não existente");
+				} */
+			}
+		});
+		
+		
+		// SERVICE MAIL BUTTON ACTION
+		gM.getMenu(3).getItem(0).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeRows(modelTable);
+				fillOnTable(gM);
+			}
+		});
+		
+		// SERVICE TWITTER BUTTON ACTION
+		gM.getMenu(3).getItem(1).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeRows(modelTable);
+				fillOnTable(gM);
+			}
+		});
+		
+		// SERVICE FACEBOOK BUTTON ACTION
+		gM.getMenu(3).getItem(2).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeRows(modelTable);
+				fillOnTable(gM);			
+				}
+		});
+		
+		// ABOUT BUTTON ACTION
+		gM.getMenu(4).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
 				String infoUC = "Software Engineering I - Teacher Vitor Basto Fernandes";
@@ -241,7 +320,7 @@ public class WindowDBA {
 		});
 
 		// HELP BUTTON ACTION
-		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
+		gM.getMenu(4).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
 				String infoHelp = "Maintenance page" + lineSep + "You will soon have support content (SWING, Java DOCS, etc).";
@@ -270,7 +349,7 @@ public class WindowDBA {
 		MR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MR.setSelected(true);
-				sortByNewest(modelTable);
+				sortByNewest(modelTable, gM);
 			}
 		});
 
@@ -278,7 +357,7 @@ public class WindowDBA {
 		MO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MO.setSelected(true);
-				sortByOldest(modelTable);
+				sortByOldest(modelTable, gM);
 			}
 		});
 
@@ -318,17 +397,16 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable, is the JTABLE that contains the messages
 	 */
-	private void getAndFillNewsOnTable(DefaultTableModel modelTable) {
+	private void getAndFillNewsOnTable(JMenuBar generalMenu, DefaultTableModel modelTable) {
 		ReadEmails rMails = new ReadEmails();
 		ReadTweets rTweets = new ReadTweets();
 		ReadPosts rPosts = new ReadPosts();
 
-		ArrayList<GenericMessage> messagesMail = GenericMessage.receiveMailReturnMessage(rMails.readMessages("imap.gmail.com", "imaps3", ReadXMLfile.userData[0], ReadXMLfile.userData[1]));
-		ArrayList<GenericMessage> messagesTwitter = GenericMessage.receiveTweetsReturnMessage(rTweets.readTweets(ReadXMLfile.userData[2]));
-		ArrayList<GenericMessage> messagesFacebook = GenericMessage.receivePostsReturnMessage(rPosts.readPosts(ReadXMLfile.userData[2]));
+		messagesMail = GenericMessage.receiveMailReturnMessage(rMails.readMessages("imap.gmail.com", "imaps3", ReadXMLfile.userData[0], ReadXMLfile.userData[1]));
+		messagesTwitter = GenericMessage.receiveTweetsReturnMessage(rTweets.readTweets(ReadXMLfile.userData[2]));
+		messagesFacebook = GenericMessage.receivePostsReturnMessage(rPosts.readPosts(ReadXMLfile.userData[2]));
 
-		fillOnTable(messagesMail, messagesTwitter, messagesFacebook);
-
+		fillOnTable(generalMenu);
 		indicatorFilters = genericMessages.size();
 	}
 
@@ -514,7 +592,6 @@ public class WindowDBA {
 		}
 	}
 
-
 	/** 
 	 * Sort messages, from the oldest to the newest
 	 * @author GROUP 91
@@ -522,12 +599,12 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void sortByOldest(DefaultTableModel modelTable) {
-		removeRows(modelTable);
+	private void sortByOldest(DefaultTableModel modelTable, JMenuBar gM) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 		int count = 1;
 		Date date = new Date();
+	
 		System.out.println("hello + " + genericMessages.size());
 		try {
 			for(GenericMessage m: genericMessages) {
@@ -535,7 +612,9 @@ public class WindowDBA {
 				dateArray.add(date);
 			}
 			Collections.sort(dateArray);
+			System.out.println("Tamanho" + dateArray.size());
 			indicatorFilters = 0;
+			removeRows(modelTable);
 
 			for(Date d: dateArray) {
 				for(GenericMessage m: genericMessages) {
@@ -546,8 +625,8 @@ public class WindowDBA {
 						String subjectM = m.getTitleM();
 						String contentM = m.getContentM();
 						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-						count++;
 						indicatorFilters++;
+						count++;
 					}
 				}
 			}
@@ -564,8 +643,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void sortByNewest(DefaultTableModel modelTable) {
-		removeRows(modelTable);
+	private void sortByNewest(DefaultTableModel modelTable, JMenuBar gM) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 
@@ -580,6 +658,7 @@ public class WindowDBA {
 			}
 			Collections.sort(dateArray, Collections.reverseOrder());
 			indicatorFilters = 0;
+			removeRows(modelTable);
 
 			for(Date d: dateArray) {
 				for(GenericMessage m: genericMessages) {
@@ -593,6 +672,7 @@ public class WindowDBA {
 						count++;
 						indicatorFilters++;
 					}
+					
 				}
 			}
 			System.out.println("Sort by newest");
@@ -602,10 +682,18 @@ public class WindowDBA {
 	}
 
 	//Method to fill the messages on the table
-	private void fillOnTable(ArrayList<GenericMessage> gMMail, ArrayList<GenericMessage> gMTwitter, ArrayList<GenericMessage> gMFacebook) {
+	private void fillOnTable(JMenuBar gM) {
 		int count = 1;
+	
+		boolean servMail = gM.getMenu(3).getItem(0).isSelected();
+		boolean servTwitter = gM.getMenu(3).getItem(1).isSelected();
+		boolean servFacebook = gM.getMenu(3).getItem(2).isSelected();
+		indicatorFilters = 0;
+	
 		try {
-			for (GenericMessage genM: gMMail) {
+		if(servMail) {
+			System.out.print("E-Mail checked.");
+			for (GenericMessage genM: messagesMail) {
 				String dateM = genM.getDateM();
 				String channelM = genM.getCanalM();
 				String fromM = genM.getFromM();
@@ -615,9 +703,12 @@ public class WindowDBA {
 				genericMessages.add(genM);
 				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 				count++;
-			}
-
-			for (GenericMessage genM: gMTwitter) {
+				indicatorFilters++;
+			}			
+		} 
+		if(servTwitter) {
+			System.out.print("Twitter checked.");
+			for (GenericMessage genM: messagesTwitter) {
 				String dateM = genM.getDateM();
 				String channelM = genM.getCanalM();
 				String fromM = genM.getFromM();
@@ -627,9 +718,13 @@ public class WindowDBA {
 				genericMessages.add(genM);
 				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 				count++;
-			}
+				indicatorFilters++;
 
-			for (GenericMessage genM: gMFacebook) {
+			}
+		}
+		if(servFacebook) {
+			System.out.print("Facebook checked.");
+			for (GenericMessage genM: messagesFacebook) {
 				String dateM = genM.getDateM();
 				String channelM = genM.getCanalM();
 				String fromM = genM.getFromM();
@@ -638,12 +733,15 @@ public class WindowDBA {
 				genericMessages.add(genM);
 				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 				count++;
+				indicatorFilters++;
+
 			}
+		}
 		} catch(Exception e) {
 			System.out.print("Error in reading emails: " + e.toString());
 		}		
 	}
-
+	
 	/** 
 	 * Auxiliary method to control date filters
 	 * @author GROUP 91
@@ -657,5 +755,9 @@ public class WindowDBA {
 			modelTable.removeRow(i);
 			System.out.println("Row " + i + " deleted.");
 		}
+	}
+	
+	private void removeGM() {
+		genericMessages.removeAll(genericMessages);
 	}
 }
