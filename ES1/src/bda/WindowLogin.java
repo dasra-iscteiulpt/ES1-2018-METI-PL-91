@@ -79,7 +79,8 @@ public class WindowLogin {
 		JLabel labEmail = new JLabel("@iscte-iul.pt");
 		JButton btNlog = new JButton("Login");
 		JButton btNreg = new JButton("Register");
-
+		JButton btNunsub = new JButton("Unsubscribe");
+		
 		panels.get(3).add(labInfoLog);
 		panelCenter.add(labInfoUser);
 		panelCenter.add(userName);
@@ -92,6 +93,7 @@ public class WindowLogin {
 
 		panels.get(0).add(btNlog);
 		panels.get(0).add(btNreg);
+		panels.get(0).add(btNunsub);
 
 		// CLICK ON TEXTFIELD USERNAME
         userName.addMouseListener(new MouseAdapter(){
@@ -114,6 +116,15 @@ public class WindowLogin {
 				windowLogin.setVisible(false);
 				windReg.getWindowFrame().setVisible(true);
 				
+			}
+		});
+		
+		// CLICK ON BUTTON UNSUBSCRIBE
+		btNunsub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WindowUnsubscribe windUnsub = new WindowUnsubscribe(windowLogin);
+				windowLogin.setVisible(false);
+				windUnsub.getWindowFrame().setVisible(true);
 			}
 		});
 		
@@ -144,7 +155,7 @@ public class WindowLogin {
 		});
 
 		// CONFIGURAÇÃO WINDOW FRAME
-		windowLogin.setSize(330, 180);
+		windowLogin.setSize(330, 170);
 		windowLogin.setLocationRelativeTo(null);
 		windowLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowLogin.setResizable(false);

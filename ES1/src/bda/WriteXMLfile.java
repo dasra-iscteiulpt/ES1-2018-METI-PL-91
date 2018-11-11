@@ -158,7 +158,7 @@ public class WriteXMLfile {
 	}
 
 	// Utility method to remove an user of an existing XML file
-	private static void removeUser(String username){
+	public static void removeUser(String username){
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

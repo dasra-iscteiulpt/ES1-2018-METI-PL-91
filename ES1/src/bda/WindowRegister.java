@@ -83,7 +83,6 @@ public class WindowRegister {
 		JLabel labInfo3TokenT = new JLabel("   Token TW: ");
 		JLabel labInfo4TokenT = new JLabel("   Token TW: ");
 		JLabel labInfo1TokenF = new JLabel("    Token FB: ");
-		JLabel labInfo2TokenF = new JLabel("    Token FB: ");
 
 		r.setupRegister("dasra");
 
@@ -188,10 +187,11 @@ public class WindowRegister {
 					} else {
 						WriteXMLfile.addUser(userName.getText().trim(), passWord.getText().trim(), email.getText().trim(), emailPassWord.getText().trim(), oneTokenTwitter.getText().trim(), twoTokenTwitter.getText().trim(), threeTokenTwitter.getText().trim(), fourTokenTwitter.getText().trim(), oneTokenFacebook.getText().trim());
 						JOptionPane.showMessageDialog(null, "Registo efectuado com sucesso");
+						windowRegister.setVisible(false);
+						windowLogin.setVisible(true);
 					}
 				}
-				windowRegister.setVisible(false);
-				windowLogin.setVisible(true);
+
 			}
 		});
 
