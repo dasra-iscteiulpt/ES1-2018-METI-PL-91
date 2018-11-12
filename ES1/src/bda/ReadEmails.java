@@ -58,7 +58,7 @@ public class ReadEmails {
 			Message[] messages = emailFolder.getMessages();
 			System.out.println(messages.length);
 			List<Attributes> filtersList = new ArrayList<Attributes>();
-			filtersList = r.readFiltersXMLfile("config.xml");
+			filtersList = r.readFiltersXMLfile();
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];				
 				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {

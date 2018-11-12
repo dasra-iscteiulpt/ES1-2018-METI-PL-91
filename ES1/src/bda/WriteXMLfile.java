@@ -35,8 +35,7 @@ public class WriteXMLfile {
 		addFilter("mestrado");
 		removeUser("teste");
 		//removeUser("rjfae1");
-		//removeFilter("iscte");
-
+		removeFilter("universidade");
 		setUserAttribute("iccco", "password", "teste");
 	}
 
@@ -221,7 +220,6 @@ public class WriteXMLfile {
 				Element e = (Element) node;
 				filter.setKeyword(ReadXMLfile.getTagValue("keyword", e));
 				String s = filter.getKeyword();
-				System.out.println(s);
 				if(keyword.equals(s)) {
 					doc.getDocumentElement().removeChild(node);
 				}

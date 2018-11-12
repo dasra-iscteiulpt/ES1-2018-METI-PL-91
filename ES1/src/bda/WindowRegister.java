@@ -183,10 +183,10 @@ public class WindowRegister {
 					JOptionPane.showMessageDialog(null, "There are fields to fill.");
 				} else {
 					if(r.validateUserRegister(userName.getText().trim())== true) { // CASO USER EXISTA NO XML
-						JOptionPane.showMessageDialog(null, "User já existente no sistema. Por favor tente novamente.");
+						JOptionPane.showMessageDialog(null, "This user altready exists. Please try again.");
 					} else {
 						WriteXMLfile.addUser(userName.getText().trim(), passWord.getText().trim(), email.getText().trim(), emailPassWord.getText().trim(), oneTokenTwitter.getText().trim(), twoTokenTwitter.getText().trim(), threeTokenTwitter.getText().trim(), fourTokenTwitter.getText().trim(), oneTokenFacebook.getText().trim());
-						JOptionPane.showMessageDialog(null, "Registo efectuado com sucesso");
+						JOptionPane.showMessageDialog(null, "Successful registration.");
 						windowRegister.setVisible(false);
 						windowLogin.setVisible(true);
 					}

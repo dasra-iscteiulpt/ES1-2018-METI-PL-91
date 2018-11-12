@@ -34,7 +34,7 @@ public class ReadPosts {
 		ArrayList<Post> fbPosts = new ArrayList<Post>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		List<Attributes> filtersList = new ArrayList<Attributes>();
-		filtersList = r.readFiltersXMLfile("config.xml");	
+		filtersList = r.readFiltersXMLfile();	
 
 		// Iterate over the feed to access the particular pages
 		for (List<Post> myFeedPage : myFeed) {

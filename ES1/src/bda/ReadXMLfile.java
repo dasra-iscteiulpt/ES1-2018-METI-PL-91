@@ -23,7 +23,7 @@ public class ReadXMLfile {
 	static String[] twitterData = new String[4];
 	static String facebookData = new String();
 	static ReadEmails r = new ReadEmails();
-	
+
 	// CONSTRUCTOR
 	public ReadXMLfile() {
 
@@ -65,7 +65,7 @@ public class ReadXMLfile {
 	 * @param XML file path
 	 * @return A list of all filters
 	 */
-	public List<Attributes> readFiltersXMLfile(String xml) {
+	public List<Attributes> readFiltersXMLfile() {
 
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -75,7 +75,7 @@ public class ReadXMLfile {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
 			// Parse using the builder to get the DOM mapping of the XML file
-			Document doc = db.parse(xml);
+			Document doc = db.parse("config.xml");
 			doc.getDocumentElement().normalize();
 
 			// Adds the filters to the array
@@ -83,7 +83,6 @@ public class ReadXMLfile {
 			for (int i = 0; i < filterList.getLength(); i++) {
 				filtersList.add(getFilterAttributes(filterList.item(i)));
 			}
-
 		} catch (SAXException | ParserConfigurationException | IOException e1) {
 			e1.printStackTrace();
 		}
@@ -148,7 +147,7 @@ public class ReadXMLfile {
 		}
 		return false;
 	}
-	
+
 	// Validates if the user is in the XML file  and setup the twitter data configuration
 	public boolean validateUserTwitter(String username) {
 		readUsersXMLfile();
@@ -191,7 +190,7 @@ public class ReadXMLfile {
 		}
 		return false;
 	}
-	
+
 	// Method to setup the user data configuration
 	public boolean setupRegister(String username) {
 		readUsersXMLfile();
@@ -227,7 +226,7 @@ public class ReadXMLfile {
 		}
 		return false;
 	}
-	
+
 	// Validates if a user already exists in the XML file
 	public boolean validateUserRegister(String username) {
 		readUsersXMLfile();
@@ -236,6 +235,21 @@ public class ReadXMLfile {
 		{
 			user = usersList.get(i).getUsername();
 			if(user.equals(username)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	// Validates if a filter already exists in the XML file
+	public boolean validateFilter(String keyword) {
+		readFiltersXMLfile();
+		String k = new String();
+		for (int i=0;i < filtersList.size();i++)
+		{
+			k = filtersList.get(i).getKeyword();
+			if(k.equals(keyword.toLowerCase())){
 				return true;
 			}
 		}

@@ -43,7 +43,7 @@ public class ReadTweets {
 			Paging paging = new Paging(1, 200);
 			List<Status> statusList = twitter.getUserTimeline("iscteiul", paging);
 			List<Attributes> filtersList = new ArrayList<Attributes>();
-			filtersList = r.readFiltersXMLfile("config.xml");
+			filtersList = r.readFiltersXMLfile();
 			for (Status status : statusList) {
 				if(keywordValidation(status.getText(), filtersList)) {
 					twitterStatus.add(status);
