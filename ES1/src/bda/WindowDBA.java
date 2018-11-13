@@ -58,11 +58,13 @@ public class WindowDBA {
 	private ArrayList<GenericMessage> messagesMail;
 	private ArrayList<GenericMessage> messagesTwitter;
 	private ArrayList<GenericMessage> messagesFacebook;
+	private ReadXMLfile rXML;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
 	
 	// CONSTRUCTOR
 	public WindowDBA(String title) {
+		rXML = new ReadXMLfile();
 		windowFrame = new JFrame(title);
 		genericMessages = new ArrayList<GenericMessage>();
 		startConfigWindow();
@@ -259,12 +261,12 @@ public class WindowDBA {
 		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a adicionar:");
-				/* if(FILTRO NÃO EXISTE NO XML) {
-					// ADICIONAR FILTRO
+				if(!rXML.validateFilter(filter)) {
+					WriteXMLfile.addFilter(filter);
 					JOptionPane.showMessageDialog(null, "Filtro adicionado.");
 				} else {
 					JOptionPane.showMessageDialog(null, "Filtro já existente.");
-				} */
+				}
 			}
 		});
 		
@@ -272,13 +274,13 @@ public class WindowDBA {
 		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a remover:");
-				/*
-				if(FILTRO EXISTE NO XML) {
-					// REMOVER FILTRO
+				if(rXML.validateFilter(filter)) {
+					WriteXMLfile.removeFilter(filter);
 					JOptionPane.showMessageDialog(null, "Filtro removido");
 				} else {
 					JOptionPane.showMessageDialog(null, "Filtro não existente");
-				} */
+				}
+
 			}
 		});
 		

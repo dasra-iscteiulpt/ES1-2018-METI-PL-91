@@ -118,7 +118,7 @@ public class WriteXMLfile {
 	}
 
 	// Utility method to add a filter to an existing XML file
-	private static void addFilter(String keyword){
+	public static void addFilter(String keyword){
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -199,7 +199,7 @@ public class WriteXMLfile {
 	}
 
 	// Utility method to remove a filter of an existing XML file
-	private static void removeFilter(String keyword) {
+	public static void removeFilter(String keyword) {
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
