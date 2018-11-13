@@ -273,13 +273,15 @@ public class WindowDBA {
 		// REMOVE FILTER
 		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a remover:");
+				
+				WindowFilter windFilter = new WindowFilter();
+				/*String filter = JOptionPane.showInputDialog(null, "Insira o filtro a remover:");
 				if(rXML.validateFilter(filter)) {
 					WriteXMLfile.removeFilter(filter);
 					JOptionPane.showMessageDialog(null, "Filtro removido");
 				} else {
 					JOptionPane.showMessageDialog(null, "Filtro não existente");
-				}
+				} */
 
 			}
 		});
