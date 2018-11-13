@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,11 +21,13 @@ public class WindowLogin {
 	// VARIABLES
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
-	ReadXMLfile r = new ReadXMLfile();
+	private ReadXMLfile r = new ReadXMLfile();
 	private int tentativesLog;
+	private JCheckBox chkOffline;
 	
 	// CONSTRUCTOR
 	public WindowLogin(String title) {
+		chkOffline = new JCheckBox("Offline");
 		tentativesLog = 0;
 		windowLogin = new JFrame(title);
 		configWindow();
@@ -94,6 +97,7 @@ public class WindowLogin {
 		panels.get(0).add(btNlog);
 		panels.get(0).add(btNreg);
 		panels.get(0).add(btNunsub);
+		panels.get(0).add(chkOffline);
 
 		// CLICK ON TEXTFIELD USERNAME
         userName.addMouseListener(new MouseAdapter(){
@@ -139,7 +143,7 @@ public class WindowLogin {
 					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
 					JOptionPane.showMessageDialog(null, "Login successfully completed.");
 					@SuppressWarnings("unused")
-					WindowDBA w = new WindowDBA("Good Morning Academy!");
+					WindowDBA w = new WindowDBA("Good Morning Academy!", chkOffline.isSelected());
 					windowLogin.setVisible(false);
 					} else {
 						tentativesLog++;
@@ -155,7 +159,7 @@ public class WindowLogin {
 		});
 
 		// CONFIGURAÇÃO WINDOW FRAME
-		windowLogin.setSize(330, 170);
+		windowLogin.setSize(350, 170);
 		windowLogin.setLocationRelativeTo(null);
 		windowLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowLogin.setResizable(false);

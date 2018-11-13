@@ -1,52 +1,28 @@
 package bda;
 
 import javax.swing.JFrame;
-
 import javax.swing.JMenu;
-
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
-
 import java.awt.event.MouseAdapter;
-
 import java.awt.event.MouseEvent;
-
 import java.text.DateFormat;
-
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-
 import java.util.Calendar;
-
 import java.util.Collections;
-
 import java.util.Date;
-
-
-
 import javax.swing.JPanel;
-
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
-
 import javax.swing.JTable;
-
 import javax.swing.table.DefaultTableModel;
-
-
-
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JMenuBar;
-
 import javax.swing.JMenuItem;
-
 import javax.swing.JOptionPane;
 
 public class WindowDBA {
@@ -61,12 +37,14 @@ public class WindowDBA {
 	private ReadXMLfile rXML;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
+	private boolean workOffline;
 	
 	// CONSTRUCTOR
-	public WindowDBA(String title) {
+	public WindowDBA(String title, boolean workOffline) {
 		rXML = new ReadXMLfile();
 		windowFrame = new JFrame(title);
 		genericMessages = new ArrayList<GenericMessage>();
+		this.workOffline = workOffline;
 		startConfigWindow();
 		endConfigWindow();
 	}
@@ -111,12 +89,10 @@ public class WindowDBA {
 		JMenu filterMenu = new JMenu("Filters");
 		JMenu servicesMenu = new JMenu("Services");
 		JMenu aboutMenu = new JMenu("More");
-		JMenuItem workOnline = new JMenuItem("Work online");
-		workOnline.setEnabled(false);
-		JMenuItem workOffline = new JMenuItem("Work offline");
 		JMenuItem exit = new JMenuItem("Exit");
 		JRadioButtonMenuItem newest = new JRadioButtonMenuItem("Newest");
 		JRadioButtonMenuItem oldest = new JRadioButtonMenuItem("Oldest");
+		JMenuItem viewFilter = new JMenuItem("View");
 		JMenuItem addFilter = new JMenuItem("Add");
 		JMenuItem removeFilter = new JMenuItem("Remove");
 		JCheckBoxMenuItem chkboxMail = new JCheckBoxMenuItem("E-Mail");
@@ -125,11 +101,10 @@ public class WindowDBA {
 		JMenuItem about = new JMenuItem("About");
 		JMenuItem help = new JMenuItem("Help");
 		
-		fileMenu.add(workOnline);
-		fileMenu.add(workOffline);
 		fileMenu.add(exit);
 		sortMenu.add(newest);
 		sortMenu.add(oldest);
+		filterMenu.add(viewFilter);
 		filterMenu.add(addFilter);
 		filterMenu.add(removeFilter);
 		servicesMenu.add(chkboxMail);
@@ -174,7 +149,11 @@ public class WindowDBA {
 		modelTable = (DefaultTableModel) tableContent.getModel();
 		modelTable.addRow(new String[]{"Id", "Date", "Channel", "From", "Subject", "Content"});
 
-		getAndFillNewsOnTable(generalMenu, modelTable);
+		if(workOffline == false) { // CHECKBOX NÃO SELECIONADA
+			getAndFillNewsOnTable(generalMenu, modelTable);
+		} else { // CHECKBOX SELECIONADA
+			getNewsWorkingOffline();
+		}
 		buttonsMenuConfig(generalMenu, sortOne, sortTwo, chkDate, modelTable, tableContent);
 	}
 
@@ -206,26 +185,9 @@ public class WindowDBA {
 	 * @param CB, is the combo box with filters date
 	 */
 	private void buttonsMenuConfig(JMenuBar gM, JRadioButton MR, JRadioButton MO, JComboBox<String> CB, DefaultTableModel MT, JTable TC) {
-		// WORKONLINE BUTTON ACTION
-		gM.getMenu(0).getItem(0).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "New sync started");
-				gM.getMenu(0).getItem(0).setEnabled(false);
-				gM.getMenu(0).getItem(1).setEnabled(true);
-			}
-		});
-
-		// WORKOFFLINE BUTTON ACTION
-		gM.getMenu(0).getItem(1).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Limited access to local content");
-				gM.getMenu(0).getItem(0).setEnabled(true);
-				gM.getMenu(0).getItem(1).setEnabled(false);
-			}
-		});
 
 		// EXIT BUTTON ACTION
-		gM.getMenu(0).getItem(2).addActionListener(new ActionListener() {
+		gM.getMenu(0).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				windowFrame.setVisible(false);
 			}
@@ -256,33 +218,37 @@ public class WindowDBA {
 				}
 			}
 		});
-
-		// ADD FILTER
+		
+		// VIEW FILTER
 		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unused")
+				WindowFilter windFilter = new WindowFilter("View filter", windowFrame);
+			}
+		});
+		
+		// ADD FILTER
+		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a adicionar:");
-				if(!rXML.validateFilter(filter)) {
-					WriteXMLfile.addFilter(filter);
-					JOptionPane.showMessageDialog(null, "Filtro adicionado.");
-				} else {
-					JOptionPane.showMessageDialog(null, "Filtro já existente.");
+				if(filter != null) {
+					if(!filter.isEmpty()) {
+						if(!rXML.validateFilter(filter)) {
+							WriteXMLfile.addFilter(filter);
+							JOptionPane.showMessageDialog(null, "Filtro adicionado.");
+						} else {
+							JOptionPane.showMessageDialog(null, "Filtro já existente.");
+						}
+					}
 				}
 			}
 		});
 		
 		// REMOVE FILTER
-		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
+		gM.getMenu(2).getItem(2).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				WindowFilter windFilter = new WindowFilter();
-				/*String filter = JOptionPane.showInputDialog(null, "Insira o filtro a remover:");
-				if(rXML.validateFilter(filter)) {
-					WriteXMLfile.removeFilter(filter);
-					JOptionPane.showMessageDialog(null, "Filtro removido");
-				} else {
-					JOptionPane.showMessageDialog(null, "Filtro não existente");
-				} */
-
+				@SuppressWarnings("unused")
+				WindowFilter windFilter = new WindowFilter("Remove filter", windowFrame);
 			}
 		});
 		
@@ -761,7 +727,7 @@ public class WindowDBA {
 		}
 	}
 	
-	private void removeGM() {
-		genericMessages.removeAll(genericMessages);
+	private void getNewsWorkingOffline() {
+		
 	}
 }

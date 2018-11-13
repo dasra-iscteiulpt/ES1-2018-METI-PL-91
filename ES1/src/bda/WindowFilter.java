@@ -1,21 +1,13 @@
 package bda;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 /** 
  * Registration window for new users
@@ -30,11 +22,21 @@ public class WindowFilter {
 	private JFrame windowFilter;
 	private JComboBox<String> comboFilters;
 	private ArrayList<JPanel> panels;
+	private String typeWindow;
+	private JButton btNcancel;
+	private JButton btNremove;
+	private ReadXMLfile rXML;
+	private JFrame windowDBA;
 
 	// CONSTRUCTOR
-	public WindowFilter() {
+	public WindowFilter(String typeWindow, JFrame windowDBA) {
+		this.typeWindow = typeWindow;
+		this.windowDBA = windowDBA;
+		btNcancel = new JButton("Cancel");
+		btNremove = new JButton("Remove");
+		rXML = new ReadXMLfile();
+		windowFilter = new JFrame(typeWindow);
 		comboFilters = new JComboBox<String>();
-		windowFilter = new JFrame("Remove filterr");
 		configWindow();
 	}
 
@@ -72,32 +74,44 @@ public class WindowFilter {
 		JPanel panelCenter = new JPanel(new FlowLayout());
 		windowFilter.add(panelCenter);
 		
-		comboFilters.addItem("Teste");
-		comboFilters.addItem("Teste");
-		comboFilters.addItem("Teste");
-		comboFilters.addItem("Teste");
-
 		panelCenter.add(comboFilters);
 		
-		JButton btNremove = new JButton("Remove");
-
-		panels.get(0).add(btNremove);
-
+		for(Attributes filter: rXML.readFiltersXMLfile()) {
+			comboFilters.addItem(filter.getKeyword());
+		}
+		
+		if(typeWindow.equals("Remove filter")) {
+			panels.get(0).add(btNremove);
+			panels.get(0).add(btNcancel);
+		} else if(typeWindow.equals("View filter")) {
+			panels.get(0).add(btNcancel);
+		}
+		
+		// BUTTON REMOVE
+		btNremove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String itemSelected = comboFilters.getSelectedItem().toString();
+				WriteXMLfile.removeFilter(itemSelected);
+			}
+		});
+		
+		
+		// BUTTON CANCEL
+		btNcancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				windowFilter.setVisible(false);
+				windowDBA.setVisible(true);
+			}
+		});
+		
+		
 		// WINDOW FRAME CONFIGURATION
-		windowFilter.setSize(320, 100);
+		windowFilter.setSize(200, 120);
 		windowFilter.setLocationRelativeTo(null);
-		windowFilter.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		windowFilter.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		windowFilter.setResizable(false);
 		windowFilter.validate();
 		windowFilter.setVisible(true);
-
-		// CLICK ON BUTTON REGISTER
-		btNremove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-
-			}
-		});
 
 	}
 
