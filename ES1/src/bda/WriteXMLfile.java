@@ -27,15 +27,16 @@ public class WriteXMLfile {
 		setupFile();
 
 		//These data have to be read from the data entered in the GUI
-		addUser("dasra", "dasra123", "diana.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N", "EAADpFZBDLw5QBAEMZBmYZBMBNjX0yOnpVO2VABZCRXx7gNgZCNx5IBi3HBTCobiQ0nfiYnZAJzmY5kKxeftI5ZCRO1y6xw92l9ozlnZBC3pLF9ZCsJEmK8wRMIS77O0iMLjySJwG0Pgo54vvFIdm5zo7QrrsHK63qSmRypyAW9d5vMBYVVNqZBQ0kF");
-		addUser("rjfae1", "rjfae123", "ricardo.f.es.pl.91@gmail.com", "engenhariasoftware", "DF5DCJ5FACNHxE1tLXZwU6Psb", "IPezOOcIibcLbdGextZlwPrV86f19BuBz4ltTVh2Ki9XSr3X4L", "1056591307521646593-dBBRKbiDGKn7CDqI9x0uu34FybAWeA", "lQfqJuHcliUr0iQdMHh11M8IJMFUW0WBwc898ePUZNaHb", "EAAgq4lhYUWYBAAXNa26kJl11NBPtOLllQrHxq6b1WhmT78hOsiFnoBfccD6Q71NEM4ZATBZCiuu6MEg47HZAzxFLocvTbJSWASWnvbKbLgGFJ4eYp6SQ9EgxZAonJBBYJ8I3sdRyhCeZBad7H9Gq7zB9cWC1Vm443XDxVvJukrTWtgqZBzOMXi");
+		addUser("dasra", "dasra123", "diana.es.pl.91@gmail.com", "engenhariasoftware", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N", "EAADpFZBDLw5QBADta3Qw8JqjHPFlShpQHhsodQhywzIZBTfdQp5oJJMBSZBP8qQrVkaiA7fmmBFZAE5xKazkRJRzyekZBL8gnThcJ0f7RoLtaNwseHJgZCUJtYZC6yyoLS1q0ZBvgumVQMG56c1rovf5iWwZAX5jjIi4nVcwM39ZABCRZCd3HZA9TN7daJZC79HSw4kcZD");
+		addUser("rjfae1", "rjfae123", "ricardo.f.es.pl.91@gmail.com", "engenhariasoftware", "DF5DCJ5FACNHxE1tLXZwU6Psb", "IPezOOcIibcLbdGextZlwPrV86f19BuBz4ltTVh2Ki9XSr3X4L", "1056591307521646593-dBBRKbiDGKn7CDqI9x0uu34FybAWeA", "lQfqJuHcliUr0iQdMHh11M8IJMFUW0WBwc898ePUZNaHb", "EAAgq4lhYUWYBAOcVQlFoJumaZBUUiPGDuSSW0xOFrH0JqZCZBCFx04q3YIlBrpZCga4ZBEp2S7ZBXlkAllFuTDfishHVXvze0YEAuOOjy02BwnJteWhdhkWVZBlCkd6WUcnHwGK8fT2fzKEumkte4eJfvf1paXViPEEDLhQV6YMZCOFSsBSDq2JuH5HPXrp0OAQZD");
 		//These data have to be read from the data entered in the GUI	
 		addFilter("tecnologia");
 		addFilter("biblioteca");
 		addFilter("mestrado");
-		removeUser("teste");
+		addFilter("universidade");
+		//removeUser("teste");
 		//removeUser("rjfae1");
-		removeFilter("universidade");
+		//removeFilter("universidade");
 		setUserAttribute("iccco", "password", "teste");
 	}
 

@@ -23,7 +23,7 @@ public class Retweet {
 	 * @param tweetId
 	 * @return int, 0 = successful, 1 = failed
 	 */
-	public int retweet(String toUser, String fromUser, Long tweetId) {{
+	public int retweet(String toUser, String fromUser, Long tweetId, String comment) {{
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		r.validateUserTwitter(fromUser);
 		cb.setDebugEnabled(true)
@@ -39,7 +39,7 @@ public class Retweet {
 		twitter.setOAuthAccessToken(accessToken);
 
 		try {
-			twitter.retweetStatus(tweetId);
+			twitter.updateStatus(comment + " https://twitter.com/edent/status/" + tweetId);
 			System.out.println("Retweet successful");
 			return 0;
 		} catch (TwitterException te) {

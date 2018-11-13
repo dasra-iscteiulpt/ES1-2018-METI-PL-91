@@ -147,7 +147,7 @@ public class WindowMessage {
 					} else {	
 						if(!retweetText.isEmpty()) {
 							Retweet rTwitter = new Retweet();
-							int sucessOrInsucess = rTwitter.retweet("iscteiul", ReadXMLfile.userData[0], Long.valueOf(titleM.getText().split(" ")[1]));	
+							int sucessOrInsucess = rTwitter.retweet("iscteiul", ReadXMLfile.userData[2], Long.valueOf(titleM.getText().split(" ")[1]), "Ol···");	
 							if(sucessOrInsucess == 0) {
 								JOptionPane.showMessageDialog(null, "Retweet successful.");
 								windowFrame.setVisible(false);
@@ -169,8 +169,8 @@ public class WindowMessage {
 						windowFrame.setVisible(false);
 					} else {	
 						if(!commentText.isEmpty()) {
-							Comment commentFace = new Comment();
-							int sucessOrInsucess = commentFace.sharePost(Long.valueOf("11"), "");
+							WriteComment commentFace = new WriteComment();
+							int sucessOrInsucess = commentFace.writeComment("","","");
 							if(sucessOrInsucess == 0) {
 								JOptionPane.showMessageDialog(null, "Comment successful.");
 								windowFrame.setVisible(false);
