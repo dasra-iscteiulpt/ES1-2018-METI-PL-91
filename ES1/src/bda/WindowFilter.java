@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /** 
@@ -20,23 +21,17 @@ public class WindowFilter {
 	
 	// VARIABLES
 	private JFrame windowFilter;
-	private JComboBox<String> comboFilters;
 	private ArrayList<JPanel> panels;
-	private String typeWindow;
-	private JButton btNcancel;
-	private JButton btNremove;
+	private JComboBox<String> comboFilters;
 	private ReadXMLfile rXML;
 	private JFrame windowDBA;
 
 	// CONSTRUCTOR
-	public WindowFilter(String typeWindow, JFrame windowDBA) {
-		this.typeWindow = typeWindow;
+	public WindowFilter(JFrame windowDBA) {
 		this.windowDBA = windowDBA;
-		btNcancel = new JButton("Cancel");
-		btNremove = new JButton("Remove");
+		comboFilters = new JComboBox<String>(); 	
 		rXML = new ReadXMLfile();
-		windowFilter = new JFrame(typeWindow);
-		comboFilters = new JComboBox<String>();
+		windowFilter = new JFrame("Filters");
 		configWindow();
 	}
 
@@ -66,6 +61,7 @@ public class WindowFilter {
 
 		// JPANEL CONFIGURATION IN WINDOWLOGIN
 		windowFilter.add(panels.get(0), BorderLayout.SOUTH);
+		
 		windowFilter.add(panels.get(1), BorderLayout.WEST);
 		windowFilter.add(panels.get(2), BorderLayout.EAST);
 		windowFilter.add(panels.get(3), BorderLayout.NORTH);
@@ -74,27 +70,44 @@ public class WindowFilter {
 		JPanel panelCenter = new JPanel(new FlowLayout());
 		windowFilter.add(panelCenter);
 		
+		JButton btNadd = new JButton("Add");
+		JButton btNcancel = new JButton("Cancel");
+		JButton btNremove = new JButton("Remove");
+		
 		panelCenter.add(comboFilters);
+		fillFilters();
+
+		panels.get(0).add(btNadd);
+		panels.get(0).add(btNremove);
+		panels.get(0).add(btNcancel);
 		
-		for(Attributes filter: rXML.readFiltersXMLfile()) {
-			comboFilters.addItem(filter.getKeyword());
-		}
-		
-		if(typeWindow.equals("Remove filter")) {
-			panels.get(0).add(btNremove);
-			panels.get(0).add(btNcancel);
-		} else if(typeWindow.equals("View filter")) {
-			panels.get(0).add(btNcancel);
-		}
+		// BUTTON ADD
+		btNadd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a adicionar:");
+				if(filter != null) {
+					if(!filter.isEmpty()) {
+						if(!rXML.validateFilter(filter)) {
+							WriteXMLfile.addFilter(filter);
+							JOptionPane.showMessageDialog(null, "Filtro " + filter + " foi adicionado.");
+							comboFilters.addItem(filter);
+						} else {
+							JOptionPane.showMessageDialog(null, "Filtro já existente.");
+						}
+					}
+				}
+			}
+		});
 		
 		// BUTTON REMOVE
 		btNremove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String itemSelected = comboFilters.getSelectedItem().toString();
 				WriteXMLfile.removeFilter(itemSelected);
+				JOptionPane.showMessageDialog(null, "Filtro " + itemSelected + " foi removido.");
+				comboFilters.removeItem(itemSelected);
 			}
 		});
-		
 		
 		// BUTTON CANCEL
 		btNcancel.addActionListener(new ActionListener() {
@@ -104,9 +117,8 @@ public class WindowFilter {
 			}
 		});
 		
-		
 		// WINDOW FRAME CONFIGURATION
-		windowFilter.setSize(200, 120);
+		windowFilter.setSize(250, 120);
 		windowFilter.setLocationRelativeTo(null);
 		windowFilter.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		windowFilter.setResizable(false);
@@ -117,5 +129,12 @@ public class WindowFilter {
 
 	public JFrame getWindowFrame() {
 		return windowFilter;
+	}
+	
+	private void fillFilters() {
+		comboFilters.removeAllItems();
+		for(Attributes filter: rXML.readFiltersXMLfile()) {
+			comboFilters.addItem(filter.getKeyword());
+		}
 	}
 }

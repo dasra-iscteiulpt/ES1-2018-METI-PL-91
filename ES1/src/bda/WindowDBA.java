@@ -38,13 +38,15 @@ public class WindowDBA {
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
 	private boolean workOffline;
+	private String userDBA;
 	
 	// CONSTRUCTOR
-	public WindowDBA(String title, boolean workOffline) {
+	public WindowDBA(String title, boolean workOffline, String userDBA) {
 		rXML = new ReadXMLfile();
 		windowFrame = new JFrame(title);
 		genericMessages = new ArrayList<GenericMessage>();
 		this.workOffline = workOffline;
+		this.userDBA = userDBA;
 		startConfigWindow();
 		endConfigWindow();
 	}
@@ -92,9 +94,7 @@ public class WindowDBA {
 		JMenuItem exit = new JMenuItem("Exit");
 		JRadioButtonMenuItem newest = new JRadioButtonMenuItem("Newest");
 		JRadioButtonMenuItem oldest = new JRadioButtonMenuItem("Oldest");
-		JMenuItem viewFilter = new JMenuItem("View");
-		JMenuItem addFilter = new JMenuItem("Add");
-		JMenuItem removeFilter = new JMenuItem("Remove");
+		JMenuItem editFilters = new JMenuItem("Edit");
 		JCheckBoxMenuItem chkboxMail = new JCheckBoxMenuItem("E-Mail");
 		JCheckBoxMenuItem chkboxTwitter = new JCheckBoxMenuItem("Twitter");
 		JCheckBoxMenuItem chkboxFacebook = new JCheckBoxMenuItem("Facebook");
@@ -104,9 +104,7 @@ public class WindowDBA {
 		fileMenu.add(exit);
 		sortMenu.add(newest);
 		sortMenu.add(oldest);
-		filterMenu.add(viewFilter);
-		filterMenu.add(addFilter);
-		filterMenu.add(removeFilter);
+		filterMenu.add(editFilters);
 		servicesMenu.add(chkboxMail);
 		chkboxMail.setSelected(true);
 		servicesMenu.add(chkboxTwitter);
@@ -219,39 +217,13 @@ public class WindowDBA {
 			}
 		});
 		
-		// VIEW FILTER
+		// FILTERS
 		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unused")
-				WindowFilter windFilter = new WindowFilter("View filter", windowFrame);
+				WindowFilter windFilter = new WindowFilter(windowFrame);
 			}
 		});
-		
-		// ADD FILTER
-		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a adicionar:");
-				if(filter != null) {
-					if(!filter.isEmpty()) {
-						if(!rXML.validateFilter(filter)) {
-							WriteXMLfile.addFilter(filter);
-							JOptionPane.showMessageDialog(null, "Filtro adicionado.");
-						} else {
-							JOptionPane.showMessageDialog(null, "Filtro já existente.");
-						}
-					}
-				}
-			}
-		});
-		
-		// REMOVE FILTER
-		gM.getMenu(2).getItem(2).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				@SuppressWarnings("unused")
-				WindowFilter windFilter = new WindowFilter("Remove filter", windowFrame);
-			}
-		});
-		
 		
 		// SERVICE MAIL BUTTON ACTION
 		gM.getMenu(3).getItem(0).addActionListener(new ActionListener() {
@@ -309,7 +281,7 @@ public class WindowDBA {
 						String titleM = TC.getModel().getValueAt(TC.getSelectedRow(),4).toString();
 						String contentM = TC.getModel().getValueAt(TC.getSelectedRow(),5).toString();
 						@SuppressWarnings("unused")
-						WindowMessage windMess = new WindowMessage(dateM, fromM, titleM, contentM, canalM);
+						WindowMessage windMess = new WindowMessage(dateM, fromM, titleM, contentM, canalM, userDBA);
 					}
 				}
 			}

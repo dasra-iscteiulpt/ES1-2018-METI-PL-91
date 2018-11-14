@@ -30,6 +30,7 @@ public class WindowMessage {
 		fromM = new JLabel("From: " + from);
 		titleM = new JLabel("Subject: " + title);
 		contentM = new JTextArea(content);
+		this.userDBA = userDBA;
 		if(canal.equals("E-Mail")) {
 			sendM = new JButton("Reply");
 		} else if(canal.equals("Twitter")) {
@@ -171,8 +172,7 @@ public class WindowMessage {
 					} else {	
 						if(!commentText.isEmpty()) {
 							WriteComment commentFace = new WriteComment();
-							int sucessOrInsucess = commentFace.writeComment(titleM.getText().split(" ")[1], "", comment.getText());
-							System.out.println("Post id: " + titleM.getText().split(" ")[1]);
+							int sucessOrInsucess = commentFace.writeComment(titleM.getText().split(" ")[1], userDBA, comment.getText());
 							if(sucessOrInsucess == 1) {
 								JOptionPane.showMessageDialog(null, "Comment successful.");
 								windowFrame.setVisible(false);

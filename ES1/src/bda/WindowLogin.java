@@ -22,13 +22,12 @@ public class WindowLogin {
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
 	private ReadXMLfile r = new ReadXMLfile();
-	private int tentativesLog;
+	private String userDBA;
 	private JCheckBox chkOffline;
 	
 	// CONSTRUCTOR
 	public WindowLogin(String title) {
 		chkOffline = new JCheckBox("Offline");
-		tentativesLog = 0;
 		windowLogin = new JFrame(title);
 		configWindow();
 	}
@@ -141,18 +140,13 @@ public class WindowLogin {
 				} else {
 					// CASO USER E PASSWORD CONSTEM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
 					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
-					JOptionPane.showMessageDialog(null, "Login successfully completed.");
-					@SuppressWarnings("unused")
-					WindowDBA w = new WindowDBA("Good Morning Academy!", chkOffline.isSelected());
-					windowLogin.setVisible(false);
+						JOptionPane.showMessageDialog(null, "Login successfully completed.");
+						userDBA = userName.getText();
+						@SuppressWarnings("unused")
+						WindowDBA w = new WindowDBA("Good Morning Academy!", chkOffline.isSelected(), userDBA);
+						windowLogin.setVisible(false);
 					} else {
-						tentativesLog++;
-						if(tentativesLog == 3) {
-							windowLogin.setVisible(false);
-							JOptionPane.showMessageDialog(null, "Login attempts exceeded.");
-						} else {
-							JOptionPane.showMessageDialog(null, "Incorrect login. Please review the access data.");
-						}
+						JOptionPane.showMessageDialog(null, "Incorrect login. Please review the access data.");
 					}
 				}
 			}
