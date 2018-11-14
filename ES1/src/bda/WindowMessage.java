@@ -21,9 +21,10 @@ public class WindowMessage {
 	private JLabel titleM;
 	private JTextArea contentM;
 	private JButton sendM;
+	private String userDBA;
 	private ArrayList<JPanel> panels;
 
-	public WindowMessage(String date, String from, String title, String content, String canal) {
+	public WindowMessage(String date, String from, String title, String content, String canal, String userDBA) {
 		windowFrame = new JFrame(canal);
 		dateM = new JLabel("Date: " + date);
 		fromM = new JLabel("From: " + from);
@@ -170,8 +171,9 @@ public class WindowMessage {
 					} else {	
 						if(!commentText.isEmpty()) {
 							WriteComment commentFace = new WriteComment();
-							int sucessOrInsucess = commentFace.writeComment(titleM.getText(), fromM.getText(), comment.getText());
-							if(sucessOrInsucess == 0) {
+							int sucessOrInsucess = commentFace.writeComment(titleM.getText().split(" ")[1], "", comment.getText());
+							System.out.println("Post id: " + titleM.getText().split(" ")[1]);
+							if(sucessOrInsucess == 1) {
 								JOptionPane.showMessageDialog(null, "Comment successful.");
 								windowFrame.setVisible(false);
 							} else {
