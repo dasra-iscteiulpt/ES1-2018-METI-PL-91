@@ -26,9 +26,9 @@ public class WindowLogin {
 	private JCheckBox chkOffline;
 	
 	// CONSTRUCTOR
-	public WindowLogin(String title) {
+	public WindowLogin() {
 		chkOffline = new JCheckBox("Offline");
-		windowLogin = new JFrame(title);
+		windowLogin = new JFrame("Login");
 		configWindow();
 	}
 
@@ -143,7 +143,7 @@ public class WindowLogin {
 						JOptionPane.showMessageDialog(null, "Login successfully completed.");
 						userDBA = userName.getText();
 						@SuppressWarnings("unused")
-						WindowDBA w = new WindowDBA("Good Morning Academy!", chkOffline.isSelected(), userDBA);
+						WindowDBA w = new WindowDBA(chkOffline.isSelected(), userDBA);
 						windowLogin.setVisible(false);
 					} else {
 						JOptionPane.showMessageDialog(null, "Incorrect login. Please review the access data.");

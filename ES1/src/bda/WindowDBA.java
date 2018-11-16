@@ -41,9 +41,9 @@ public class WindowDBA {
 	private String userDBA;
 	
 	// CONSTRUCTOR
-	public WindowDBA(String title, boolean workOffline, String userDBA) {
+	public WindowDBA(boolean workOffline, String userDBA) {
 		rXML = new ReadXMLfile();
-		windowFrame = new JFrame(title);
+		windowFrame = new JFrame("Good Morning Academy!");
 		genericMessages = new ArrayList<GenericMessage>();
 		this.workOffline = workOffline;
 		this.userDBA = userDBA;
@@ -701,5 +701,21 @@ public class WindowDBA {
 	
 	private void getNewsWorkingOffline() {
 		
+	}
+	
+	public ArrayList<GenericMessage> getGMemail() {
+		return messagesMail;
+	}
+	
+	public ArrayList<GenericMessage> getGMtweets() {
+		return messagesTwitter;
+	}
+	
+	public ArrayList<GenericMessage> getGMposts() {
+		return messagesFacebook;
+	}
+	
+	public ArrayList<GenericMessage> getGM() {
+		return genericMessages;
 	}
 }

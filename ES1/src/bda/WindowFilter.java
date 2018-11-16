@@ -131,10 +131,15 @@ public class WindowFilter {
 		return windowFilter;
 	}
 	
-	private void fillFilters() {
+
+	public void fillFilters() {
 		comboFilters.removeAllItems();
 		for(Attributes filter: rXML.readFiltersXMLfile()) {
 			comboFilters.addItem(filter.getKeyword());
 		}
+	}
+	
+	public JComboBox<String> getComboBox() {
+		return comboFilters;
 	}
 }

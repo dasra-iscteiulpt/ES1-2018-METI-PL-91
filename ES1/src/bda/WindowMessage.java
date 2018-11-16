@@ -188,4 +188,8 @@ public class WindowMessage {
 			}
 		});
 	}
+	
+	public JButton sendM() {
+		return sendM;
+	}
 }

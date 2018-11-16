@@ -33,7 +33,7 @@ public class WindowUnsubscribe {
 	// CONSTRUCTOR
 	public WindowUnsubscribe(JFrame windowLogin) {
 		this.windowLogin = windowLogin;
-		windowUnsubscribe = new JFrame("Register");
+		windowUnsubscribe = new JFrame("Unsubscribe");
 		configWindow();
 	}
 
