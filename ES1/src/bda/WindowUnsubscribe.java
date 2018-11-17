@@ -66,7 +66,7 @@ public class WindowUnsubscribe {
 		JPanel panelCenter = new JPanel(new FlowLayout());
 		windowUnsubscribe.add(panelCenter);
 
-		JLabel labInfoRegister = new JLabel("Unsubscribe your account: ");
+		JLabel labInfoRegister = new JLabel("Unsubscribe account: ");
 
 		JLabel labInfoUser = new JLabel("Username: ");
 		JLabel labInfoPw = new JLabel("Password: ");
@@ -118,15 +118,15 @@ public class WindowUnsubscribe {
 		btNunsub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "There are fields to fill.");
+					JOptionPane.showMessageDialog(null, "There are empty fields.");
 				} else {
-					if(r.validateUserRegister(userName.getText().trim())== true) { // CASO USER EXISTA NO XML
+					if(r.validateUserRegister(userName.getText().trim())== true) { // IF USER IS IN XML FILE
 						WriteXMLfile.removeUser(userName.getText().trim());
-						JOptionPane.showMessageDialog(null, "User removido do sistema.");				
+						JOptionPane.showMessageDialog(null, "User removed.");				
 						windowUnsubscribe.setVisible(false);
 						windowLogin.setVisible(true);
 					} else {
-						JOptionPane.showMessageDialog(null, "Utilizador não existe em sistema para ser removido.");
+						JOptionPane.showMessageDialog(null, "This user doesn't exist.");
 					}
 				}
 

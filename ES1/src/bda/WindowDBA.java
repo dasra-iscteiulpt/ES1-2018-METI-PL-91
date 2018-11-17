@@ -149,7 +149,7 @@ public class WindowDBA {
 
 		if(workOffline == false) { // CHECKBOX NÃO SELECIONADA
 			getAndFillNewsOnTable(generalMenu, modelTable);
-		} else { // CHECKBOX SELECIONADA
+		} else { // CHECKBOX SELECTED
 			getNewsWorkingOffline();
 		}
 		buttonsMenuConfig(generalMenu, sortOne, sortTwo, chkDate, modelTable, tableContent);
@@ -254,9 +254,9 @@ public class WindowDBA {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
 				String infoUC = "Software Engineering I - Teacher Vitor Basto Fernandes";
-				String numberGroup = "Group 91 - Constituted by:" + lineSep;
+				String numberGroup = "Group 91 members:" + lineSep;
 				String infoGroup = "68092 - Diana Salvador" + lineSep + "69980 - Diogo Reis" + lineSep + "65799 - Ricardo Ferreira" + lineSep + "73422 - Ivo Carvalho";
-				String toolsProj = "Used tools: Git, Trello.";
+				String toolsProj = "Tools: GitHub, Trello and Eclipse.";
 				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);
 			}
 		});
@@ -265,7 +265,7 @@ public class WindowDBA {
 		gM.getMenu(4).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
-				String infoHelp = "Maintenance page" + lineSep + "You will soon have support content (SWING, Java DOCS, etc).";
+				String infoHelp = "Help page:" + lineSep + "Please check the JavaDoc documentation for further details about the software.";
 				JOptionPane.showMessageDialog(null, infoHelp);
 			}
 		});
@@ -320,11 +320,11 @@ public class WindowDBA {
 					filterEmailsLast48Hours(MT);
 					break;
 				case 3:
-					System.out.println("Last Week");
+					System.out.println("Last week");
 					filterEmailsLastWeek(MT);
 					break;
 				default:
-					System.out.println("Last MONTH");
+					System.out.println("Last month");
 					filterEmailsLastMonth(MT);
 					break;             
 				} 
@@ -547,14 +547,14 @@ public class WindowDBA {
 		int count = 1;
 		Date date = new Date();
 	
-		System.out.println("hello + " + genericMessages.size());
+		System.out.println("Hello + " + genericMessages.size());
 		try {
 			for(GenericMessage m: genericMessages) {
 				date = df.parse(m.getDateM());
 				dateArray.add(date);
 			}
 			Collections.sort(dateArray);
-			System.out.println("Tamanho" + dateArray.size());
+			System.out.println("Size" + dateArray.size());
 			indicatorFilters = 0;
 			removeRows(modelTable);
 

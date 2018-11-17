@@ -138,9 +138,9 @@ public class WindowLogin {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "There are empty fields.");
 				} else {
-					// CASO USER E PASSWORD CONSTEM NO FICHEIRO XML E SERVIÇO É "BDA", LOGIN É EFETUADO C/ SUCESSO
+					// IF USER AND PASSWORD ARE IN THE XML FILE, THE LOGIN IS SUCCESSFUL
 					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
-						JOptionPane.showMessageDialog(null, "Login successfully completed.");
+						JOptionPane.showMessageDialog(null, "Login successful.");
 						userDBA = userName.getText();
 						@SuppressWarnings("unused")
 						WindowDBA w = new WindowDBA(chkOffline.isSelected(), userDBA);

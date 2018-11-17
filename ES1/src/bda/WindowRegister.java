@@ -180,9 +180,9 @@ public class WindowRegister {
 		btNreg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty() || email.getText().isEmpty() || emailPassWord.getText().toString().isEmpty() ) {
-					JOptionPane.showMessageDialog(null, "There are fields to fill.");
+					JOptionPane.showMessageDialog(null, "There are empty fields.");
 				} else {
-					if(r.validateUserRegister(userName.getText().trim())== true) { // CASO USER EXISTA NO XML
+					if(r.validateUserRegister(userName.getText().trim())== true) { // IF USER EXISTS IN XML FILE
 						JOptionPane.showMessageDialog(null, "This user altready exists. Please try again.");
 					} else {
 						WriteXMLfile.addUser(userName.getText().trim(), passWord.getText().trim(), email.getText().trim(), emailPassWord.getText().trim(), oneTokenTwitter.getText().trim(), twoTokenTwitter.getText().trim(), threeTokenTwitter.getText().trim(), fourTokenTwitter.getText().trim(), oneTokenFacebook.getText().trim());

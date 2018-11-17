@@ -84,15 +84,15 @@ public class WindowFilter {
 		// BUTTON ADD
 		btNadd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String filter = JOptionPane.showInputDialog(null, "Insira o filtro a adicionar:");
+				String filter = JOptionPane.showInputDialog(null, "Please add the filter:");
 				if(filter != null) {
 					if(!filter.isEmpty()) {
 						if(!rXML.validateFilter(filter)) {
 							WriteXMLfile.addFilter(filter);
-							JOptionPane.showMessageDialog(null, "Filtro " + filter + " foi adicionado.");
+							JOptionPane.showMessageDialog(null, "Filter " + filter + " added.");
 							comboFilters.addItem(filter);
 						} else {
-							JOptionPane.showMessageDialog(null, "Filtro já existente.");
+							JOptionPane.showMessageDialog(null, "The filter already exists.");
 						}
 					}
 				}
@@ -104,7 +104,7 @@ public class WindowFilter {
 			public void actionPerformed(ActionEvent e) {
 				String itemSelected = comboFilters.getSelectedItem().toString();
 				WriteXMLfile.removeFilter(itemSelected);
-				JOptionPane.showMessageDialog(null, "Filtro " + itemSelected + " foi removido.");
+				JOptionPane.showMessageDialog(null, "Filter " + itemSelected + " removed.");
 				comboFilters.removeItem(itemSelected);
 			}
 		});
