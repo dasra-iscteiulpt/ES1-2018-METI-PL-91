@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  * Registration window for new users
  * @author GROUP 91
  * @version 1.0
- * @since September 2018
+ * @since September 2018 
  */
 
 public class WindowRegister {

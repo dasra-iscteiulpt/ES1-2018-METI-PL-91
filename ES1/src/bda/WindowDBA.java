@@ -29,7 +29,7 @@ import javax.swing.JOptionPane;
 * "Bom dia Academia" content window called after a successful login
 * @author GROUP 91
 * @version 1.0
-* @since September 2018
+* @since September 2018 
 */
 
 public class WindowDBA {
