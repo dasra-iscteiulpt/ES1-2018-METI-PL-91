@@ -1,5 +1,12 @@
 package bda;
 
+/** 
+* Saves users' attributes from the XML file 
+* @author GROUP 91
+* @version 1.0
+* @since September 2018
+*/
+
 public class Attributes {
 
 	private String email;

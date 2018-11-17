@@ -95,7 +95,14 @@ public class ReadEmails {
 		return false; 
 	}
 
-	//METHOD TO GET THE SUBJECT OF THE EMAIL
+	/** 
+	 * Get the subject from the e-mail message
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param m, is the subject of the message
+	 * @return s, if the message contains academic keywords
+	 */
 	public static String getSubject(Message m) throws Exception {
 		String s="";
 		if (m.getSubject() != null)
@@ -103,7 +110,14 @@ public class ReadEmails {
 		return s;	
 	}
 	
-	//METHOD TO GET TEXT OF THE EMAIL IF THE TYPE IS MIME MILTIPART
+	/** 
+	 * Get the text of the email only if the type is MIME multipart, used in the getBody(Message) method
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param mimeMultipart, MimeMultipart object
+	 * @return body, a string from the body text
+	 */
 	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException{
 		String body = "";
 		int count = mimeMultipart.getCount();
@@ -123,7 +137,14 @@ public class ReadEmails {
 		return body;
 	}
 
-	//METHOD TO GET TEXT FROM THE BODY OF EMAIL
+	/** 
+	 * Get the text from the body of email whether it's plain text or multipart message
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param m, Message object
+	 * @return body, text from the body of email
+	 */
 	public static String getBody(Message m) throws Exception {
 		String body = "";
 		if (m.isMimeType("text/plain")) {

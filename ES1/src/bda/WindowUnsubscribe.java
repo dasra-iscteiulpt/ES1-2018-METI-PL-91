@@ -17,7 +17,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /** 
- * Registration window for new users
+ * Unsubscribe window for registered users.
+ * Existing user and respective profile information will be deleted from the XML file.
  * @author GROUP 91
  * @version 1.0
  * @since September 2018
@@ -132,7 +133,9 @@ public class WindowUnsubscribe {
 
 			}
 		});
-
+		
+		
+		
 		// CLICK ON BUTTON CANCEL
 		btNcancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -11,7 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /** 
- * Registration window for new users
+ * Content filters window for registered users.
+ * Here a user is able to edit content filters from its own profile by writing and adding them or by removing existing ones.
+ * Filters will decide which information will be shown in the content list.
  * @author GROUP 91
  * @version 1.0
  * @since September 2018
