@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * Filters will decide which information will be shown in the content list.
  * @author GROUP 91
  * @version 1.0
- * @since September 2018 
+ * @since September 2018
  */
 
 public class WindowFilter {

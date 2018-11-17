@@ -143,7 +143,7 @@ public class ReadEmails {
 	 * @version 1.0
 	 * @since September 
 	 * @param m, Message object
-	 * @return body, text from the body of email
+	 * @return body, text from the body of email 
 	 */
 	public static String getBody(Message m) throws Exception {
 		String body = "";

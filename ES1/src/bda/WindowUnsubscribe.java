@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * Existing user and respective profile information will be deleted from the XML file.
  * @author GROUP 91
  * @version 1.0 
- * @since September 2018
+ * @since September 2018 
  */
 
 public class WindowUnsubscribe {
