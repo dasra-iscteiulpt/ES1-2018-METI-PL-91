@@ -1,11 +1,10 @@
 package bda;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.mail.Message;
+import javax.swing.table.DefaultTableModel;
+
 import org.junit.jupiter.api.Test;
 
 class JUnitTests {
@@ -73,14 +72,6 @@ class JUnitTests {
 	}
 	
 	@Test
-	public void testWindowDBA() {
-		WindowDBA windDBA = new WindowDBA(false, "dasra");
-		assertTrue(windDBA.getGMemail().get(0).getCanalM().equals("E-Mail"));
-		assertTrue(windDBA.getGMtweets().get(0).getCanalM().equals("Twitter"));
-		assertTrue(windDBA.getGMposts().get(0).getCanalM().equals("Facebook"));
-	}
-	
-	@Test
 	public void testWindowRegister() {
 		WindowLogin windL = null;
 		assertNull(windL);
@@ -89,14 +80,7 @@ class JUnitTests {
 		WindowRegister windReg = new WindowRegister(windL.getFrame());
 		assertTrue(windReg.getFrame().isVisible());
 	}
-	
-	/*
-	@Test
-	public void testWindowMessage() {
-		WindowMessage windMess = new WindowMessage("04/07/2018", "ISCTE-IUL", "Subject - 101454389886004837", "Adicionei um vídeo a uma playlist @YouTube https://t.co/8iK7Nei6DM do Mês junho 2018 Biblioteca ISCTE-IUL", "Twitter", "dasra");
-		windMess.sendM().doClick();
-	} */
-	
+		
 	@Test
 	public void testWindowFilter() {
 		WindowDBA windDBA = new WindowDBA(false, "dasra");
@@ -104,9 +88,79 @@ class JUnitTests {
 		windF.fillFilters();
 		windF.getComboBox().addItem("ISCTE");
 		assertNotEquals(windF.getComboBox().getItemAt(0), "ISCTE");
-		
 	}
 	
+	@Test
+	public void testWriteComment() {
+		WriteComment comm = new WriteComment();
+		assertNotNull(comm);
+		int result = comm.writeComment("2210486695854771_2210487832521324", "dasra", "Comentário p/ JUNIT!");
+		assertEquals(result, 1);
+	}
 	
+	@Test
+	public void testRetweet() {
+		Retweet twitter = new Retweet();
+		assertNotNull(twitter);
+		long tId = Long.parseLong("1019834231432843265");
+		int result = twitter.retweet("iscteiul", "diana.es.pl.91@gmail.com", tId, "Tweet p/ JUNIT!");
+		assertEquals(result, 1);
+	}
+	
+	@Test
+	public void testWindowMessage() {
+		WindowMessage windMess = new WindowMessage("04/07/2018", "ISCTE-IUL", "Subject - 101454389886004837", "Adicionei um vídeo a uma playlist @YouTube https://t.co/8iK7Nei6DM do Mês junho 2018 Biblioteca ISCTE-IUL", "Twitter", "dasra");
+		assertFalse(windMess.getFrame().isResizable());
+	} 
+	
+	@Test
+	public void testWindowDBA() {
+		WindowDBA windDBA = new WindowDBA(false, "dasra");
 
+		assertTrue(windDBA.getGMemail().get(0).getCanalM().equals("E-Mail"));
+		assertTrue(windDBA.getGMtweets().get(0).getCanalM().equals("Twitter"));
+		assertTrue(windDBA.getGMposts().get(0).getCanalM().equals("Facebook"));
+		
+		DefaultTableModel modelTable = windDBA.getModelTable();
+		assertNotNull(modelTable);
+				
+		windDBA.filterEmailsAll(modelTable);
+		boolean sizeTableAll = (modelTable.getRowCount() > 0);
+		assertTrue(sizeTableAll);
+		
+		windDBA.filterEmailsLast24Hours(modelTable);
+		boolean sizeTable24H = (modelTable.getRowCount() > 0);
+		assertTrue(sizeTable24H);
+		
+		windDBA.filterEmailsLast48Hours(modelTable);
+		boolean sizeTable48H = (modelTable.getRowCount() > 0);
+		assertTrue(sizeTable48H);
+		
+		windDBA.filterEmailsLastMonth(modelTable);
+		boolean sizeTableMonth = (modelTable.getRowCount() > 0);
+		assertTrue(sizeTableMonth);
+
+		windDBA.filterEmailsLastWeek(modelTable);
+		boolean sizeTableWeek = (modelTable.getRowCount() > 0);
+		assertTrue(sizeTableWeek);
+		
+		int sizeTableBeforeSortNewest = modelTable.getRowCount();
+		windDBA.sortByNewest(modelTable, null);
+		boolean sizeTableAfterSortNewest = (sizeTableBeforeSortNewest == modelTable.getRowCount());
+		assertTrue(sizeTableAfterSortNewest);	
+	}
+	
+	@Test
+	public void testXMLFile() {
+		boolean existFilter = rXML.validateFilter("universidade");
+		boolean existUser = rXML.validateUserBDA("dasra", "dasra123");
+		boolean existsFilters = (rXML.readFiltersXMLfile().size() > 0);
+		boolean existsUsers = (rXML.readUsersXMLfile().size() > 0);
+		
+		assertFalse(existFilter);
+		assertFalse(existUser);
+		assertFalse(existsFilters);
+		assertFalse(existsUsers);
+	}
+	
 }

@@ -359,7 +359,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void filterEmailsLast24Hours(DefaultTableModel modelTable) {
+	public void filterEmailsLast24Hours(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -394,7 +394,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void filterEmailsLast48Hours(DefaultTableModel modelTable) {
+	public void filterEmailsLast48Hours(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();	
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -433,7 +433,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void filterEmailsLastWeek(DefaultTableModel modelTable) {
+	public void filterEmailsLastWeek(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -473,7 +473,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void filterEmailsLastMonth(DefaultTableModel modelTable) {
+	public void filterEmailsLastMonth(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -511,7 +511,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void filterEmailsAll(DefaultTableModel modelTable) {
+	public void filterEmailsAll(DefaultTableModel modelTable) {
 		removeRows(modelTable);
 		int count = 1;
 
@@ -541,7 +541,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void sortByOldest(DefaultTableModel modelTable, JMenuBar gM) {
+	public void sortByOldest(DefaultTableModel modelTable, JMenuBar gM) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 		int count = 1;
@@ -585,7 +585,7 @@ public class WindowDBA {
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
 	 */
-	private void sortByNewest(DefaultTableModel modelTable, JMenuBar gM) {
+	public void sortByNewest(DefaultTableModel modelTable, JMenuBar gM) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 
@@ -717,5 +717,9 @@ public class WindowDBA {
 	
 	public ArrayList<GenericMessage> getGM() {
 		return genericMessages;
+	}
+	
+	public DefaultTableModel getModelTable() {
+		return modelTable;
 	}
 }
