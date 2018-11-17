@@ -157,10 +157,10 @@ class JUnitTests {
 		boolean existsFilters = (rXML.readFiltersXMLfile().size() > 0);
 		boolean existsUsers = (rXML.readUsersXMLfile().size() > 0);
 		
-		assertFalse(existFilter);
-		assertFalse(existUser);
-		assertFalse(existsFilters);
-		assertFalse(existsUsers);
+		assertTrue(existFilter);
+		assertTrue(existUser);
+		assertTrue(existsFilters);
+		assertTrue(existsUsers);
 	}
 	
 }
