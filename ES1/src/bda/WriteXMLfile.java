@@ -18,7 +18,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-//write a XML file that contains a set of attributes per user 
+/** 
+ * Write in a XML file that contains a set of attributes per user and keywords
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
 
 public class WriteXMLfile {
 
@@ -41,7 +46,9 @@ public class WriteXMLfile {
 		setUserAttribute("iccco", "password", "teste");
 	}
 
-	// Utility method to setup an initial file 
+	/**
+	 * Utility method to setup an initial file 
+	 */
 	private static void setupFile(){
 		try {
 			// Instance of a DocumentBuilderFactory
@@ -79,8 +86,19 @@ public class WriteXMLfile {
 			tfe.printStackTrace();
 		}
 	}
-
-	// Utility method to add an user to an existing XML file
+	/**
+	 * Utility method to add an user to an existing XML file
+	 * @param username, is one of the mandatory parameters for adding an user
+	 * @param password, is one of the mandatory parameters for adding an user
+	 * @param email, is one of the mandatory parameters for adding an user
+	 * @param passwordEmail, is one of the mandatory parameters for adding an user
+	 * @param OAuthConsumerKey, is one of the mandatory parameters for adding an user
+	 * @param OAuthConsumerSecret, is one of the mandatory parameters for adding an user
+	 * @param OAuthAccessToken, is one of the mandatory parameters for adding an user
+	 * @param OAuthAccessTokenSecret, is one of the mandatory parameters for adding an user
+	 * @param userAccessToken, is one of the mandatory parameters for adding an user
+	 * @return Returns true case user is successfully added and false otherwise
+	 */
 	public static boolean addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken){
 		try {
 			// Instance of a DocumentBuilderFactory
@@ -124,7 +142,11 @@ public class WriteXMLfile {
 		}
 	}
 
-	// Utility method to add a filter to an existing XML file
+	/**
+	 * Utility method to add a filter to an existing XML file
+	 * @param keyword, is one of the mandatory parameters for adding a filter
+	 * @return Returns true case filter is successfully added and false otherwise
+	 */
 	public static boolean addFilter(String keyword){
 		try {
 			// Instance of a DocumentBuilderFactory
@@ -168,7 +190,11 @@ public class WriteXMLfile {
 		}
 	}
 
-	// Utility method to remove an user of an existing XML file
+	/**
+	 * Utility method to remove an user of an existing XML file
+	 * @param username, is one of the mandatory parameters for removing an user
+	 * @return Returns true case user is successfully removed and false otherwise
+	 */
 	public static boolean removeUser(String username){
 		try {
 			// Instance of a DocumentBuilderFactory
@@ -215,7 +241,11 @@ public class WriteXMLfile {
 		}
 	}
 
-	// Utility method to remove a filter of an existing XML file
+	/**
+	 * Utility method to remove a filter of an existing XML file
+	 * @param keyword, is one of the mandatory parameters for removing a filter
+	 * @return Returns true case filter is successfully removed and false otherwise
+	 */
 	public static boolean removeFilter(String keyword) {
 		try {
 			// Instance of a DocumentBuilderFactory
@@ -265,7 +295,13 @@ public class WriteXMLfile {
 		}
 	}
 
-	// Utility method to modify an user attribute in an existing XML file
+	/**
+	 * Utility method to modify an user attribute in an existing XML file
+	 * @param username, is one of the mandatory parameters for setting an attribute
+	 * @param tag, is one of the mandatory parameters for setting an attribute
+	 * @param newValue, is one of the mandatory parameters for setting an attribute
+	 * @return Returns true case attribute is successfully modified and false otherwise
+	 */
 	public static boolean setUserAttribute(String username, String tag, String newValue){
 		try {
 			// Instance of a DocumentBuilderFactory
@@ -316,7 +352,20 @@ public class WriteXMLfile {
 		}
 	}
 
-	// Utility method to create a user
+	/**
+	 * Utility method to create a user
+	 * @param doc, is one of the mandatory parameters for creating an user
+	 * @param username, is one of the mandatory parameters for creating an user
+	 * @param password, is one of the mandatory parameters for creating an user
+	 * @param email, is one of the mandatory parameters for creating an user
+	 * @param passwordEmail, is one of the mandatory parameters for creating an user
+	 * @param OAuthConsumerKey, is one of the mandatory parameters for creating an user
+	 * @param OAuthConsumerSecret, is one of the mandatory parameters for creating an user
+	 * @param OAuthAccessToken, is one of the mandatory parameters for creating an user
+	 * @param OAuthAccessTokenSecret, is one of the mandatory parameters for creating an user
+	 * @param userAccessToken, is one of the mandatory parameters for creating an user
+	 * @return Returns an user Node
+	 */
 	public static Node createUserBDA(Document doc, String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken) {
 		Element user = doc.createElement("User");
 
@@ -353,22 +402,40 @@ public class WriteXMLfile {
 		return user;
 	}
 
-	// Utility method to create user node
+	/**
+	 * Utility method to create user element
+	 * @param doc, is one of the mandatory parameters for getting an element
+	 * @param element, is one of the mandatory parameters for getting an element
+	 * @param name, is one of the mandatory parameters for getting an element
+	 * @param value, is one of the mandatory parameters for getting an element
+	 * @return Returns an element Node  
+	 */
 	private static Node getUserElements(Document doc, Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));
 		return node;
 	}
 
-
-	// Utility method to create filter
+	/**
+	 * Utility method to create a filter
+	 * @param doc, is one of the mandatory parameters for creating a filter
+	 * @param keyword, is one of the mandatory parameters for creating a filter
+	 * @return Returns a filter Node 
+	 */
 	private static Node createFilter(Document doc, String keyword) {
 		Element filter = doc.createElement("Filter");
 		filter.appendChild(getFilterElements(doc, filter, "keyword", keyword));
 		return filter;
 	}
 
-	// Utility method to create filter node
+	/**
+	 * Utility method to create filter element
+	 * @param doc, is one of the mandatory parameters for getting an element
+	 * @param element, is one of the mandatory parameters for getting an element
+	 * @param name, is one of the mandatory parameters for getting an element
+	 * @param value, is one of the mandatory parameters for getting an element
+	 * @return Returns an element Node 
+	 */
 	private static Node getFilterElements(Document doc, Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));

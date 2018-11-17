@@ -58,7 +58,7 @@ public class ReadTweets {
 	}
 	
 	/** 
-	 * Check for academic key words in the tweet
+	 * Check for academic keywords in the tweet
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September 

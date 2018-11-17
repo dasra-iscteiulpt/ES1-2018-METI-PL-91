@@ -6,11 +6,11 @@ import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 /** 
-* Response to a specific tweet message
-* @author GROUP 91
-* @version 1.0
-* @since September 2018
-*/
+ * Retweet to a specific tweet
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
 
 public class Retweet {
 

@@ -88,8 +88,11 @@ public class ReadXMLfile {
 		return filtersList;
 	}
 
-
-	// Gets all the user attributes: email, user, password and service
+	/**
+	 * Gets all the user attributes: email, user, password and service
+	 * @param node, is one of the mandatory parameters for getting user attributes
+	 * @return Returns user attributes
+	 */
 	private static Attributes getUserAttributes(Node node) {
 		Attributes user = new Attributes();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -107,7 +110,11 @@ public class ReadXMLfile {
 		return user;
 	}
 
-	// Gets the filters: keyword
+	/**
+	 * Gets the filters: keyword
+	 * @param node, is one of the mandatory parameters for getting filter attributes
+	 * @return Returns filter attributes
+	 */
 	private static Attributes getFilterAttributes(Node node) {
 		Attributes filter = new Attributes();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -117,14 +124,24 @@ public class ReadXMLfile {
 		return filter;
 	}
 
-	// Gets a specific user attribute based on a Tag
+	/**
+	 * Gets a specific user attribute based on a Tag
+	 * @param tag, is one of the mandatory parameters for getting tag value
+	 * @param element, is one of the mandatory parameters for getting tag value
+	 * @return Returns tag value
+	 */
 	static String getTagValue(String tag, Element element) {
 		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
 		Node node = (Node) nodeList.item(0);
 		return node.getNodeValue();
 	}
 
-	// Validates if the user and password introduced are in the XML file and setup the user data configuration
+	/**
+	 * Validates if the user and password introduced are in the XML file and setup the user data configuration
+	 * @param username, is one of the mandatory parameters for validating an user
+	 * @param password, is one of the mandatory parameters for validating an user
+	 * @return Returns true case user is successfully validated and false otherwise
+	 */
 	public boolean validateUserBDA(String username, String password) {
 		readUsersXMLfile();
 		String user = new String();
@@ -147,7 +164,11 @@ public class ReadXMLfile {
 		return false;
 	}
 
-	// Validates if the user is in the XML file  and setup the twitter data configuration
+	/**
+	 * Validates if the user is in the XML file and setup the twitter data configuration
+	 * @param username, is one of the mandatory parameters for validating an user
+	 * @return Returns true case user is successfully validated and false otherwise
+	 */
 	public boolean validateUserTwitter(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -173,7 +194,11 @@ public class ReadXMLfile {
 		return false;
 	}
 
-	// Validates if the user is in the XML file and setup the facebook data configuration
+	/**
+	 * Validates if the user is in the XML file and setup the facebook data configuration
+	 * @param username, is one of the mandatory parameters for validating an user
+	 * @return Returns true case user is successfully validated and false otherwise
+	 */
 	public boolean validateUserFacebook(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -190,7 +215,11 @@ public class ReadXMLfile {
 		return false;
 	}
 
-	// Method to setup the user data configuration
+	/**
+	 * Method to setup the user data configuration
+	 * @param username, is one of the mandatory parameters 
+	 * @return Returns true case the setup is successful and false otherwise
+	 */
 	public boolean setupRegister(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -226,7 +255,11 @@ public class ReadXMLfile {
 		return false;
 	}
 
-	// Validates if a user already exists in the XML file
+	/**
+	 * Validates if a user already exists in the XML file
+	 * @param username, is one of the mandatory parameters for validating an user
+	 * @return Returns true case user already exists and false otherwise
+	 */
 	public boolean validateUserRegister(String username) {
 		readUsersXMLfile();
 		String user = new String();
@@ -240,8 +273,11 @@ public class ReadXMLfile {
 		return false;
 	}
 
-
-	// Validates if a filter already exists in the XML file
+	/**
+	 * Validates if a filter already exists in the XML file
+	 * @param keyword, is one of the mandatory parameters for validating a filter
+	 * @return Returns true case filter already exists and false otherwise
+	 */
 	public boolean validateFilter(String keyword) {
 		readFiltersXMLfile();
 		String k = new String();
