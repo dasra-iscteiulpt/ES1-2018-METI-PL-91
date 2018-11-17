@@ -62,7 +62,6 @@ public class ReadXMLfile {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
-	 * @param XML file path
 	 * @return A list of all filters
 	 */
 	public List<Attributes> readFiltersXMLfile() {

@@ -547,6 +547,7 @@ public class WindowDBA {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
+	 * @param gM
 	 */
 	public void sortByOldest(DefaultTableModel modelTable, JMenuBar gM) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -591,6 +592,7 @@ public class WindowDBA {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
+	 * @param gM
 	 */
 	public void sortByNewest(DefaultTableModel modelTable, JMenuBar gM) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");

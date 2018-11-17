@@ -23,8 +23,8 @@ public class ReadTweets {
 
 	/**
 	 * Utility method to read ISCTE tweets that contain specific keywords
-	 * @param username 
-	 * @return ArrayList<Status>
+	 * @param username, is the BDA user
+	 * @return ArrayList<Status>, is an array that contains tweets
 	 */
 	public ArrayList<Status> readTweets(String username){
 		ArrayList<Status> twitterStatus = new ArrayList<Status>();

@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 
 public class WriteXMLfile {
 
+
 	public static void main(String argv[]) throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
 		setupFile();
@@ -80,7 +81,7 @@ public class WriteXMLfile {
 	}
 
 	// Utility method to add an user to an existing XML file
-	public static void addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken){
+	public static boolean addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken){
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -106,20 +107,25 @@ public class WriteXMLfile {
 			//transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.transform(source, result);
 			System.out.println("User added successfully");
+			return true;
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
+			return false;
 		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
+			return false;
 		} catch (SAXException sax) {
 			sax.printStackTrace();
+			return false;
 		} catch (IOException io) {
 			io.printStackTrace();
+			return false;
 		}
 	}
 
 	// Utility method to add a filter to an existing XML file
-	public static void addFilter(String keyword){
+	public static boolean addFilter(String keyword){
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -145,20 +151,25 @@ public class WriteXMLfile {
 			//transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.transform(source, result);
 			System.out.println("Filter added successfully");
+			return true;
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
+			return false;
 		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
+			return false;
 		} catch (SAXException sax) {
 			sax.printStackTrace();
+			return false;
 		} catch (IOException io) {
 			io.printStackTrace();
+			return false;
 		}
 	}
 
 	// Utility method to remove an user of an existing XML file
-	public static void removeUser(String username){
+	public static boolean removeUser(String username){
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -187,20 +198,25 @@ public class WriteXMLfile {
 			StreamResult result = new StreamResult(new File("config.xml"));
 			transformer.transform(source, result);
 			System.out.println("User removed successfully");
+			return true;
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
+			return false;
 		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
+			return false;
 		} catch (SAXException sax) {
 			sax.printStackTrace();
+			return false;
 		} catch (IOException io) {
 			io.printStackTrace();
+			return false;
 		}
 	}
 
 	// Utility method to remove a filter of an existing XML file
-	public static void removeFilter(String keyword) {
+	public static boolean removeFilter(String keyword) {
 		try {
 			// Instance of a DocumentBuilderFactory
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -232,55 +248,76 @@ public class WriteXMLfile {
 			StreamResult result = new StreamResult(new File("config.xml"));
 			transformer.transform(source, result);
 			System.out.println("Filter removed successfully");
+			return true;
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
+			return false;
 		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
+			return false;
 		} catch (SAXException sax) {
 			sax.printStackTrace();
+			return false;
 		} catch (IOException io) {
 			io.printStackTrace();
+			return false;
 		}
 	}
 
 	// Utility method to modify an user attribute in an existing XML file
-	private static void setUserAttribute(String username, String tag, String newValue) throws ParserConfigurationException, SAXException, IOException, TransformerException{
-		// Instance of a DocumentBuilderFactory
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+	public static boolean setUserAttribute(String username, String tag, String newValue){
+		try {
+			// Instance of a DocumentBuilderFactory
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 
-		// Use factory to get an instance of document builder
-		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			// Use factory to get an instance of document builder
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-		// Get an instance of existing document
-		Document doc = docBuilder.parse("config.xml");
-		doc.getDocumentElement().normalize();
+			// Get an instance of existing document
+			Document doc = docBuilder.parse("config.xml");
+			doc.getDocumentElement().normalize();
 
-		NodeList usersList = doc.getElementsByTagName("User");
-		//Get the user element by tag name directly
-		for (int i = 0; i < usersList.getLength(); i++) {
-			Node user = usersList.item(i);
-			Element e = (Element) user;
-			String s = e.getAttributes().getNamedItem("Id").getNodeValue();
-			if(username.equals(s)) {
-				Node node = doc.getElementsByTagName(tag).item(i);
-				if (node.getNodeName().equals(tag)) {
-					node.getFirstChild().setNodeValue(newValue) ;
+			NodeList usersList = doc.getElementsByTagName("User");
+			//Get the user element by tag name directly
+			for (int i = 0; i < usersList.getLength(); i++) {
+				Node user = usersList.item(i);
+				Element e = (Element) user;
+				String s = e.getAttributes().getNamedItem("Id").getNodeValue();
+				if(username.equals(s)) {
+					Node node = doc.getElementsByTagName(tag).item(i);
+					if (node.getNodeName().equals(tag)) {
+						node.getFirstChild().setNodeValue(newValue) ;
+					}
 				}
 			}
-		}
 
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File("config.xml"));
-		//transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.transform(source, result);
-		System.out.println("User tag value modified successfully");
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File("config.xml"));
+			//transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.transform(source, result);
+			System.out.println("User tag value modified successfully");
+			return true;
+
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+			return false;
+		} catch (TransformerException tfe) {
+			tfe.printStackTrace();
+			return false;
+		} catch (SAXException sax) {
+			sax.printStackTrace();
+			return false;
+		} catch (IOException io) {
+			io.printStackTrace();
+			return false;
+		}
 	}
 
 	// Utility method to create a user
-	private static Node createUserBDA(Document doc, String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken) {
+	public static Node createUserBDA(Document doc, String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken) {
 		Element user = doc.createElement("User");
 
 		// Set id attribute

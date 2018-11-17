@@ -1,7 +1,7 @@
 package bda;
 
 /** 
-* Saves users' attributes from the XML file 
+* Getters and setters for users' attributes
 * @author GROUP 91
 * @version 1.0
 * @since September 2018 

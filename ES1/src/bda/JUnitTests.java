@@ -11,6 +11,7 @@ class JUnitTests {
 
 	ReadEmails rEmails = new ReadEmails();
 	ReadXMLfile rXML = new ReadXMLfile();
+	WriteXMLfile wXML = new WriteXMLfile();
 	SendEmail sEmail = new SendEmail();
 	WindowMessage wMessage;
 
@@ -21,14 +22,16 @@ class JUnitTests {
 		messageArrayOne = rEmails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
 
 		@SuppressWarnings("static-access")
-		String subjectMail = rEmails.getSubject(messageArrayOne.get(0));
+		String subjectMail1 = rEmails.getSubject(messageArrayOne.get(0));
+		String subjectMail2 = rEmails.getSubject(messageArrayOne.get(5));
 		messageArrayTwo.add(messageArrayOne.get(0));
 
 		assertNotEquals(messageArrayOne, messageArrayTwo);
 		assertNotEquals(messageArrayOne.size(), messageArrayTwo.size());
-		assertEquals(messageArrayOne.size(),5);
-		assertNotEquals(subjectMail, "Exame");
-		assertEquals(subjectMail,"Inscrição universidade");
+		assertEquals(messageArrayOne.size(),6);
+		assertNotEquals(subjectMail1, "Exame");
+		assertEquals(subjectMail1,"Inscrição universidade");
+		assertEquals(subjectMail2,"Q&A Highlights for Diana Salvador");
 	}
 
 	@Test
@@ -147,7 +150,7 @@ class JUnitTests {
 		int sizeTableBeforeSortNewest = modelTable.getRowCount();
 		windDBA.sortByNewest(modelTable, null);
 		boolean sizeTableAfterSortNewest = (sizeTableBeforeSortNewest == modelTable.getRowCount());
-		assertTrue(sizeTableAfterSortNewest);	
+		assertFalse(sizeTableAfterSortNewest);	
 	}
 	
 	@Test
@@ -155,6 +158,7 @@ class JUnitTests {
 		boolean existFilter = rXML.validateFilter("universidade");
 		boolean existUser = rXML.validateUserBDA("dasra", "dasra123");
 		boolean existsFilters = (rXML.readFiltersXMLfile().size() > 0);
+		@SuppressWarnings("static-access")
 		boolean existsUsers = (rXML.readUsersXMLfile().size() > 0);
 		
 		assertTrue(existFilter);
@@ -163,4 +167,23 @@ class JUnitTests {
 		assertTrue(existsUsers);
 	}
 	
+	@Test
+	public void writeXMLFile() {
+		@SuppressWarnings("static-access")
+		boolean addUser = wXML.addUser("teste", "teste123", "teste@gmail.com", "teste123", "dpthvBBPVVsWxWituNu1CBx9h", "Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W", "1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B", "B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N", "EAADpFZBDLw5QBADta3Qw8JqjHPFlShpQHhsodQhywzIZBTfdQp5oJJMBSZBP8qQrVkaiA7fmmBFZAE5xKazkRJRzyekZBL8gnThcJ0f7RoLtaNwseHJgZCUJtYZC6yyoLS1q0ZBvgumVQMG56c1rovf5iWwZAX5jjIi4nVcwM39ZABCRZCd3HZA9TN7daJZC79HSw4kcZD");
+		@SuppressWarnings("static-access")
+		boolean addFilter = wXML.addFilter("professor");
+		@SuppressWarnings("static-access")
+		boolean removeUser = wXML.removeUser("teste");
+		@SuppressWarnings("static-access")
+		boolean removeFilter = (wXML.removeFilter("professor"));
+		@SuppressWarnings("static-access")
+		boolean setUserAtt = (wXML.setUserAttribute("iccco", "password", "teste"));
+				
+		assertTrue(addUser);
+		assertTrue(addFilter);
+		assertTrue(removeUser);
+		assertTrue(removeFilter);
+		assertTrue(setUserAtt);
+	}
 }

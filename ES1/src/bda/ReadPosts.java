@@ -23,7 +23,7 @@ public class ReadPosts {
 
 	/**
 	 * Utility method to read posts that contain specific keywords 
-	 * @param username
+	 * @param username is the BDA user
 	 * @return fbPosts, ArrayList of Post
 	 */
 	public ArrayList<Post> readPosts(String username){
@@ -54,7 +54,7 @@ public class ReadPosts {
 	}
 
 	/** 
-	 * Check for academic key words in the post
+	 * Check for academic keywords in the post
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September 

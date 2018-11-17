@@ -18,9 +18,10 @@ public class Retweet {
 
 	/**
 	 * Utility method to retweet to ISCTE tweets
-	 * @param toUser 
-	 * @param fromUser
-	 * @param tweetId
+	 * @param toUser, is ISCTE
+	 * @param fromUser, is the BDA user
+	 * @param tweetId, is the tweet identification
+	 * @param comment, is the text of the retweet
 	 * @return int, 0 = successful, 1 = failed
 	 */
 	public int retweet(String toUser, String fromUser, Long tweetId, String comment) {{

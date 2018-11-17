@@ -111,7 +111,7 @@ public class ReadEmails {
 	}
 	
 	/** 
-	 * Get the text of the email only if the type is MIME multipart, used in the getBody(Message) method
+	 * Get the text of the email if the type is MIME multipart, used in the getBody(Message) method
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September 
