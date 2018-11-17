@@ -192,4 +192,8 @@ public class WindowMessage {
 	public JButton sendM() {
 		return sendM;
 	}
+	
+	public JFrame getFrame() {
+		return windowFrame;
+	}
 }
