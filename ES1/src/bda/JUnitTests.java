@@ -107,7 +107,7 @@ class JUnitTests {
 		assertNotNull(twitter);
 		long tId = Long.parseLong("1019834231432843265");
 		int result = twitter.retweet("iscteiul", "diana.es.pl.91@gmail.com", tId, "Tweet p/ JUNIT!");
-		assertEquals(result, 1);
+		assertNotEquals(result, 0);
 	}
 	
 	@Test
