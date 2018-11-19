@@ -559,13 +559,15 @@ public class WindowDBA {
 		try {
 			for(GenericMessage m: genericMessages) {
 				date = df.parse(m.getDateM());
-				dateArray.add(date);
+				if(!dateArray.contains(date)) {
+					dateArray.add(date);
+				}
 			}
 			Collections.sort(dateArray);
 			System.out.println("Size" + dateArray.size());
-			indicatorFilters = 0;
 			removeRows(modelTable);
-
+			indicatorFilters = 0;
+		
 			for(Date d: dateArray) {
 				for(GenericMessage m: genericMessages) {
 					if(df.parse(m.getDateM()).equals(d)) {
@@ -604,12 +606,13 @@ public class WindowDBA {
 		try {
 			for(GenericMessage m: genericMessages) {
 				date = df.parse(m.getDateM());
-				dateArray.add(date);
-				System.out.println("Date = " + date);
+				if(!dateArray.contains(date)) {
+					dateArray.add(date);
+				}
 			}
 			Collections.sort(dateArray, Collections.reverseOrder());
-			indicatorFilters = 0;
 			removeRows(modelTable);
+			indicatorFilters = 0;
 
 			for(Date d: dateArray) {
 				for(GenericMessage m: genericMessages) {
