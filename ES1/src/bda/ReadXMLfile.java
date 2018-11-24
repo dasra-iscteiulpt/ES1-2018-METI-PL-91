@@ -19,6 +19,7 @@ public class ReadXMLfile {
 	// VARIABLES
 	static List<Attributes> usersList = new ArrayList<Attributes>();
 	List<Attributes> filtersList = new ArrayList<Attributes>();
+	static ArrayList<GenericMessage> messagesList = new ArrayList<GenericMessage>();
 	static String[] userData = new String[3];
 	static String[] twitterData = new String[4];
 	static String facebookData = new String();
@@ -88,6 +89,36 @@ public class ReadXMLfile {
 		return filtersList;
 	}
 
+
+	/** 
+	 * Read all messages included in usersBackup.xml file
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @return A list of all messages
+	 */
+	public static ArrayList<GenericMessage> readMessagesXMLfile(String username) {
+		// Make an  instance of the DocumentBuilderFactory
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			// Use the factory to take an instance of the document builder
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			// Parse using the builder to get the DOM mapping of the XML file
+			Document doc = db.parse("userBackup_" + username + ".xml");
+			doc.getDocumentElement().normalize();
+
+			// Adds the user attributes to the array
+			NodeList gmList = doc.getElementsByTagName("GM");
+			for (int i = 0; i < gmList.getLength(); i++) {
+				messagesList.add(getMessagesAttributes(gmList.item(i)));
+				System.out.println(messagesList.get(i).getTitleM());
+			}
+		} catch (SAXException | ParserConfigurationException | IOException e1) {
+			e1.printStackTrace();
+		}
+		return messagesList;
+	}
+
 	/**
 	 * Gets all the user attributes: email, user, password and service
 	 * @param node, is one of the mandatory parameters for getting user attributes
@@ -108,6 +139,24 @@ public class ReadXMLfile {
 			user.setUserAccessToken(getTagValue("userAccessToken", element));
 		}
 		return user;
+	}
+
+	/**
+	 * Gets all the messages attributes: email, user, password and service
+	 * @param node, is one of the mandatory parameters for getting user attributes
+	 * @return Returns user attributes
+	 */
+	private static GenericMessage getMessagesAttributes(Node node) {
+		GenericMessage gm = new GenericMessage("","","","","");
+		if (node.getNodeType() == Node.ELEMENT_NODE) {
+			Element element = (Element) node;
+			gm.setDateM((getTagValue("date", element)));
+			gm.setDateM(getTagValue("channel", element));
+			gm.setTitleM(getTagValue("subject", element));
+			gm.setFromM(getTagValue("from", element));
+			gm.setContentM(getTagValue("content", element));
+		}
+		return gm;
 	}
 
 	/**
