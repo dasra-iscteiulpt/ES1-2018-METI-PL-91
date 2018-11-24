@@ -139,5 +139,25 @@ public class GenericMessage {
 	public String getTitleM() {
 		return titleM;
 	}
+	public void setContentM(String content) {
+		this.contentM = content;
+	}
+
+	public void setCanalM(String canal) {
+		this.canalM = canal;
+	}
+
+	public void setDateM(String date) {
+		this.dateM = date;
+	}
+
+	public void setFromM(String from) {
+		this.fromM = from;
+	}
+
+	public void setTitleM(String title) {
+		this.titleM = title;
+	}
+	
 	
 }

@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,18 +28,18 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 /** 
-* "Bom dia Academia" content window called after a successful login
-* @author GROUP 91
-* @version 1.0
-* @since September 2018
-*/
+ * "Bom dia Academia" content window called after a successful login
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
 
 public class WindowDBA {
 
 	// VARIABLES
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
-	private ArrayList<GenericMessage> genericMessages;
+	private static ArrayList<GenericMessage> genericMessages;
 	private ArrayList<GenericMessage> messagesMail;
 	private ArrayList<GenericMessage> messagesTwitter;
 	private ArrayList<GenericMessage> messagesFacebook;
@@ -45,10 +47,14 @@ public class WindowDBA {
 	private int indicatorFilters = 0;
 	private boolean workOffline;
 	private String userDBA;
+<<<<<<< HEAD
 	private JRadioButton sortOne; // NEWEST
 	private JRadioButton sortTwo; // OLDEST
 
 	
+=======
+
+>>>>>>> branch 'master' of https://github.com/dasra-iscteiulpt/ES1-2018-METI-PL-91.git
 	// CONSTRUCTOR
 	public WindowDBA(boolean workOffline, String userDBA) {
 		windowFrame = new JFrame("Good Morning Academy!");
@@ -105,7 +111,7 @@ public class WindowDBA {
 		JCheckBoxMenuItem chkboxFacebook = new JCheckBoxMenuItem("Facebook");
 		JMenuItem about = new JMenuItem("About");
 		JMenuItem help = new JMenuItem("Help");
-		
+
 		fileMenu.add(exit);
 		filterMenu.add(editFilters);
 		servicesMenu.add(chkboxMail);
@@ -137,11 +143,11 @@ public class WindowDBA {
 		ButtonGroup sortOptions = new ButtonGroup();
 		sortOptions.add(sortOne);
 		sortOptions.add(sortTwo);
-		
+
 		panels.get(3).add(sortOne);
 		panels.get(3).add(sortTwo);
 		panels.get(3).add(chkDate);
-				
+
 		// TABLE CONFIGURATION
 		JTable tableContent = new JTable(0,6);
 		panels.get(3).add(tableContent);
@@ -149,8 +155,12 @@ public class WindowDBA {
 		modelTable = (DefaultTableModel) tableContent.getModel();
 		modelTable.addRow(new String[]{"Id", "Date", "Channel", "From", "Subject", "Content"});
 
-		if(workOffline == false) { // CHECKBOX NÃO SELECIONADA
-			getAndFillNewsOnTable(generalMenu, modelTable);
+		if(workOffline == false) { // CHECKBOX NOT SELECTED
+			try {
+				getAndFillNewsOnTable(generalMenu, modelTable);
+			} catch (Exception e) {
+				getNewsWorkingOffline();
+			}
 		} else { // CHECKBOX SELECTED
 			getNewsWorkingOffline();
 		}
@@ -192,7 +202,37 @@ public class WindowDBA {
 				windowFrame.setVisible(false);
 			}
 		});
+<<<<<<< HEAD
 		
+=======
+
+		// NEWEST ACTION (MR)
+		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if( !MR.isSelected() ) {
+					MR.setSelected(true);
+					gM.getMenu(1).getItem(1).setSelected(false);
+					sortByNewest(modelTable, gM);
+				} else {
+					gM.getMenu(1).getItem(0).setSelected(true);
+				}
+			}
+		});
+
+		// OLDEST ACTION (MO)
+		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if( !MO.isSelected() ) {
+					MO.setSelected(true);
+					gM.getMenu(1).getItem(0).setSelected(false);
+					sortByOldest(modelTable, gM);
+				} else {
+					gM.getMenu(1).getItem(1).setSelected(true);
+				}
+			}
+		});
+
+>>>>>>> branch 'master' of https://github.com/dasra-iscteiulpt/ES1-2018-METI-PL-91.git
 		// FILTERS
 		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -200,7 +240,7 @@ public class WindowDBA {
 				WindowFilter windFilter = new WindowFilter(windowFrame);
 			}
 		});
-		
+
 		// SERVICE MAIL BUTTON ACTION
 		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -208,7 +248,7 @@ public class WindowDBA {
 				fillOnTable(gM);
 			}
 		});
-		
+
 		// SERVICE TWITTER BUTTON ACTION
 		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -216,15 +256,15 @@ public class WindowDBA {
 				fillOnTable(gM);
 			}
 		});
-		
+
 		// SERVICE FACEBOOK BUTTON ACTION
 		gM.getMenu(2).getItem(2).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeRows(modelTable);
 				fillOnTable(gM);			
-				}
+			}
 		});
-		
+
 		// ABOUT BUTTON ACTION
 		gM.getMenu(3).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -530,7 +570,7 @@ public class WindowDBA {
 		ArrayList<Date> dateArray = new ArrayList<Date>();
 		int count = 1;
 		Date date = new Date();
-	
+
 		System.out.println("Hello + " + genericMessages.size());
 		try {
 			for(GenericMessage m: genericMessages) {
@@ -543,7 +583,7 @@ public class WindowDBA {
 			System.out.println("Size" + dateArray.size());
 			removeRows(modelTable);
 			indicatorFilters = 0;
-		
+
 			for(Date d: dateArray) {
 				for(GenericMessage m: genericMessages) {
 					if(df.parse(m.getDateM()).equals(d)) {
@@ -602,7 +642,7 @@ public class WindowDBA {
 						count++;
 						indicatorFilters++;
 					}
-					
+
 				}
 			}
 			System.out.println("Sort by newest");
@@ -614,64 +654,72 @@ public class WindowDBA {
 	//Method to fill the messages on the table
 	private void fillOnTable(JMenuBar gM) {
 		int count = 1;
+<<<<<<< HEAD
 	
 		boolean servMail = gM.getMenu(2).getItem(0).isSelected();
 		boolean servTwitter = gM.getMenu(2).getItem(1).isSelected();
 		boolean servFacebook = gM.getMenu(2).getItem(2).isSelected();
+=======
+
+		boolean servMail = gM.getMenu(3).getItem(0).isSelected();
+		boolean servTwitter = gM.getMenu(3).getItem(1).isSelected();
+		boolean servFacebook = gM.getMenu(3).getItem(2).isSelected();
+>>>>>>> branch 'master' of https://github.com/dasra-iscteiulpt/ES1-2018-METI-PL-91.git
 		indicatorFilters = 0;
-	
+
 		try {
-		if(servMail) {
-			System.out.print("E-Mail checked.");
-			for (GenericMessage genM: messagesMail) {
-				String dateM = genM.getDateM();
-				String channelM = genM.getCanalM();
-				String fromM = genM.getFromM();
-				String subjectM = genM.getTitleM();
-				String contentM = genM.getContentM();
+			if(servMail) {
+				System.out.print("E-Mail checked.");
+				for (GenericMessage genM: messagesMail) {
+					String dateM = genM.getDateM();
+					String channelM = genM.getCanalM();
+					String fromM = genM.getFromM();
+					String subjectM = genM.getTitleM();
+					String contentM = genM.getContentM();
 
-				genericMessages.add(genM);
-				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-				count++;
-				indicatorFilters++;
-			}			
-		} 
-		if(servTwitter) {
-			System.out.print("Twitter checked.");
-			for (GenericMessage genM: messagesTwitter) {
-				String dateM = genM.getDateM();
-				String channelM = genM.getCanalM();
-				String fromM = genM.getFromM();
-				String subjectM = genM.getTitleM();
-				String contentM = genM.getContentM();
+					genericMessages.add(genM);
+					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+					count++;
+					indicatorFilters++;
+				}			
+			} 
+			if(servTwitter) {
+				System.out.print("Twitter checked.");
+				for (GenericMessage genM: messagesTwitter) {
+					String dateM = genM.getDateM();
+					String channelM = genM.getCanalM();
+					String fromM = genM.getFromM();
+					String subjectM = genM.getTitleM();
+					String contentM = genM.getContentM();
 
-				genericMessages.add(genM);
-				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-				count++;
-				indicatorFilters++;
+					genericMessages.add(genM);
+					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+					count++;
+					indicatorFilters++;
 
+				}
 			}
-		}
-		if(servFacebook) {
-			System.out.print("Facebook checked.");
-			for (GenericMessage genM: messagesFacebook) {
-				String dateM = genM.getDateM();
-				String channelM = genM.getCanalM();
-				String fromM = genM.getFromM();
-				String subjectM = genM.getTitleM();
-				String contentM = genM.getContentM();
-				genericMessages.add(genM);
-				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-				count++;
-				indicatorFilters++;
-
+			if(servFacebook) {
+				System.out.print("Facebook checked.");
+				for (GenericMessage genM: messagesFacebook) {
+					String dateM = genM.getDateM();
+					String channelM = genM.getCanalM();
+					String fromM = genM.getFromM();
+					String subjectM = genM.getTitleM();
+					String contentM = genM.getContentM();
+					genericMessages.add(genM);
+					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+					count++;
+					indicatorFilters++;
+				}
 			}
-		}
+			WriteXMLfile.writeMessage("dasra");
+			ReadXMLfile.readMessagesXMLfile("dasra");
 		} catch(Exception e) {
 			System.out.print("Error in reading emails: " + e.toString());
 		}		
 	}
-	
+
 	/** 
 	 * Auxiliary method to control date filters
 	 * @author GROUP 91
@@ -686,27 +734,27 @@ public class WindowDBA {
 			System.out.println("Row " + i + " deleted.");
 		}
 	}
-	
+
 	private void getNewsWorkingOffline() {
-		
+
 	}
-	
+
 	public ArrayList<GenericMessage> getGMemail() {
 		return messagesMail;
 	}
-	
+
 	public ArrayList<GenericMessage> getGMtweets() {
 		return messagesTwitter;
 	}
-	
+
 	public ArrayList<GenericMessage> getGMposts() {
 		return messagesFacebook;
 	}
-	
-	public ArrayList<GenericMessage> getGM() {
+
+	public static ArrayList<GenericMessage> getGM() {
 		return genericMessages;
 	}
-	
+
 	public DefaultTableModel getModelTable() {
 		return modelTable;
 	}

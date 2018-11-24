@@ -1,6 +1,7 @@
 package bda;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,7 +27,6 @@ import org.xml.sax.SAXException;
  */
 
 public class WriteXMLfile {
-
 
 	public static void main(String argv[]) throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
@@ -86,6 +86,47 @@ public class WriteXMLfile {
 			tfe.printStackTrace();
 		}
 	}
+
+	/**
+	 * Utility method to write an XML with all the messages
+	 */
+	public static void writeMessage(String username){
+		try {
+			// Instance of a DocumentBuilderFactory
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+
+			// Use factory to get an instance of document builder
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+			// Message elements
+			Document doc = docBuilder.newDocument();
+
+			// Add the new message node
+			Element userElement = doc.createElement("Message");
+			doc.appendChild(userElement);
+
+			// Add the new message
+			ArrayList<GenericMessage> gm = WindowDBA.getGM(); 
+			for (int i = 0; i < gm.size(); i++) {
+				userElement.appendChild(createMessage(doc, gm.get(i).getDateM(), gm.get(i).getCanalM(), gm.get(i).getFromM(), gm.get(i).getTitleM(), gm.get(i).getContentM()));
+				System.out.println(gm.get(i));
+			}
+
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File("userBackup_" + username + ".xml"));
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.transform(source, result);
+			System.out.println("XML file updated successfully");
+
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (TransformerException tfe) {
+			tfe.printStackTrace();
+		}
+	}
+
 	/**
 	 * Utility method to add an user to an existing XML file
 	 * @param username, is one of the mandatory parameters for adding an user
@@ -403,6 +444,37 @@ public class WriteXMLfile {
 	}
 
 	/**
+	 * Utility method to create a message
+	 * @param doc, is one of the mandatory parameters for creating a message
+	 * @param date, is one of the mandatory parameters for creating a message
+	 * @param channel, is one of the mandatory parameters for creating a message
+	 * @param from, is one of the mandatory parameters for creating a message
+	 * @param subject, is one of the mandatory parameters for creating a message
+	 * @param content, is one of the mandatory parameters for creating a message
+	 * @return Returns an user Node
+	 */
+	public static Node createMessage(Document doc, String date, String channel, String from, String subject, String content) {
+		Element user = doc.createElement("GM");
+
+		// Create date element
+		user.appendChild(getMessageElements(doc, user, "date", date));
+
+		// Create channel element
+		user.appendChild(getMessageElements(doc, user, "channel", channel));
+
+		// Create from element
+		user.appendChild(getMessageElements(doc, user, "from", from));
+
+		// Create subject element
+		user.appendChild(getMessageElements(doc, user, "subject", subject));
+
+		// Create content element
+		user.appendChild(getMessageElements(doc, user, "content", content));
+
+		return user;
+	}
+
+	/**
 	 * Utility method to create user element
 	 * @param doc, is one of the mandatory parameters for getting an element
 	 * @param element, is one of the mandatory parameters for getting an element
@@ -411,6 +483,20 @@ public class WriteXMLfile {
 	 * @return Returns an element Node  
 	 */
 	private static Node getUserElements(Document doc, Element element, String name, String value) {
+		Element node = doc.createElement(name);
+		node.appendChild(doc.createTextNode(value));
+		return node;
+	}
+
+	/**
+	 * Utility method to create message element
+	 * @param doc, is one of the mandatory parameters for getting an element
+	 * @param element, is one of the mandatory parameters for getting an element
+	 * @param name, is one of the mandatory parameters for getting an element
+	 * @param value, is one of the mandatory parameters for getting an element
+	 * @return Returns an element Node  
+	 */
+	private static Node getMessageElements(Document doc, Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));
 		return node;

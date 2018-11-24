@@ -8,16 +8,20 @@ package bda;
 */
 
 public class Attributes {
-
+	
 	private String email;
 	private String username;
 	private String password;
 	private String keyword;
 	private String passwordEmail;
+	
+	/** Twitter tokens */
 	private String OAuthConsumerKey;
 	private String OAuthConsumerSecret;
 	private String OAuthAccessToken;
 	private String OAuthAccessTokenSecret;
+	
+	/** Facebook tokens */
 	private String userAccessToken;
 
 	public String getEmail() {
