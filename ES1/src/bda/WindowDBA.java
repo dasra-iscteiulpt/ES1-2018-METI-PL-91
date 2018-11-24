@@ -41,15 +41,16 @@ public class WindowDBA {
 	private ArrayList<GenericMessage> messagesMail;
 	private ArrayList<GenericMessage> messagesTwitter;
 	private ArrayList<GenericMessage> messagesFacebook;
-	private ReadXMLfile rXML;
 	private DefaultTableModel modelTable;
 	private int indicatorFilters = 0;
 	private boolean workOffline;
 	private String userDBA;
+	private JRadioButton sortOne; // NEWEST
+	private JRadioButton sortTwo; // OLDEST
+
 	
 	// CONSTRUCTOR
 	public WindowDBA(boolean workOffline, String userDBA) {
-		rXML = new ReadXMLfile();
 		windowFrame = new JFrame("Good Morning Academy!");
 		genericMessages = new ArrayList<GenericMessage>();
 		this.workOffline = workOffline;
@@ -94,13 +95,10 @@ public class WindowDBA {
 		// MENU CONFIGURATION
 		JMenuBar generalMenu = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
-		JMenu sortMenu = new JMenu("Sort");
 		JMenu filterMenu = new JMenu("Filters");
 		JMenu servicesMenu = new JMenu("Services");
 		JMenu aboutMenu = new JMenu("More");
 		JMenuItem exit = new JMenuItem("Exit");
-		JRadioButtonMenuItem newest = new JRadioButtonMenuItem("Newest");
-		JRadioButtonMenuItem oldest = new JRadioButtonMenuItem("Oldest");
 		JMenuItem editFilters = new JMenuItem("Edit");
 		JCheckBoxMenuItem chkboxMail = new JCheckBoxMenuItem("E-Mail");
 		JCheckBoxMenuItem chkboxTwitter = new JCheckBoxMenuItem("Twitter");
@@ -109,8 +107,6 @@ public class WindowDBA {
 		JMenuItem help = new JMenuItem("Help");
 		
 		fileMenu.add(exit);
-		sortMenu.add(newest);
-		sortMenu.add(oldest);
 		filterMenu.add(editFilters);
 		servicesMenu.add(chkboxMail);
 		chkboxMail.setSelected(true);
@@ -121,15 +117,14 @@ public class WindowDBA {
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		generalMenu.add(fileMenu);
-		generalMenu.add(sortMenu);
 		generalMenu.add(filterMenu);
 		generalMenu.add(servicesMenu);
 		generalMenu.add(aboutMenu);
 		windowFrame.add(generalMenu, BorderLayout.NORTH);
 
 		// RADIO BUTTON, COMBOBOX & CHECKBOX CONFIGURATION		
-		JRadioButton sortOne = new JRadioButton("Newest");
-		JRadioButton sortTwo = new JRadioButton("Oldest");
+		sortOne = new JRadioButton("Newest");
+		sortTwo = new JRadioButton("Oldest");
 
 		JComboBox<String> chkDate = new JComboBox<String>();
 
@@ -197,35 +192,9 @@ public class WindowDBA {
 				windowFrame.setVisible(false);
 			}
 		});
-
-		// NEWEST ACTION (MR)
-		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if( !MR.isSelected() ) {
-					MR.setSelected(true);
-					gM.getMenu(1).getItem(1).setSelected(false);
-					sortByNewest(modelTable, gM);
-				} else {
-					gM.getMenu(1).getItem(0).setSelected(true);
-				}
-			}
-		});
-
-		// OLDEST ACTION (MO)
-		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if( !MO.isSelected() ) {
-					MO.setSelected(true);
-					gM.getMenu(1).getItem(0).setSelected(false);
-					sortByOldest(modelTable, gM);
-				} else {
-					gM.getMenu(1).getItem(1).setSelected(true);
-				}
-			}
-		});
 		
 		// FILTERS
-		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
+		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unused")
 				WindowFilter windFilter = new WindowFilter(windowFrame);
@@ -233,7 +202,7 @@ public class WindowDBA {
 		});
 		
 		// SERVICE MAIL BUTTON ACTION
-		gM.getMenu(3).getItem(0).addActionListener(new ActionListener() {
+		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeRows(modelTable);
 				fillOnTable(gM);
@@ -241,7 +210,7 @@ public class WindowDBA {
 		});
 		
 		// SERVICE TWITTER BUTTON ACTION
-		gM.getMenu(3).getItem(1).addActionListener(new ActionListener() {
+		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeRows(modelTable);
 				fillOnTable(gM);
@@ -249,7 +218,7 @@ public class WindowDBA {
 		});
 		
 		// SERVICE FACEBOOK BUTTON ACTION
-		gM.getMenu(3).getItem(2).addActionListener(new ActionListener() {
+		gM.getMenu(2).getItem(2).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeRows(modelTable);
 				fillOnTable(gM);			
@@ -257,7 +226,7 @@ public class WindowDBA {
 		});
 		
 		// ABOUT BUTTON ACTION
-		gM.getMenu(4).getItem(0).addActionListener(new ActionListener() {
+		gM.getMenu(3).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
 				String infoUC = "Software Engineering I - Teacher Vitor Basto Fernandes";
@@ -269,7 +238,7 @@ public class WindowDBA {
 		});
 
 		// HELP BUTTON ACTION
-		gM.getMenu(4).getItem(1).addActionListener(new ActionListener() {
+		gM.getMenu(3).getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String lineSep = System.lineSeparator();
 				String infoHelp = "Help page:" + lineSep + "Please check the JavaDoc documentation for further details about the software.";
@@ -392,6 +361,8 @@ public class WindowDBA {
 		} catch (Exception e) {
 			System.out.print("Error in filtering by hour: " + e.toString());
 		}
+		sortOne.setEnabled(false);
+		sortTwo.setEnabled(false);
 	}
 
 	/** 
@@ -431,6 +402,8 @@ public class WindowDBA {
 		} catch (Exception e) {
 			System.out.print("Error in filtering by hour: " + e.toString());
 		}
+		sortOne.setEnabled(false);
+		sortTwo.setEnabled(false);
 	}
 
 	/** 
@@ -444,11 +417,8 @@ public class WindowDBA {
 		removeRows(modelTable);
 		Calendar c = Calendar.getInstance();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
 		indicatorFilters = 0;
-
 		int count = 1;
-
 		try {
 			for (GenericMessage m: genericMessages) {
 				c.setTime(new Date());
@@ -471,6 +441,8 @@ public class WindowDBA {
 		} catch (Exception e) {
 			System.out.print("Error in filtering by hour: " + e.toString());
 		}
+		sortOne.setEnabled(false);
+		sortTwo.setEnabled(false);
 	}
 
 	/** 
@@ -509,6 +481,8 @@ public class WindowDBA {
 
 			System.out.print("Error in filtering by hour: " + e.toString());
 		}
+		sortOne.setEnabled(false);
+		sortTwo.setEnabled(false);
 	}
 
 	/** 
@@ -539,6 +513,8 @@ public class WindowDBA {
 		} catch (Exception e) {
 			System.out.print("Error in filtering by hour: " + e.toString());
 		}
+		sortOne.setEnabled(true);
+		sortTwo.setEnabled(true);
 	}
 
 	/** 
@@ -639,9 +615,9 @@ public class WindowDBA {
 	private void fillOnTable(JMenuBar gM) {
 		int count = 1;
 	
-		boolean servMail = gM.getMenu(3).getItem(0).isSelected();
-		boolean servTwitter = gM.getMenu(3).getItem(1).isSelected();
-		boolean servFacebook = gM.getMenu(3).getItem(2).isSelected();
+		boolean servMail = gM.getMenu(2).getItem(0).isSelected();
+		boolean servTwitter = gM.getMenu(2).getItem(1).isSelected();
+		boolean servFacebook = gM.getMenu(2).getItem(2).isSelected();
 		indicatorFilters = 0;
 	
 		try {

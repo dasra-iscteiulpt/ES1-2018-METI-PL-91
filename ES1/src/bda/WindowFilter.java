@@ -4,9 +4,11 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,14 +26,18 @@ public class WindowFilter {
 	// VARIABLES
 	private JFrame windowFilter;
 	private ArrayList<JPanel> panels;
-	private JComboBox<String> comboFilters;
+	private JList<String> listFilters;
+    private DefaultListModel listModel;
+
 	private ReadXMLfile rXML;
 	private JFrame windowDBA;
 
 	// CONSTRUCTOR
 	public WindowFilter(JFrame windowDBA) {
 		this.windowDBA = windowDBA;
-		comboFilters = new JComboBox<String>(); 	
+		listFilters = new JList<String>();
+		listModel = new DefaultListModel();
+		listFilters.setModel(listModel);
 		rXML = new ReadXMLfile();
 		windowFilter = new JFrame("Filters");
 		configWindow();
@@ -76,7 +82,7 @@ public class WindowFilter {
 		JButton btNcancel = new JButton("Cancel");
 		JButton btNremove = new JButton("Remove");
 		
-		panelCenter.add(comboFilters);
+		panelCenter.add(listFilters);
 		fillFilters();
 
 		panels.get(0).add(btNadd);
@@ -88,14 +94,16 @@ public class WindowFilter {
 			public void actionPerformed(ActionEvent e) {
 				String filter = JOptionPane.showInputDialog(null, "Please add the filter:");
 				if(filter != null) {
-					if(!filter.isEmpty()) {
+					if(!filter.isEmpty() && listModel.size() < 10) {
 						if(!rXML.validateFilter(filter)) {
 							WriteXMLfile.addFilter(filter);
 							JOptionPane.showMessageDialog(null, "Filter " + filter + " added.");
-							comboFilters.addItem(filter);
+							listModel.addElement(filter);
 						} else {
 							JOptionPane.showMessageDialog(null, "The filter already exists.");
 						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Filtro vazio ou tamanho máximo atingido!");
 					}
 				}
 			}
@@ -104,10 +112,10 @@ public class WindowFilter {
 		// BUTTON REMOVE
 		btNremove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String itemSelected = comboFilters.getSelectedItem().toString();
+				String itemSelected = listFilters.getSelectedValue();
 				WriteXMLfile.removeFilter(itemSelected);
 				JOptionPane.showMessageDialog(null, "Filter " + itemSelected + " removed.");
-				comboFilters.removeItem(itemSelected);
+				listModel.removeElement(itemSelected);
 			}
 		});
 		
@@ -120,7 +128,7 @@ public class WindowFilter {
 		});
 		
 		// WINDOW FRAME CONFIGURATION
-		windowFilter.setSize(250, 120);
+		windowFilter.setSize(250, 270);
 		windowFilter.setLocationRelativeTo(null);
 		windowFilter.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		windowFilter.setResizable(false);
@@ -135,13 +143,13 @@ public class WindowFilter {
 	
 
 	public void fillFilters() {
-		comboFilters.removeAllItems();
+		listModel.removeAllElements();
 		for(Attributes filter: rXML.readFiltersXMLfile()) {
-			comboFilters.addItem(filter.getKeyword());
+			listModel.addElement(filter.getKeyword());
 		}
 	}
 	
-	public JComboBox<String> getComboBox() {
-		return comboFilters;
+	public DefaultListModel getListModel() {
+		return listModel;
 	}
 }

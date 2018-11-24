@@ -89,8 +89,8 @@ class JUnitTests {
 		WindowDBA windDBA = new WindowDBA(false, "dasra");
 		WindowFilter windF = new WindowFilter(windDBA.getFrame());
 		windF.fillFilters();
-		windF.getComboBox().addItem("ISCTE");
-		assertNotEquals(windF.getComboBox().getItemAt(0), "ISCTE");
+		windF.getListModel().addElement("ISCTE");
+		assertNotEquals(windF.getListModel().get(0), "ISCTE");
 	}
 	
 	@Test
