@@ -3,12 +3,13 @@ package bda;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,9 +21,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -47,20 +49,17 @@ public class WindowDBA {
 	private int indicatorFilters = 0;
 	private boolean workOffline;
 	private String userDBA;
-<<<<<<< HEAD
 	private JRadioButton sortOne; // NEWEST
 	private JRadioButton sortTwo; // OLDEST
+	private Font textFont;
 
-	
-=======
-
->>>>>>> branch 'master' of https://github.com/dasra-iscteiulpt/ES1-2018-METI-PL-91.git
 	// CONSTRUCTOR
 	public WindowDBA(boolean workOffline, String userDBA) {
 		windowFrame = new JFrame("Good Morning Academy!");
 		genericMessages = new ArrayList<GenericMessage>();
 		this.workOffline = workOffline;
 		this.userDBA = userDBA;
+		textFont = new Font("Calibri", Font.BOLD, 12);
 		startConfigWindow();
 		endConfigWindow();
 	}
@@ -91,7 +90,7 @@ public class WindowDBA {
 	 */
 	private void startConfigWindow() {
 		addPanels();
-		windowFrame.setSize(500, 700);
+		windowFrame.setSize(500, 530);
 		// JPANEL CONFIGURATION IN THE WINDOW FRAME
 		windowFrame.add(panels.get(0), BorderLayout.SOUTH);
 		windowFrame.add(panels.get(1), BorderLayout.WEST);
@@ -150,8 +149,14 @@ public class WindowDBA {
 
 		// TABLE CONFIGURATION
 		JTable tableContent = new JTable(0,6);
+	
+		//tableContent.setAutoscrolls(true);
+		tableContent.setFont(textFont);
 		panels.get(3).add(tableContent);
-
+		JScrollPane scroll = new JScrollPane(tableContent);
+		panels.get(3).add(scroll);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	        
 		modelTable = (DefaultTableModel) tableContent.getModel();
 		modelTable.addRow(new String[]{"Id", "Date", "Channel", "From", "Subject", "Content"});
 
@@ -202,37 +207,7 @@ public class WindowDBA {
 				windowFrame.setVisible(false);
 			}
 		});
-<<<<<<< HEAD
-		
-=======
 
-		// NEWEST ACTION (MR)
-		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if( !MR.isSelected() ) {
-					MR.setSelected(true);
-					gM.getMenu(1).getItem(1).setSelected(false);
-					sortByNewest(modelTable, gM);
-				} else {
-					gM.getMenu(1).getItem(0).setSelected(true);
-				}
-			}
-		});
-
-		// OLDEST ACTION (MO)
-		gM.getMenu(1).getItem(1).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if( !MO.isSelected() ) {
-					MO.setSelected(true);
-					gM.getMenu(1).getItem(0).setSelected(false);
-					sortByOldest(modelTable, gM);
-				} else {
-					gM.getMenu(1).getItem(1).setSelected(true);
-				}
-			}
-		});
-
->>>>>>> branch 'master' of https://github.com/dasra-iscteiulpt/ES1-2018-METI-PL-91.git
 		// FILTERS
 		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -654,19 +629,12 @@ public class WindowDBA {
 	//Method to fill the messages on the table
 	private void fillOnTable(JMenuBar gM) {
 		int count = 1;
-<<<<<<< HEAD
 	
 		boolean servMail = gM.getMenu(2).getItem(0).isSelected();
 		boolean servTwitter = gM.getMenu(2).getItem(1).isSelected();
 		boolean servFacebook = gM.getMenu(2).getItem(2).isSelected();
-=======
-
-		boolean servMail = gM.getMenu(3).getItem(0).isSelected();
-		boolean servTwitter = gM.getMenu(3).getItem(1).isSelected();
-		boolean servFacebook = gM.getMenu(3).getItem(2).isSelected();
->>>>>>> branch 'master' of https://github.com/dasra-iscteiulpt/ES1-2018-METI-PL-91.git
+		
 		indicatorFilters = 0;
-
 		try {
 			if(servMail) {
 				System.out.print("E-Mail checked.");
@@ -681,7 +649,7 @@ public class WindowDBA {
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
 					indicatorFilters++;
-				}			
+				}
 			} 
 			if(servTwitter) {
 				System.out.print("Twitter checked.");
@@ -691,12 +659,11 @@ public class WindowDBA {
 					String fromM = genM.getFromM();
 					String subjectM = genM.getTitleM();
 					String contentM = genM.getContentM();
-
+					
 					genericMessages.add(genM);
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
 					indicatorFilters++;
-
 				}
 			}
 			if(servFacebook) {
@@ -707,6 +674,7 @@ public class WindowDBA {
 					String fromM = genM.getFromM();
 					String subjectM = genM.getTitleM();
 					String contentM = genM.getContentM();
+	
 					genericMessages.add(genM);
 					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 					count++;
@@ -717,7 +685,15 @@ public class WindowDBA {
 			ReadXMLfile.readMessagesXMLfile("dasra");
 		} catch(Exception e) {
 			System.out.print("Error in reading emails: " + e.toString());
-		}		
+		}
+		
+		if(servMail && servTwitter && servFacebook) {
+			sortOne.setEnabled(true);
+			sortTwo.setEnabled(true);
+		} else {
+			sortOne.setEnabled(false);
+			sortTwo.setEnabled(false);
+		}
 	}
 
 	/** 

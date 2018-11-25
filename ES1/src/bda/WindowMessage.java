@@ -1,6 +1,7 @@
 package bda;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class WindowMessage {
 	private JTextArea contentM;
 	private JButton sendM;
 	private String userDBA;
+	private Font textFont;
 	private ArrayList<JPanel> panels;
 
 	public WindowMessage(String date, String from, String title, String content, String canal, String userDBA) {
@@ -30,6 +32,7 @@ public class WindowMessage {
 		fromM = new JLabel("From: " + from);
 		titleM = new JLabel("Subject: " + title);
 		contentM = new JTextArea(content);
+		textFont = new Font("Calibri", Font.BOLD, 12);
 		this.userDBA = userDBA;
 		if(canal.equals("E-Mail")) {
 			sendM = new JButton("Reply");
@@ -103,7 +106,9 @@ public class WindowMessage {
 
 					// JOPTION PANE
 					JTextField emailTo = new JTextField();
+					emailTo.setFont(textFont);
 					JTextField contentTo = new JTextField();
+					contentTo.setFont(textFont);
 
 					String fromMOnlyEmail = fromM.getText().split("<")[1];
 					String emailToFinal = fromMOnlyEmail.substring(0, fromMOnlyEmail.length()-1).toLowerCase();
@@ -140,6 +145,7 @@ public class WindowMessage {
 					}
 				} else if(windowFrame.getTitle().equals("Twitter")) {
 					JTextField retweet = new JTextField();
+					retweet.setFont(textFont);
 					Object[] f = {"Retweet message:", retweet};
 					int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
 					String retweetText = retweet.getText().toString();
@@ -163,6 +169,7 @@ public class WindowMessage {
 					}
 				} else if(windowFrame.getTitle().equals("Facebook")) {
 					JTextField comment = new JTextField();
+					comment.setFont(textFont);
 					Object[] f = {"Comment: ", comment};
 					int okOrCancel = JOptionPane.showConfirmDialog(null, f, "This is a header", JOptionPane.OK_CANCEL_OPTION);
 					String commentText = comment.getText().toString();

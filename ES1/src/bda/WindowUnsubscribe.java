@@ -2,12 +2,12 @@ package bda;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,11 +29,13 @@ public class WindowUnsubscribe {
 	private JFrame windowUnsubscribe;
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
+	private Font textFont;
 	ReadXMLfile r = new ReadXMLfile();
 
 	// CONSTRUCTOR
 	public WindowUnsubscribe(JFrame windowLogin) {
 		this.windowLogin = windowLogin;
+		textFont = new Font("Calibri", Font.BOLD, 12);
 		windowUnsubscribe = new JFrame("Unsubscribe");
 		configWindow();
 	}
@@ -74,9 +76,11 @@ public class WindowUnsubscribe {
 		JLabel labEmail = new JLabel("@iscte-iul.pt");
 
 		JTextField userName = new JTextField();
+		userName.setFont(textFont);
 		userName.setPreferredSize(new Dimension(130,20));
 
 		JPasswordField passWord = new JPasswordField();
+		passWord.setFont(textFont);
 		passWord.setPreferredSize(new Dimension(204,20));
 
 		JButton btNunsub = new JButton("Unsubscribe");

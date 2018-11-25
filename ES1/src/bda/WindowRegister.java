@@ -2,12 +2,12 @@ package bda;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,11 +28,13 @@ public class WindowRegister {
 	private JFrame windowRegister;
 	private JFrame windowLogin;
 	private ArrayList<JPanel> panels;
+	private Font textFont;
 	ReadXMLfile r = new ReadXMLfile();
 
 	// CONSTRUCTOR
 	public WindowRegister(JFrame windowLogin) {
 		this.windowLogin = windowLogin;
+		textFont = new Font("Calibri", Font.BOLD, 12);
 		windowRegister = new JFrame("Register");
 		configWindow();
 	}
@@ -87,42 +89,51 @@ public class WindowRegister {
 		r.setupRegister("dasra");
 
 		JTextField userName = new JTextField();
+		userName.setFont(textFont);
 		userName.setPreferredSize(new Dimension(130,20));
-
+		
 		JPasswordField passWord = new JPasswordField();
+		passWord.setFont(textFont);
 		passWord.setPreferredSize(new Dimension(204,20));
 
 		JTextField email = new JTextField();
+		email.setFont(textFont);
 		email.setText(ReadXMLfile.userData[0]);
 		email.setPreferredSize(new Dimension(180,20));
 		email.setEditable(false);
 
 		JPasswordField emailPassWord = new JPasswordField();
+		emailPassWord.setFont(textFont);
 		emailPassWord.setText(ReadXMLfile.userData[1]);
 		emailPassWord.setPreferredSize(new Dimension(210,20));
 		emailPassWord.setEditable(false);
 
 		JTextField oneTokenTwitter = new JTextField();
+		oneTokenTwitter.setFont(textFont);
 		oneTokenTwitter.setText(ReadXMLfile.twitterData[0]);
 		oneTokenTwitter.setPreferredSize(new Dimension(210,20));
 		oneTokenTwitter.setEditable(false);
 
 		JTextField twoTokenTwitter = new JTextField();
+		twoTokenTwitter.setFont(textFont);
 		twoTokenTwitter.setText(ReadXMLfile.twitterData[1]);
 		twoTokenTwitter.setPreferredSize(new Dimension(210,20));
 		twoTokenTwitter.setEditable(false);
 
 		JTextField threeTokenTwitter = new JTextField();
+		threeTokenTwitter.setFont(textFont);
 		threeTokenTwitter.setText(ReadXMLfile.twitterData[2]);
 		threeTokenTwitter.setPreferredSize(new Dimension(210,20));
 		threeTokenTwitter.setEditable(false);
 
 		JTextField fourTokenTwitter = new JTextField();
+		fourTokenTwitter.setFont(textFont);
 		fourTokenTwitter.setText(ReadXMLfile.twitterData[3]);
 		fourTokenTwitter.setPreferredSize(new Dimension(210,20));
 		fourTokenTwitter.setEditable(false);
 
 		JTextField oneTokenFacebook = new JTextField();
+		oneTokenFacebook.setFont(textFont);
 		oneTokenFacebook.setText(ReadXMLfile.facebookData);
 		oneTokenFacebook.setPreferredSize(new Dimension(210,20));
 		oneTokenFacebook.setEditable(false);

@@ -2,6 +2,7 @@ package bda;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -24,11 +25,13 @@ public class WindowLogin {
 	private ReadXMLfile r = new ReadXMLfile();
 	private String userDBA;
 	private JCheckBox chkOffline;
+	private Font textFont;
 	
 	// CONSTRUCTOR
 	public WindowLogin() {
 		chkOffline = new JCheckBox("Offline");
 		windowLogin = new JFrame("Login");
+		textFont = new Font("Calibri", Font.BOLD, 12);
 		configWindow();
 	}
 
@@ -74,9 +77,12 @@ public class WindowLogin {
 		JLabel labInfoUser = new JLabel("Username: ");
 		JLabel labInfoPw = new JLabel("Password: ");
 		
-		JTextField userName = new JTextField();
+		JTextField userName = new JTextField();	
+		userName.setFont(textFont);
 		userName.setPreferredSize(new Dimension(130,20));
+		
 		JPasswordField passWord = new JPasswordField();
+		passWord.setFont(textFont);
 		passWord.setPreferredSize(new Dimension(204,20));
 		JLabel labEmail = new JLabel("@iscte-iul.pt");
 		JButton btNlog = new JButton("Login");
@@ -90,7 +96,6 @@ public class WindowLogin {
 
 		panelCenter.add(labInfoPw);
 		panelCenter.add(passWord);
-		
 		panelCenter.add(labInfoRegister);
 
 		panels.get(0).add(btNlog);
