@@ -52,13 +52,15 @@ public class WindowDBA {
 	private JRadioButton sortOne; // NEWEST
 	private JRadioButton sortTwo; // OLDEST
 	private Font textFont;
-
+	private ReadXMLfile rXML;
+	
 	// CONSTRUCTOR
 	public WindowDBA(boolean workOffline, String userDBA) {
 		windowFrame = new JFrame("Good Morning Academy!");
 		genericMessages = new ArrayList<GenericMessage>();
 		this.workOffline = workOffline;
 		this.userDBA = userDBA;
+		rXML = new ReadXMLfile();
 		textFont = new Font("Calibri", Font.BOLD, 12);
 		startConfigWindow();
 		endConfigWindow();
@@ -163,6 +165,7 @@ public class WindowDBA {
 		if(workOffline == false) { // CHECKBOX NOT SELECTED
 			try {
 				getAndFillNewsOnTable(generalMenu, modelTable);
+				WriteXMLfile.writeMessage(userDBA);
 			} catch (Exception e) {
 				getNewsWorkingOffline();
 			}
@@ -272,7 +275,7 @@ public class WindowDBA {
 						String titleM = TC.getModel().getValueAt(TC.getSelectedRow(),4).toString();
 						String contentM = TC.getModel().getValueAt(TC.getSelectedRow(),5).toString();
 						@SuppressWarnings("unused")
-						WindowMessage windMess = new WindowMessage(dateM, fromM, titleM, contentM, canalM, userDBA);
+						WindowMessage windMess = new WindowMessage(dateM, fromM, titleM, contentM, canalM, userDBA, workOffline);
 					}
 				}
 			}
@@ -712,7 +715,28 @@ public class WindowDBA {
 	}
 
 	private void getNewsWorkingOffline() {
+		int count = 1;
+		indicatorFilters = 0;
+		ArrayList<GenericMessage> listGenM = rXML.readMessagesXMLfile(userDBA);
+		for (GenericMessage genM: listGenM) {
+			System.out.println("------------------");
+			System.out.println(genM.getDateM());
+			
+			System.out.println(genM.getCanalM());
+			System.out.println(genM.getFromM());
+			System.out.println(genM.getTitleM());
+			System.out.println(genM.getContentM());
+			String dateM = "";
+			String channelM = genM.getDateM();
+			String fromM = genM.getFromM();
+			String subjectM = genM.getTitleM();
+			String contentM = genM.getContentM();
 
+			//genericMessages.add(genM);
+			modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+			count++;
+			indicatorFilters++;
+		}
 	}
 
 	public ArrayList<GenericMessage> getGMemail() {

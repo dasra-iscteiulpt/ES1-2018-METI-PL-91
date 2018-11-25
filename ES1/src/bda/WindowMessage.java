@@ -26,7 +26,7 @@ public class WindowMessage {
 	private Font textFont;
 	private ArrayList<JPanel> panels;
 
-	public WindowMessage(String date, String from, String title, String content, String canal, String userDBA) {
+	public WindowMessage(String date, String from, String title, String content, String canal, String userDBA, boolean workOffline) {
 		windowFrame = new JFrame(canal);
 		dateM = new JLabel("Date: " + date);
 		fromM = new JLabel("From: " + from);
@@ -40,6 +40,9 @@ public class WindowMessage {
 			sendM = new JButton("Retweet");
 		} else if(canal.equals("Facebook")) {
 			sendM = new JButton("Comment");
+		}
+		if(workOffline) {
+			sendM.setEnabled(false);
 		}
 		configWindow();
 		endConfigWindow();
