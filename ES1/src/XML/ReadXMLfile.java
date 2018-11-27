@@ -1,4 +1,4 @@
-package bda;
+package XML;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,18 +12,20 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import Others.Attributes;
+import Others.GenericMessage;
+
 import java.util.List;
 
 public class ReadXMLfile {
 
 	// VARIABLES
-	static List<Attributes> usersList = new ArrayList<Attributes>();
-	List<Attributes> filtersList = new ArrayList<Attributes>();
-	static ArrayList<GenericMessage> messagesList = new ArrayList<GenericMessage>();
-	static String[] userData = new String[3];
-	static String[] twitterData = new String[4];
-	static String facebookData = new String();
-	static ReadEmails r = new ReadEmails();
+	private static List<Attributes> usersList = new ArrayList<Attributes>();
+	private List<Attributes> filtersList = new ArrayList<Attributes>();
+	private static ArrayList<GenericMessage> messagesList = new ArrayList<GenericMessage>();
+	public static String[] userData = new String[3];
+	public static String[] twitterData = new String[4];
+	public static String facebookData = new String();
 
 	// CONSTRUCTOR
 	public ReadXMLfile() {
@@ -97,7 +99,7 @@ public class ReadXMLfile {
 	 * @since September
 	 * @return A list of all messages
 	 */
-	public static ArrayList<GenericMessage> readMessagesXMLfile(String username) {
+	public ArrayList<GenericMessage> readMessagesXMLfile(String username) {
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
@@ -150,8 +152,8 @@ public class ReadXMLfile {
 		GenericMessage gm = new GenericMessage("","","","","");
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			Element element = (Element) node;
-			gm.setDateM((getTagValue("date", element)));
-			gm.setDateM(getTagValue("channel", element));
+			gm.setDateM(getTagValue("date", element));
+			gm.setCanalM(getTagValue("channel", element));
 			gm.setTitleM(getTagValue("subject", element));
 			gm.setFromM(getTagValue("from", element));
 			gm.setContentM(getTagValue("content", element));

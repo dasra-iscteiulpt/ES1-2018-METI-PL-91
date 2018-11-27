@@ -1,4 +1,5 @@
-package bda;
+package Facebook;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,10 @@ import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Post;
+
+import Others.Attributes;
+import XML.ReadXMLfile;
+
 
 /** 
  * Read Facebook Posts

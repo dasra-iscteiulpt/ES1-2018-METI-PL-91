@@ -1,4 +1,4 @@
-package bda;
+package JUNIT;
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -6,6 +6,19 @@ import javax.mail.Message;
 import javax.swing.table.DefaultTableModel;
 
 import org.junit.jupiter.api.Test;
+
+import Email.ReadEmails;
+import Email.SendEmail;
+import Facebook.WriteComment;
+import GUI.WindowDBA;
+import GUI.WindowFilter;
+import GUI.WindowLogin;
+import GUI.WindowMessage;
+import GUI.WindowRegister;
+import GUI.WindowUnsubscribe;
+import Twitter.Retweet;
+import XML.ReadXMLfile;
+import XML.WriteXMLfile;
 
 class JUnitTests {
 
@@ -21,7 +34,6 @@ class JUnitTests {
 		ArrayList<Message> messageArrayTwo = new ArrayList<Message>();
 		messageArrayOne = rEmails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
 
-		@SuppressWarnings("static-access")
 		String subjectMail1 = rEmails.getSubject(messageArrayOne.get(0));
 		String subjectMail2 = rEmails.getSubject(messageArrayOne.get(5));
 		messageArrayTwo.add(messageArrayOne.get(0));

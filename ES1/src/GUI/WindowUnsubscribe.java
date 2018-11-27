@@ -1,4 +1,4 @@
-package bda;
+package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,6 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import XML.ReadXMLfile;
+import XML.WriteXMLfile;
 
 /** 
  * Unsubscribe window for registered users.
@@ -121,6 +124,7 @@ public class WindowUnsubscribe {
 		
 		// CLICK ON BUTTON UNBSUBSCRIBE
 		btNunsub.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "There are empty fields.");

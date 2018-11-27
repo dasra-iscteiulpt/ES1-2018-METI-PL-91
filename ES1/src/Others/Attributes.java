@@ -1,4 +1,4 @@
-package bda;
+package Others;
 
 /** 
 * Getters and setters for users' attributes

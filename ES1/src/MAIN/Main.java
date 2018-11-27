@@ -1,4 +1,6 @@
-package bda;
+package MAIN;
+
+import GUI.WindowLogin;
 
 public class Main {
 

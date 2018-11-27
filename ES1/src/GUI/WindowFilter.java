@@ -1,7 +1,6 @@
-package bda;
+package GUI;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,6 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Others.Attributes;
+import XML.ReadXMLfile;
+import XML.WriteXMLfile;
 
 /** 
  * Content filters window for registered users.
@@ -27,7 +30,7 @@ public class WindowFilter {
 	private JFrame windowFilter;
 	private ArrayList<JPanel> panels;
 	private JList<String> listFilters;
-    private DefaultListModel listModel;
+	private DefaultListModel listModel;
 
 	private ReadXMLfile rXML;
 	private JFrame windowDBA;

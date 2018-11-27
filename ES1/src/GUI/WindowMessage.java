@@ -1,4 +1,4 @@
-package bda;
+package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,6 +12,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import Email.SendEmail;
+import Facebook.WriteComment;
+import Twitter.Retweet;
+import XML.ReadXMLfile;
 
 public class WindowMessage {
 

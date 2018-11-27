@@ -1,10 +1,8 @@
-package bda;
+package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +21,14 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+
+import Email.ReadEmails;
+import Facebook.ReadPosts;
+import Others.GenericMessage;
+import Twitter.ReadTweets;
+import XML.ReadXMLfile;
+import XML.WriteXMLfile;
+
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JMenuBar;
@@ -116,11 +122,19 @@ public class WindowDBA {
 		fileMenu.add(exit);
 		filterMenu.add(editFilters);
 		servicesMenu.add(chkboxMail);
-		chkboxMail.setSelected(true);
 		servicesMenu.add(chkboxTwitter);
-		chkboxTwitter.setSelected(true);
 		servicesMenu.add(chkboxFacebook);
-		chkboxFacebook.setSelected(true);
+		
+		if(workOffline) {
+			chkboxMail.setEnabled(false);
+			chkboxTwitter.setEnabled(false);
+			chkboxFacebook.setEnabled(false);
+			editFilters.setEnabled(false);
+		} else {
+			chkboxMail.setSelected(true);
+			chkboxTwitter.setSelected(true);
+			chkboxFacebook.setSelected(true);
+		}
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		generalMenu.add(fileMenu);
@@ -685,7 +699,7 @@ public class WindowDBA {
 				}
 			}
 			WriteXMLfile.writeMessage("dasra");
-			ReadXMLfile.readMessagesXMLfile("dasra");
+			rXML.readMessagesXMLfile("dasra");
 		} catch(Exception e) {
 			System.out.print("Error in reading emails: " + e.toString());
 		}
@@ -717,22 +731,14 @@ public class WindowDBA {
 	private void getNewsWorkingOffline() {
 		int count = 1;
 		indicatorFilters = 0;
-		ArrayList<GenericMessage> listGenM = rXML.readMessagesXMLfile(userDBA);
-		for (GenericMessage genM: listGenM) {
-			System.out.println("------------------");
-			System.out.println(genM.getDateM());
-			
-			System.out.println(genM.getCanalM());
-			System.out.println(genM.getFromM());
-			System.out.println(genM.getTitleM());
-			System.out.println(genM.getContentM());
-			String dateM = "";
-			String channelM = genM.getDateM();
+
+		for (GenericMessage genM: rXML.readMessagesXMLfile(userDBA)) {
+			String dateM = genM.getDateM();
+			String channelM = genM.getCanalM();
 			String fromM = genM.getFromM();
 			String subjectM = genM.getTitleM();
 			String contentM = genM.getContentM();
-
-			//genericMessages.add(genM);
+			genericMessages.add(genM);
 			modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
 			count++;
 			indicatorFilters++;

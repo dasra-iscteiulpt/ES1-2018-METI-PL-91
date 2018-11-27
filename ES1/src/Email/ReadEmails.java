@@ -1,4 +1,4 @@
-package bda;
+package Email;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,9 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
+
+import Others.Attributes;
+import XML.ReadXMLfile;
 
 public class ReadEmails {
 
@@ -103,7 +106,7 @@ public class ReadEmails {
 	 * @param m, is the subject of the message
 	 * @return s, if the message contains academic keywords
 	 */
-	public static String getSubject(Message m) throws Exception {
+	public String getSubject(Message m) throws Exception {
 		String s="";
 		if (m.getSubject() != null)
 			s=m.getSubject();

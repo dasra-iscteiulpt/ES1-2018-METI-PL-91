@@ -1,9 +1,11 @@
-package bda;
+package Facebook;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
+
+import XML.ReadXMLfile;
 
 /** 
  * Write a comment in a specific Facebook post

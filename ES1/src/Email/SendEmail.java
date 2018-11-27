@@ -1,4 +1,4 @@
-package bda;
+package Email;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;

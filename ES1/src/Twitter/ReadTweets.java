@@ -1,8 +1,10 @@
-package bda;
+package Twitter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import Others.Attributes;
+import XML.ReadXMLfile;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;

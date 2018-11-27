@@ -1,4 +1,4 @@
-package bda;
+package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,6 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import XML.ReadXMLfile;
+import XML.WriteXMLfile;
 
 /** 
  * Registration window for new users
@@ -189,6 +192,7 @@ public class WindowRegister {
 
 		// CLICK ON BUTTON REGISTER
 		btNreg.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty() || email.getText().isEmpty() || emailPassWord.getText().toString().isEmpty() ) {
 					JOptionPane.showMessageDialog(null, "There are empty fields.");

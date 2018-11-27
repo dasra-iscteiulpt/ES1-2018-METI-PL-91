@@ -1,4 +1,4 @@
-package bda;
+package XML;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +18,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import GUI.WindowDBA;
+import Others.Attributes;
+import Others.GenericMessage;
 
 /** 
  * Write in a XML file that contains a set of attributes per user and keywords
