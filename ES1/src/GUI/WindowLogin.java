@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 
 import XML.ReadXMLfile;
 
-public class WindowLogin {
+public class WindowLogin{
 
 	// VARIABLES
 	private JFrame windowLogin;
@@ -36,7 +36,7 @@ public class WindowLogin {
 		textFont = new Font("Calibri", Font.BOLD, 12);
 		configWindow();
 	}
-
+	
 	// GETTERS
 	public JFrame getFrame() {
 		return windowLogin;
@@ -149,9 +149,17 @@ public class WindowLogin {
 					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
 						JOptionPane.showMessageDialog(null, "Login successful.");
 						userDBA = userName.getText();
-						@SuppressWarnings("unused")
-						WindowDBA w = new WindowDBA(chkOffline.isSelected(), userDBA);
+						
 						windowLogin.setVisible(false);
+						
+						/*ivo*/
+						WindowLoading windowloading = new WindowLoading();						
+						windowloading.start();
+						
+						@SuppressWarnings("unused")
+						WindowDBA w = new WindowDBA(chkOffline.isSelected(), userDBA, windowloading);
+						w.start();
+																				
 					} else {
 						JOptionPane.showMessageDialog(null, "Incorrect login. Please review the access data.");
 					}

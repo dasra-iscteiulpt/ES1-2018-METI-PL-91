@@ -42,8 +42,10 @@ import javax.swing.JOptionPane;
  * @since September 2018
  */
 
-public class WindowDBA {
+public class WindowDBA extends Thread{
 
+
+	
 	// VARIABLES
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
@@ -59,15 +61,22 @@ public class WindowDBA {
 	private JRadioButton sortTwo; // OLDEST
 	private Font textFont;
 	private ReadXMLfile rXML;
+	private WindowLoading loading;
 	
 	// CONSTRUCTOR
-	public WindowDBA(boolean workOffline, String userDBA) {
+	public WindowDBA(boolean workOffline, String userDBA, WindowLoading loading) {
+		this.loading = loading;
 		windowFrame = new JFrame("Good Morning Academy!");
 		genericMessages = new ArrayList<GenericMessage>();
 		this.workOffline = workOffline;
 		this.userDBA = userDBA;
 		rXML = new ReadXMLfile();
 		textFont = new Font("Calibri", Font.BOLD, 12);
+
+	}
+	
+	@Override
+	public void run() {
 		startConfigWindow();
 		endConfigWindow();
 	}
@@ -202,6 +211,12 @@ public class WindowDBA {
 		windowFrame.setResizable(false);
 		windowFrame.validate();
 		windowFrame.setVisible(true);
+		
+		/**
+		 * Interrupt sent to WindowLoading (gif image loading)
+		 * */
+		loading.interrupt();
+		
 	}
 
 	/** 
