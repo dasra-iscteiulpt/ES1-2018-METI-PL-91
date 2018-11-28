@@ -176,6 +176,8 @@ public class WindowDBA extends Thread{
 		// TABLE CONFIGURATION
 		JTable tableContent = new JTable(0,6);
 	
+		tableContent.setTableHeader(null); //Hides default A B C... table header
+		
 		//tableContent.setAutoscrolls(true);
 		tableContent.setFont(textFont);
 		panels.get(3).add(tableContent);
@@ -184,8 +186,8 @@ public class WindowDBA extends Thread{
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	        
 		modelTable = (DefaultTableModel) tableContent.getModel();
-		modelTable.addRow(new String[]{"Id", "Date", "Channel", "From", "Subject", "Content"});
-
+		modelTable.addRow(new String[]{"ID", "DATE", "CHANNEL", "FROM", "SUBJECT", "CONTENT"});
+		
 		if(workOffline == false) { // CHECKBOX NOT SELECTED
 			try {
 				getAndFillNewsOnTable(generalMenu, modelTable);
