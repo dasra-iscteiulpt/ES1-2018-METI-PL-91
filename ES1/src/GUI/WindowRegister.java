@@ -103,43 +103,43 @@ public class WindowRegister {
 		email.setFont(textFont);
 		email.setText(ReadXMLfile.userData[0]);
 		email.setPreferredSize(new Dimension(180,20));
-		email.setEditable(false);
+		//email.setEditable(false);
 
 		JPasswordField emailPassWord = new JPasswordField();
 		emailPassWord.setFont(textFont);
 		emailPassWord.setText(ReadXMLfile.userData[1]);
 		emailPassWord.setPreferredSize(new Dimension(210,20));
-		emailPassWord.setEditable(false);
+		//emailPassWord.setEditable(false);
 
 		JTextField oneTokenTwitter = new JTextField();
 		oneTokenTwitter.setFont(textFont);
 		oneTokenTwitter.setText(ReadXMLfile.twitterData[0]);
 		oneTokenTwitter.setPreferredSize(new Dimension(210,20));
-		oneTokenTwitter.setEditable(false);
+		//oneTokenTwitter.setEditable(false);
 
 		JTextField twoTokenTwitter = new JTextField();
 		twoTokenTwitter.setFont(textFont);
 		twoTokenTwitter.setText(ReadXMLfile.twitterData[1]);
 		twoTokenTwitter.setPreferredSize(new Dimension(210,20));
-		twoTokenTwitter.setEditable(false);
+		//twoTokenTwitter.setEditable(false);
 
 		JTextField threeTokenTwitter = new JTextField();
 		threeTokenTwitter.setFont(textFont);
 		threeTokenTwitter.setText(ReadXMLfile.twitterData[2]);
 		threeTokenTwitter.setPreferredSize(new Dimension(210,20));
-		threeTokenTwitter.setEditable(false);
+		//threeTokenTwitter.setEditable(false);
 
 		JTextField fourTokenTwitter = new JTextField();
 		fourTokenTwitter.setFont(textFont);
 		fourTokenTwitter.setText(ReadXMLfile.twitterData[3]);
 		fourTokenTwitter.setPreferredSize(new Dimension(210,20));
-		fourTokenTwitter.setEditable(false);
+		//fourTokenTwitter.setEditable(false);
 
 		JTextField oneTokenFacebook = new JTextField();
 		oneTokenFacebook.setFont(textFont);
 		oneTokenFacebook.setText(ReadXMLfile.facebookData);
 		oneTokenFacebook.setPreferredSize(new Dimension(210,20));
-		oneTokenFacebook.setEditable(false);
+		//oneTokenFacebook.setEditable(false);
 
 		JButton btNreg = new JButton("Register");
 		JButton btNcancel = new JButton("Cancel");

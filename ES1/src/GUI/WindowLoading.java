@@ -7,20 +7,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 
-
 public class WindowLoading extends Thread  {
 		
 	private JFrame window;
 	private JPanel panel;
 	
 	public WindowLoading() {
-				
 		window = new JFrame();
-		panel  = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		
 		JLabel label = new JLabel();
-		ImageIcon ii = new ImageIcon(getClass().getResource("loading_img.gif"));
+		ImageIcon ii = new ImageIcon(getClass().getResource("wedges-loading.gif"));
 		label.setIcon(ii);
 		
 		panel.add(label);
@@ -29,29 +27,21 @@ public class WindowLoading extends Thread  {
 		window.setUndecorated(true);
 		window.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 		window.validate();
-		window.setSize(441, 291);
+		window.setSize(250, 200);
 		window.setLocationRelativeTo(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setUndecorated(true);
+		window.pack();
 		window.setResizable(false);
 		window.setVisible(true);
-		
 	}
 	
 	@Override
-	public void run() {
-				
+	public void run() {	
 		while(!isInterrupted()) {
 			//Active waiting...
 		}
 		this.window.setVisible(false);
 	}
-	
-	
-	/*
-	public static void main(String[] args) {
-		new WindowLoading();
-	}
-	*/
-	
 	
 }

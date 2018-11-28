@@ -133,7 +133,7 @@ public class WindowDBA extends Thread{
 		servicesMenu.add(chkboxMail);
 		servicesMenu.add(chkboxTwitter);
 		servicesMenu.add(chkboxFacebook);
-		
+
 		if(workOffline) {
 			chkboxMail.setEnabled(false);
 			chkboxTwitter.setEnabled(false);
@@ -144,6 +144,7 @@ public class WindowDBA extends Thread{
 			chkboxTwitter.setSelected(true);
 			chkboxFacebook.setSelected(true);
 		}
+		
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		generalMenu.add(fileMenu);
@@ -278,8 +279,8 @@ public class WindowDBA extends Thread{
 				String lineSep = System.lineSeparator();
 				String infoUC = "Software Engineering I - Teacher Vitor Basto Fernandes";
 				String numberGroup = "Group 91 members:" + lineSep;
-				String infoGroup = "68092 - Diana Salvador" + lineSep + "69980 - Diogo Reis" + lineSep + "65799 - Ricardo Ferreira" + lineSep + "73422 - Ivo Carvalho";
-				String toolsProj = "Tools: GitHub, Trello and Eclipse.";
+				String infoGroup = "68092 - Diana Salvador" + lineSep + "65799 - Ricardo Ferreira" + lineSep + "73422 - Ivo Carvalho";
+				String toolsProj = "Tools: GitHub, Trello, Maven & EclEmma.";
 				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);
 			}
 		});
@@ -667,65 +668,68 @@ public class WindowDBA extends Thread{
 		boolean servFacebook = gM.getMenu(2).getItem(2).isSelected();
 		
 		indicatorFilters = 0;
+		removeRows(modelTable);
+		genericMessages.clear();
 		try {
-			if(servMail) {
-				System.out.print("E-Mail checked.");
-				for (GenericMessage genM: messagesMail) {
-					String dateM = genM.getDateM();
-					String channelM = genM.getCanalM();
-					String fromM = genM.getFromM();
-					String subjectM = genM.getTitleM();
-					String contentM = genM.getContentM();
-
-					genericMessages.add(genM);
-					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-					count++;
-					indicatorFilters++;
-				}
-			} 
-			if(servTwitter) {
-				System.out.print("Twitter checked.");
-				for (GenericMessage genM: messagesTwitter) {
-					String dateM = genM.getDateM();
-					String channelM = genM.getCanalM();
-					String fromM = genM.getFromM();
-					String subjectM = genM.getTitleM();
-					String contentM = genM.getContentM();
-					
-					genericMessages.add(genM);
-					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-					count++;
-					indicatorFilters++;
-				}
-			}
-			if(servFacebook) {
-				System.out.print("Facebook checked.");
-				for (GenericMessage genM: messagesFacebook) {
-					String dateM = genM.getDateM();
-					String channelM = genM.getCanalM();
-					String fromM = genM.getFromM();
-					String subjectM = genM.getTitleM();
-					String contentM = genM.getContentM();
+				if(servMail) {
+					System.out.print("E-Mail checked.");
+					for (GenericMessage genM: messagesMail) {
+						String dateM = genM.getDateM();
+						String channelM = genM.getCanalM();
+						String fromM = genM.getFromM();
+						String subjectM = genM.getTitleM();
+						String contentM = genM.getContentM();
 	
-					genericMessages.add(genM);
-					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-					count++;
-					indicatorFilters++;
+						genericMessages.add(genM);
+						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+						count++;
+						indicatorFilters++;
+					}
+				} 
+				if(servTwitter) {
+					System.out.print("Twitter checked.");
+					for (GenericMessage genM: messagesTwitter) {
+						String dateM = genM.getDateM();
+						String channelM = genM.getCanalM();
+						String fromM = genM.getFromM();
+						String subjectM = genM.getTitleM();
+						String contentM = genM.getContentM();
+						
+						genericMessages.add(genM);
+						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+						count++;
+						indicatorFilters++;
+					}
 				}
-			}
-			WriteXMLfile.writeMessage("dasra");
-			rXML.readMessagesXMLfile("dasra");
+				if(servFacebook) {
+					System.out.print("Facebook checked.");
+					for (GenericMessage genM: messagesFacebook) {
+						String dateM = genM.getDateM();
+						String channelM = genM.getCanalM();
+						String fromM = genM.getFromM();
+						String subjectM = genM.getTitleM();
+						String contentM = genM.getContentM();
+		
+						genericMessages.add(genM);
+						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+						count++;
+						indicatorFilters++;
+					}
+				}
 		} catch(Exception e) {
 			System.out.print("Error in reading emails: " + e.toString());
+		} finally {
+			WriteXMLfile.writeMessage("dasra");
+			rXML.readMessagesXMLfile("dasra");
 		}
 		
-		if(servMail && servTwitter && servFacebook) {
+		/*if(servMail && servTwitter && servFacebook) {
 			sortOne.setEnabled(true);
 			sortTwo.setEnabled(true);
 		} else {
 			sortOne.setEnabled(false);
 			sortTwo.setEnabled(false);
-		}
+		}*/
 	}
 
 	/** 

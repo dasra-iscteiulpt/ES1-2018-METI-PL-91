@@ -4,14 +4,13 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.mail.Message;
 import javax.swing.table.DefaultTableModel;
-
 import org.junit.jupiter.api.Test;
-
 import Email.ReadEmails;
 import Email.SendEmail;
 import Facebook.WriteComment;
 import GUI.WindowDBA;
 import GUI.WindowFilter;
+import GUI.WindowLoading;
 import GUI.WindowLogin;
 import GUI.WindowMessage;
 import GUI.WindowRegister;
@@ -98,7 +97,7 @@ class JUnitTests {
 		
 	@Test
 	public void testWindowFilter() {
-		WindowDBA windDBA = new WindowDBA(false, "dasra");
+		WindowDBA windDBA = new WindowDBA(false, "dasra", new WindowLoading());
 		WindowFilter windF = new WindowFilter(windDBA.getFrame());
 		windF.fillFilters();
 		windF.getListModel().addElement("ISCTE");
@@ -130,7 +129,7 @@ class JUnitTests {
 	
 	@Test
 	public void testWindowDBA() {
-		WindowDBA windDBA = new WindowDBA(false, "dasra");
+		WindowDBA windDBA = new WindowDBA(false, "dasra", new WindowLoading());
 
 		assertTrue(windDBA.getGMemail().get(0).getCanalM().equals("E-Mail"));
 		assertTrue(windDBA.getGMtweets().get(0).getCanalM().equals("Twitter"));
