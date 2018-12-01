@@ -203,11 +203,19 @@ public class WindowMessage {
 			}
 		});
 	}
-	
+
+	/** 
+	 * Utility method to get the JButton
+	 * @return A JButton
+	 */
 	public JButton sendM() {
 		return sendM;
 	}
-	
+
+	/** 
+	 * Utility method to get the JFrame
+	 * @return A JFrame
+	 */
 	public JFrame getFrame() {
 		return windowFrame;
 	}

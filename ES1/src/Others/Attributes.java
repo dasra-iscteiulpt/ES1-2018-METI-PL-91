@@ -42,7 +42,6 @@ public class Attributes {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getKeyword() {
 		return keyword;
 	}

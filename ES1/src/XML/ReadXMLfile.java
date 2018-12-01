@@ -1,4 +1,5 @@
 package XML;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class ReadXMLfile {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
-	 * @return A list of all users
+	 * @return A list with all users attributes
 	 */
 	public static List<Attributes> readUsersXMLfile() {
 		// Make an  instance of the DocumentBuilderFactory
@@ -65,7 +66,7 @@ public class ReadXMLfile {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
-	 * @return A list of all filters
+	 * @return A list with all the filters
 	 */
 	public List<Attributes> readFiltersXMLfile() {
 
@@ -97,7 +98,7 @@ public class ReadXMLfile {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
-	 * @return A list of all messages
+	 * @return A list with all messages
 	 */
 	public ArrayList<GenericMessage> readMessagesXMLfile(String username) {
 		// Make an  instance of the DocumentBuilderFactory
@@ -105,15 +106,23 @@ public class ReadXMLfile {
 		try {
 			// Use the factory to take an instance of the document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			// Parse using the builder to get the DOM mapping of the XML file
-			Document doc = db.parse("userBackup_" + username + ".xml");
-			doc.getDocumentElement().normalize();
 
-			// Adds the user attributes to the array
-			NodeList gmList = doc.getElementsByTagName("GM");
-			for (int i = 0; i < gmList.getLength(); i++) {
-				messagesList.add(getMessagesAttributes(gmList.item(i)));
-				System.out.println(messagesList.get(i).getTitleM());
+			// test to see if a file exists
+			File tmpDir = new File("WorkOfflineBackup/userBackup_" + username + ".xml");
+			boolean exists = tmpDir.exists();
+			if (exists == true){
+				{
+					// Parse using the builder to get the DOM mapping of the XML file
+					Document doc = db.parse("WorkOfflineBackup/userBackup_" + username + ".xml");
+					doc.getDocumentElement().normalize();
+
+					// Adds the user attributes to the array
+					NodeList gmList = doc.getElementsByTagName("GM");
+					for (int i = 0; i < gmList.getLength(); i++) {
+						messagesList.add(getMessagesAttributes(gmList.item(i)));
+						//System.out.println(messagesList.get(i).getTitleM());
+					}
+				}
 			}
 		} catch (SAXException | ParserConfigurationException | IOException e1) {
 			e1.printStackTrace();

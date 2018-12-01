@@ -12,11 +12,11 @@ import Email.ReadEmails;
 import twitter4j.Status;
 
 /** 
-* Generic Message 
-* @author GROUP 91
-* @version 1.0
-* @since September 2018
-*/
+ * Generic Message 
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
 
 public class GenericMessage {
 
@@ -25,7 +25,7 @@ public class GenericMessage {
 	private String fromM;
 	private String titleM;
 	private String contentM;
-	
+
 	public GenericMessage(String dateM, String canalM, String fromM, String titleM, String contentM) {
 		this.dateM = dateM;
 		this.canalM = canalM;
@@ -33,7 +33,7 @@ public class GenericMessage {
 		this.titleM = titleM;
 		this.contentM = contentM;
 	}
-	
+
 	/**
 	 * Receive Mail Return Message
 	 * @param listMail, ArrayList of Message
@@ -58,11 +58,10 @@ public class GenericMessage {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 		return genMessage;
 	}
-	
+
 	/**
 	 * Receive Tweet Return Message
 	 * @param listTweets, List of Status
@@ -87,11 +86,10 @@ public class GenericMessage {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 		return genMessage;
 	}
-	
+
 	/**
 	 * Receive Posts Return Message
 	 * @param listPosts, List of Post
@@ -116,7 +114,6 @@ public class GenericMessage {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 		return genMessage;
 	}
@@ -159,6 +156,4 @@ public class GenericMessage {
 	public void setTitleM(String title) {
 		this.titleM = title;
 	}
-	
-	
 }

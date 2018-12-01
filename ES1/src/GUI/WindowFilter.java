@@ -65,7 +65,7 @@ public class WindowFilter {
 	}
 
 	/** 
-	 * Construction of the main window structure
+	 * Utility method for construction of the main window structure
 	 */
 	private void configWindow() {
 		addPanels();
@@ -140,11 +140,17 @@ public class WindowFilter {
 
 	}
 
+	/** 
+	 * Utility method to get the JFrame
+	 * @return A JFrame
+	 */
 	public JFrame getWindowFrame() {
 		return windowFilter;
 	}
 	
-
+	/** 
+	 * Utility method to fill the table with filters 
+	 */
 	public void fillFilters() {
 		listModel.removeAllElements();
 		for(Attributes filter: rXML.readFiltersXMLfile()) {
@@ -152,6 +158,10 @@ public class WindowFilter {
 		}
 	}
 	
+	/** 
+	 * Utility method to get the DefaultListModel
+	 * @return A DefaultListModel
+	 */
 	public DefaultListModel getListModel() {
 		return listModel;
 	}

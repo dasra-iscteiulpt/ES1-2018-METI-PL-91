@@ -93,6 +93,7 @@ public class WriteXMLfile {
 
 	/**
 	 * Utility method to write an XML with all the messages
+	 * @param username, is one of the mandatory parameters for writing the backup file
 	 */
 	public static void writeMessage(String username){
 		try {
@@ -119,7 +120,7 @@ public class WriteXMLfile {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("userBackup_" + username + ".xml"));
+			StreamResult result = new StreamResult(new File("WorkOfflineBackup/userBackup_" + username + ".xml"));
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.transform(source, result);
 			System.out.println("XML file updated successfully");

@@ -43,11 +43,18 @@ public class WindowUnsubscribe {
 		configWindow();
 	}
 
+	// AUXILIARY METHODS
+	/** 
+	 * Utility method to get the JPanels
+	 * @return An arrayList of JPanel
+	 */
 	public ArrayList<JPanel> getPanels() {
 		return panels;
 	}
 
-	// AUXILIARY METHODS
+	/** 
+	 * Utility method to add the JPanels
+	 */
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -153,6 +160,10 @@ public class WindowUnsubscribe {
 		});
 	}
 
+	/** 
+	 * Utility method to get the JFrame
+	 * @return A JFrame
+	 */
 	public JFrame getWindowFrame() {
 		return windowUnsubscribe;
 	}

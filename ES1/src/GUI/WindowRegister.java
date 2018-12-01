@@ -219,6 +219,10 @@ public class WindowRegister {
 		});
 	}
 
+	/** 
+	 * Utility method to get the JFrame
+	 * @return A JFrame
+	 */
 	public JFrame getWindowFrame() {
 		return windowRegister;
 	}
