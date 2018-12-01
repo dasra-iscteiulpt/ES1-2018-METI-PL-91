@@ -1,18 +1,14 @@
 package GUI;
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import Others.Attributes;
-import XML.ReadXMLfile;
 import XML.WriteXMLfile;
 
 /** 
@@ -24,15 +20,11 @@ import XML.WriteXMLfile;
  * @since September 2018
  */
 
-public class WindowFilter {
+public class WindowFilter extends WindowGUI {
 	
 	// VARIABLES
-	private JFrame windowFilter;
-	private ArrayList<JPanel> panels;
 	private JList<String> listFilters;
 	private DefaultListModel listModel;
-
-	private ReadXMLfile rXML;
 	private JFrame windowDBA;
 
 	// CONSTRUCTOR
@@ -41,45 +33,18 @@ public class WindowFilter {
 		listFilters = new JList<String>();
 		listModel = new DefaultListModel();
 		listFilters.setModel(listModel);
-		rXML = new ReadXMLfile();
-		windowFilter = new JFrame("Filters");
+		getWindowFrame().setTitle("Filters");
 		configWindow();
-	}
-
-	// GETTERS
-	public JFrame getFrame() {
-		return windowFilter;
-	}
-
-	public ArrayList<JPanel> getPanels() {
-		return panels;
-	}
-
-	// AUXILIARY METHODS
-	private void addPanels() {
-		panels = new ArrayList<>();
-		panels.add(new JPanel()); // 0 SOUTH
-		panels.add(new JPanel()); // 1 WEST
-		panels.add(new JPanel()); // 2 EAST
-		panels.add(new JPanel()); // 3 NORTH
 	}
 
 	/** 
 	 * Utility method for construction of the main window structure
 	 */
 	private void configWindow() {
-		addPanels();
-
-		// JPANEL CONFIGURATION IN WINDOWLOGIN
-		windowFilter.add(panels.get(0), BorderLayout.SOUTH);
-		
-		windowFilter.add(panels.get(1), BorderLayout.WEST);
-		windowFilter.add(panels.get(2), BorderLayout.EAST);
-		windowFilter.add(panels.get(3), BorderLayout.NORTH);
 
 		// COMPONENTS CONFIGURATION
 		JPanel panelCenter = new JPanel(new FlowLayout());
-		windowFilter.add(panelCenter);
+		getWindowFrame().add(panelCenter);
 		
 		JButton btNadd = new JButton("Add");
 		JButton btNcancel = new JButton("Cancel");
@@ -88,9 +53,9 @@ public class WindowFilter {
 		panelCenter.add(listFilters);
 		fillFilters();
 
-		panels.get(0).add(btNadd);
-		panels.get(0).add(btNremove);
-		panels.get(0).add(btNcancel);
+		getPanels().get(0).add(btNadd);
+		getPanels().get(0).add(btNremove);
+		getPanels().get(0).add(btNcancel);
 		
 		// BUTTON ADD
 		btNadd.addActionListener(new ActionListener() {
@@ -98,7 +63,7 @@ public class WindowFilter {
 				String filter = JOptionPane.showInputDialog(null, "Please add the filter:");
 				if(filter != null) {
 					if(!filter.isEmpty() && listModel.size() < 10) {
-						if(!rXML.validateFilter(filter)) {
+						if(!getReadXML().validateFilter(filter)) {
 							WriteXMLfile.addFilter(filter);
 							JOptionPane.showMessageDialog(null, "Filter " + filter + " added.");
 							listModel.addElement(filter);
@@ -125,27 +90,16 @@ public class WindowFilter {
 		// BUTTON CANCEL
 		btNcancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				windowFilter.setVisible(false);
+				getWindowFrame().setVisible(false);
 				windowDBA.setVisible(true);
 			}
 		});
 		
 		// WINDOW FRAME CONFIGURATION
-		windowFilter.setSize(250, 270);
-		windowFilter.setLocationRelativeTo(null);
-		windowFilter.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		windowFilter.setResizable(false);
-		windowFilter.validate();
-		windowFilter.setVisible(true);
+		getWindowFrame().setSize(250, 270);
+		getWindowFrame().setLocationRelativeTo(null);
+		getWindowFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-	}
-
-	/** 
-	 * Utility method to get the JFrame
-	 * @return A JFrame
-	 */
-	public JFrame getWindowFrame() {
-		return windowFilter;
 	}
 	
 	/** 
@@ -153,7 +107,7 @@ public class WindowFilter {
 	 */
 	public void fillFilters() {
 		listModel.removeAllElements();
-		for(Attributes filter: rXML.readFiltersXMLfile()) {
+		for(Attributes filter: getReadXML().readFiltersXMLfile()) {
 			listModel.addElement(filter.getKeyword());
 		}
 	}

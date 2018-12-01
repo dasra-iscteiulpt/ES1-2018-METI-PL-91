@@ -10,6 +10,7 @@ import Email.SendEmail;
 import Facebook.WriteComment;
 import GUI.WindowDBA;
 import GUI.WindowFilter;
+import GUI.WindowGUI;
 import GUI.WindowLoading;
 import GUI.WindowLogin;
 import GUI.WindowMessage;
@@ -72,27 +73,27 @@ class JUnitTests {
 	
 	@Test
 	public void testWindowLogin() {
-		WindowLogin wind = new WindowLogin();
+		WindowGUI wind = new WindowLogin();
 		Dimension windowSize = new Dimension(350,170);
-		assertEquals(windowSize, wind.getFrame().getSize());
+		assertEquals(windowSize, wind.getWindowFrame().getSize());
 	}
 	
 	@Test
 	public void testWindowUnsubscribe() {
 		WindowLogin windL = new WindowLogin();
 		assertNotNull(windL);
-		WindowUnsubscribe windU = new WindowUnsubscribe(windL.getFrame());
+		WindowGUI windU = new WindowUnsubscribe(windL.getWindowFrame());
 		assertEquals(windU.getPanels().size(), 4);
 	}
 	
 	@Test
 	public void testWindowRegister() {
-		WindowLogin windL = null;
+		WindowGUI windL = null;
 		assertNull(windL);
 		windL = new WindowLogin();
 		assertNotNull(windL);
-		WindowRegister windReg = new WindowRegister(windL.getFrame());
-		assertTrue(windReg.getFrame().isVisible());
+		WindowGUI windReg = new WindowRegister(windL.getWindowFrame());
+		assertTrue(windReg.getWindowFrame().isVisible());
 	}
 		
 	@Test
@@ -124,7 +125,7 @@ class JUnitTests {
 	@Test
 	public void testWindowMessage() {
 		WindowMessage windMess = new WindowMessage("04/07/2018", "ISCTE-IUL", "Subject - 101454389886004837", "Adicionei um vídeo a uma playlist @YouTube https://t.co/8iK7Nei6DM do Mês junho 2018 Biblioteca ISCTE-IUL", "Twitter", "dasra", false);
-		assertFalse(windMess.getFrame().isResizable());
+		assertFalse(windMess.getWindowFrame().isResizable());
 	} 
 	
 	@Test
@@ -138,28 +139,28 @@ class JUnitTests {
 		DefaultTableModel modelTable = windDBA.getModelTable();
 		assertNotNull(modelTable);
 				
-		windDBA.filterEmailsAll(modelTable);
+		windDBA.getFiltersForData().filterMessagesAll(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
 		boolean sizeTableAll = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTableAll);
 		
-		windDBA.filterEmailsLast24Hours(modelTable);
+		windDBA.getFiltersForData().filterMessagesLast24Hours(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
 		boolean sizeTable24H = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTable24H);
 		
-		windDBA.filterEmailsLast48Hours(modelTable);
+		windDBA.getFiltersForData().filterMessagesLast48Hours(modelTable,windDBA.getIndicatorFilters(), WindowDBA.getGM());
 		boolean sizeTable48H = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTable48H);
 		
-		windDBA.filterEmailsLastMonth(modelTable);
+		windDBA.getFiltersForData().filterMessagesLastMonth(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
 		boolean sizeTableMonth = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTableMonth);
 
-		windDBA.filterEmailsLastWeek(modelTable);
+		windDBA.getFiltersForData().filterMessagesLastWeek(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
 		boolean sizeTableWeek = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTableWeek);
 		
 		int sizeTableBeforeSortNewest = modelTable.getRowCount();
-		windDBA.sortByNewest(modelTable, null);
+		windDBA.getFiltersForData().sortByNewest(modelTable, null, windDBA.getIndicatorFilters(), WindowDBA.getGM());
 		boolean sizeTableAfterSortNewest = (sizeTableBeforeSortNewest == modelTable.getRowCount());
 		assertFalse(sizeTableAfterSortNewest);	
 	}

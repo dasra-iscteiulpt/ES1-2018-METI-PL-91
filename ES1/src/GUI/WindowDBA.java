@@ -1,5 +1,4 @@
 package GUI;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import java.awt.BorderLayout;
@@ -8,12 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
@@ -21,14 +15,13 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
-
 import Email.ReadEmails;
 import Facebook.ReadPosts;
+import Others.Filters;
 import Others.GenericMessage;
 import Twitter.ReadTweets;
 import XML.ReadXMLfile;
 import XML.WriteXMLfile;
-
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JMenuBar;
@@ -42,9 +35,7 @@ import javax.swing.JOptionPane;
  * @since September 2018
  */
 
-public class WindowDBA extends Thread{
-
-
+public class WindowDBA extends Thread {
 	
 	// VARIABLES
 	private JFrame windowFrame;
@@ -61,6 +52,7 @@ public class WindowDBA extends Thread{
 	private JRadioButton sortTwo; // OLDEST
 	private Font textFont;
 	private ReadXMLfile rXML;
+	private Filters filtersForData;
 	private WindowLoading loading;
 	
 	// CONSTRUCTOR
@@ -68,11 +60,11 @@ public class WindowDBA extends Thread{
 		this.loading = loading;
 		windowFrame = new JFrame("Good Morning Academy!");
 		genericMessages = new ArrayList<GenericMessage>();
+		filtersForData = new Filters();
 		this.workOffline = workOffline;
 		this.userDBA = userDBA;
 		rXML = new ReadXMLfile();
 		textFont = new Font("Calibri", Font.BOLD, 12);
-
 	}
 	
 	@Override
@@ -175,8 +167,7 @@ public class WindowDBA extends Thread{
 
 		// TABLE CONFIGURATION
 		JTable tableContent = new JTable(0,6);
-	
-		tableContent.setTableHeader(null); //Hides default A B C... table header
+		tableContent.setTableHeader(null); // Hides default A B C... table header
 		
 		//tableContent.setAutoscrolls(true);
 		tableContent.setFont(textFont);
@@ -317,7 +308,7 @@ public class WindowDBA extends Thread{
 		MR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MR.setSelected(true);
-				sortByNewest(modelTable, gM);
+				indicatorFilters = filtersForData.sortByNewest(modelTable, gM, indicatorFilters, genericMessages);
 			}
 		});
 
@@ -325,7 +316,7 @@ public class WindowDBA extends Thread{
 		MO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MO.setSelected(true);
-				sortByOldest(modelTable, gM);
+				indicatorFilters = filtersForData.sortByOldest(modelTable, gM, indicatorFilters, genericMessages);
 			}
 		});
 
@@ -335,23 +326,33 @@ public class WindowDBA extends Thread{
 				switch (CB.getSelectedIndex()) {
 				case 0:
 					System.out.println("All");
-					filterEmailsAll(MT);
+					indicatorFilters = filtersForData.filterMessagesAll(MT, indicatorFilters, genericMessages);
+					sortOne.setEnabled(true);
+					sortTwo.setEnabled(true);
 					break;
 				case 1:
 					System.out.println("Last 24H");
-					filterEmailsLast24Hours(MT);
+					indicatorFilters = filtersForData.filterMessagesLast24Hours(MT, indicatorFilters, genericMessages);
+					sortOne.setEnabled(false);
+					sortTwo.setEnabled(false);
 					break;
 				case 2:
 					System.out.println("Last 48H");
-					filterEmailsLast48Hours(MT);
+					indicatorFilters = filtersForData.filterMessagesLast48Hours(MT, indicatorFilters, genericMessages);
+					sortOne.setEnabled(false);
+					sortTwo.setEnabled(false);
 					break;
 				case 3:
 					System.out.println("Last week");
-					filterEmailsLastWeek(MT);
+					indicatorFilters = filtersForData.filterMessagesLastWeek(MT, indicatorFilters, genericMessages);
+					sortOne.setEnabled(false);
+					sortTwo.setEnabled(false);
 					break;
 				default:
 					System.out.println("Last month");
-					filterEmailsLastMonth(MT);
+					indicatorFilters = filtersForData.filterMessagesLastMonth(MT, indicatorFilters, genericMessages);
+					sortOne.setEnabled(false);
+					sortTwo.setEnabled(false);
 					break;             
 				} 
 			}
@@ -378,288 +379,6 @@ public class WindowDBA extends Thread{
 		indicatorFilters = genericMessages.size();
 	}
 
-	/** 
-	 * Method to filter e-mails from the last 24 hours
-	 * @author GROUP 91
-	 * @version 1.0
-	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
-	 */
-	public void filterEmailsLast24Hours(DefaultTableModel modelTable) {
-		removeRows(modelTable);
-		Calendar c = Calendar.getInstance();
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		indicatorFilters = 0;
-		int count = 1;
-		try {
-			for (GenericMessage m: genericMessages) {
-				c.setTime(new Date());
-				c.add(Calendar.DATE, -1);
-				Date d = c.getTime();
-				if (df.parse(m.getDateM()).after(d)) {
-					String dateM = m.getDateM();
-					String channelM = m.getCanalM();
-					String fromM = m.getFromM();
-					String subjectM = m.getTitleM();
-					String contentM = m.getContentM();
-					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-					count++;
-					indicatorFilters++;
-				}
-			}
-			System.out.println("Emails from last 24h");
-		} catch (Exception e) {
-			System.out.print("Error in filtering by hour: " + e.toString());
-		}
-		sortOne.setEnabled(false);
-		sortTwo.setEnabled(false);
-	}
-
-	/** 
-	 * Method to filter e-mails from the last 48 hours
-	 * @author GROUP 91
-	 * @version 1.0
-	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
-	 */
-	public void filterEmailsLast48Hours(DefaultTableModel modelTable) {
-		removeRows(modelTable);
-		Calendar c = Calendar.getInstance();	
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-		indicatorFilters = 0;
-		int count = 1;
-
-		try {
-			System.out.println(genericMessages.size());
-			for (GenericMessage m: genericMessages) {
-				System.out.println("INSIDE FOR");
-				c.setTime(new Date());
-				c.add(Calendar.DATE, -2);
-				Date d = c.getTime();
-				if (df.parse(m.getDateM()).after(d)) {
-					String dateM = m.getDateM();
-					String channelM = m.getCanalM();
-					String fromM = m.getFromM();
-					String subjectM = m.getTitleM();
-					String contentM = m.getContentM();
-					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-					count++;
-					indicatorFilters++;
-				}
-			}
-			System.out.println("Emails from last 48h");
-		} catch (Exception e) {
-			System.out.print("Error in filtering by hour: " + e.toString());
-		}
-		sortOne.setEnabled(false);
-		sortTwo.setEnabled(false);
-	}
-
-	/** 
-	 * Method to filter e-mails from the last Week
-	 * @author GROUP 91
-	 * @version 1.0
-	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
-	 */
-	public void filterEmailsLastWeek(DefaultTableModel modelTable) {
-		removeRows(modelTable);
-		Calendar c = Calendar.getInstance();
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		indicatorFilters = 0;
-		int count = 1;
-		try {
-			for (GenericMessage m: genericMessages) {
-				c.setTime(new Date());
-				c.add(Calendar.DATE, -7);
-				Date d = c.getTime();
-				System.out.println(df.parse(m.getDateM()));
-				if (df.parse(m.getDateM()).after(d)) {
-					String dateM = m.getDateM();
-					String channelM = m.getCanalM();
-					String fromM = m.getFromM();
-					String subjectM = m.getTitleM();
-					String contentM = m.getContentM();
-					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-					count++;
-					indicatorFilters++;
-				}
-			}
-			System.out.println("Emails from last week");
-
-		} catch (Exception e) {
-			System.out.print("Error in filtering by hour: " + e.toString());
-		}
-		sortOne.setEnabled(false);
-		sortTwo.setEnabled(false);
-	}
-
-	/** 
-	 * Method to filter e-mails from the last Month
-	 * @author GROUP 91
-	 * @version 1.0
-	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
-	 */
-	public void filterEmailsLastMonth(DefaultTableModel modelTable) {
-		removeRows(modelTable);
-		Calendar c = Calendar.getInstance();
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-		indicatorFilters = 0;
-		int count = 1;
-
-		try {
-			for (GenericMessage m: genericMessages) {
-				c.setTime(new Date());
-				c.add(Calendar.DATE, -30);
-				Date d = c.getTime();
-				if (df.parse(m.getDateM()).after(d)) {
-					String dateM = m.getDateM();
-					String channelM = m.getCanalM();
-					String fromM = m.getFromM();
-					String subjectM = m.getTitleM();
-					String contentM = m.getContentM();
-					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-					count++;
-					indicatorFilters++;
-				}
-			}
-			System.out.println("Emails from last month");
-		} catch (Exception e) {
-
-			System.out.print("Error in filtering by hour: " + e.toString());
-		}
-		sortOne.setEnabled(false);
-		sortTwo.setEnabled(false);
-	}
-
-	/** 
-	 * Method to show all messages
-	 * @author GROUP 91
-	 * @version 1.0
-	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
-	 */
-	public void filterEmailsAll(DefaultTableModel modelTable) {
-		removeRows(modelTable);
-		int count = 1;
-
-		indicatorFilters = 0;
-
-		try {
-			for (GenericMessage m: genericMessages) {
-				String dateM = m.getDateM();
-				String channelM = m.getCanalM();
-				String fromM = m.getFromM();
-				String subjectM = m.getTitleM();
-				String contentM = m.getContentM();
-				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-				count++;
-				indicatorFilters++;
-			}
-			System.out.println("All Emails");
-		} catch (Exception e) {
-			System.out.print("Error in filtering by hour: " + e.toString());
-		}
-		sortOne.setEnabled(true);
-		sortTwo.setEnabled(true);
-	}
-
-	/** 
-	 * Sort messages, from the oldest to the newest
-	 * @author GROUP 91
-	 * @version 1.0
-	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
-	 * @param gM
-	 */
-	public void sortByOldest(DefaultTableModel modelTable, JMenuBar gM) {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		ArrayList<Date> dateArray = new ArrayList<Date>();
-		int count = 1;
-		Date date = new Date();
-
-		System.out.println("Hello + " + genericMessages.size());
-		try {
-			for(GenericMessage m: genericMessages) {
-				date = df.parse(m.getDateM());
-				if(!dateArray.contains(date)) {
-					dateArray.add(date);
-				}
-			}
-			Collections.sort(dateArray);
-			System.out.println("Size" + dateArray.size());
-			removeRows(modelTable);
-			indicatorFilters = 0;
-
-			for(Date d: dateArray) {
-				for(GenericMessage m: genericMessages) {
-					if(df.parse(m.getDateM()).equals(d)) {
-						String dateM = m.getDateM();
-						String channelM = m.getCanalM();
-						String fromM = m.getFromM();
-						String subjectM = m.getTitleM();
-						String contentM = m.getContentM();
-						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-						indicatorFilters++;
-						count++;
-					}
-				}
-			}
-			System.out.println("Sort by oldest");
-		} catch (Exception e) {
-			System.out.print("Error in sorting by oldest emails: " + e.toString());
-		}
-	}
-
-	/** 
-	 * Sort messages, from the newest to the oldest
-	 * @author GROUP 91
-	 * @version 1.0
-	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
-	 * @param gM
-	 */
-	public void sortByNewest(DefaultTableModel modelTable, JMenuBar gM) {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		ArrayList<Date> dateArray = new ArrayList<Date>();
-
-		int count = 1;
-		Date date = new Date();
-
-		try {
-			for(GenericMessage m: genericMessages) {
-				date = df.parse(m.getDateM());
-				if(!dateArray.contains(date)) {
-					dateArray.add(date);
-				}
-			}
-			Collections.sort(dateArray, Collections.reverseOrder());
-			removeRows(modelTable);
-			indicatorFilters = 0;
-
-			for(Date d: dateArray) {
-				for(GenericMessage m: genericMessages) {
-					if(df.parse(m.getDateM()).equals(d)) {
-						String dateM = m.getDateM();
-						String channelM = m.getCanalM();
-						String fromM = m.getFromM();
-						String subjectM = m.getTitleM();
-						String contentM = m.getContentM();
-						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-						count++;
-						indicatorFilters++;
-					}
-
-				}
-			}
-			System.out.println("Sort by newest");
-		} catch (Exception e) {
-			System.out.print("Error in sorting by newest emails: " + e.toString());
-		}
-	}
 
 	//Method to fill the messages on the table
 	private void fillOnTable(JMenuBar gM) {
@@ -784,5 +503,13 @@ public class WindowDBA extends Thread{
 
 	public DefaultTableModel getModelTable() {
 		return modelTable;
+	}
+	
+	public int getIndicatorFilters() {
+		return indicatorFilters;
+	}
+	
+	public Filters getFiltersForData() {
+		return filtersForData;
 	}
 }

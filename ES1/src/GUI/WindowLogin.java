@@ -1,13 +1,10 @@
 package GUI;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -17,44 +14,19 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import XML.ReadXMLfile;
-
-public class WindowLogin{
+public class WindowLogin extends WindowGUI {
 
 	// VARIABLES
-	private JFrame windowLogin;
-	private ArrayList<JPanel> panels;
-	private ReadXMLfile r = new ReadXMLfile();
 	private String userDBA;
 	private JCheckBox chkOffline;
-	private Font textFont;
 	
 	// CONSTRUCTOR
 	public WindowLogin() {
 		chkOffline = new JCheckBox("Offline");
-		windowLogin = new JFrame("Login");
-		textFont = new Font("Calibri", Font.BOLD, 12);
+		getWindowFrame().setTitle("Login");
 		configWindow();
 	}
 	
-	// GETTERS
-	public JFrame getFrame() {
-		return windowLogin;
-	}
-
-	public ArrayList<JPanel> getPanels() {
-		return panels;
-	}
-
-	//AUXILIARY METHODS
-	private void addPanels() {
-		panels = new ArrayList<>();
-		panels.add(new JPanel()); // 0 SOUTH
-		panels.add(new JPanel()); // 1 WEST
-		panels.add(new JPanel()); // 2 EAST
-		panels.add(new JPanel()); // 3 NORTH
-	}
-
 	/** 
 	* Construction of the main window structure
 	* @author GROUP 91
@@ -62,16 +34,10 @@ public class WindowLogin{
 	* @since September
 	*/
 	private void configWindow() {
-		addPanels();
-		// JPANEL CONFIGURATION IN THE WINDOWLOGIN
-		windowLogin.add(panels.get(0), BorderLayout.SOUTH);
-		windowLogin.add(panels.get(1), BorderLayout.WEST);
-		windowLogin.add(panels.get(2), BorderLayout.EAST);
-		windowLogin.add(panels.get(3), BorderLayout.NORTH);
 
 		// COMPONENTS CONFIGURATION
 		JPanel panelCenter = new JPanel(new FlowLayout());
-		windowLogin.add(panelCenter);
+		getWindowFrame().add(panelCenter);
 		
 		JLabel labInfoLog = new JLabel("Do you have an account? Please login.");
 		JLabel labInfoRegister = new JLabel("Not registered? Please sign up.");
@@ -80,18 +46,18 @@ public class WindowLogin{
 		JLabel labInfoPw = new JLabel("Password: ");
 		
 		JTextField userName = new JTextField();	
-		userName.setFont(textFont);
+		userName.setFont(getTextFont());
 		userName.setPreferredSize(new Dimension(130,20));
 		
 		JPasswordField passWord = new JPasswordField();
-		passWord.setFont(textFont);
+		passWord.setFont(getTextFont());
 		passWord.setPreferredSize(new Dimension(204,20));
 		JLabel labEmail = new JLabel("@iscte-iul.pt");
 		JButton btNlog = new JButton("Login");
 		JButton btNreg = new JButton("Register");
 		JButton btNunsub = new JButton("Unsubscribe");
 		
-		panels.get(3).add(labInfoLog);
+		getPanels().get(3).add(labInfoLog);
 		panelCenter.add(labInfoUser);
 		panelCenter.add(userName);
 		panelCenter.add(labEmail);
@@ -100,10 +66,10 @@ public class WindowLogin{
 		panelCenter.add(passWord);
 		panelCenter.add(labInfoRegister);
 
-		panels.get(0).add(btNlog);
-		panels.get(0).add(btNreg);
-		panels.get(0).add(btNunsub);
-		panels.get(0).add(chkOffline);
+		getPanels().get(0).add(btNlog);
+		getPanels().get(0).add(btNreg);
+		getPanels().get(0).add(btNunsub);
+		getPanels().get(0).add(chkOffline);
 
 		// CLICK ON TEXTFIELD USERNAME
         userName.addMouseListener(new MouseAdapter(){
@@ -122,8 +88,8 @@ public class WindowLogin{
 		// CLICK ON BUTTON REGISTER
 		btNreg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WindowRegister windReg = new WindowRegister(windowLogin);
-				windowLogin.setVisible(false);
+				WindowGUI windReg = new WindowRegister(getWindowFrame());
+				getWindowFrame().setVisible(false);
 				windReg.getWindowFrame().setVisible(true);
 				
 			}
@@ -132,8 +98,8 @@ public class WindowLogin{
 		// CLICK ON BUTTON UNSUBSCRIBE
 		btNunsub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WindowUnsubscribe windUnsub = new WindowUnsubscribe(windowLogin);
-				windowLogin.setVisible(false);
+				WindowGUI windUnsub = new WindowUnsubscribe(getWindowFrame());
+				getWindowFrame().setVisible(false);
 				windUnsub.getWindowFrame().setVisible(true);
 			}
 		});
@@ -146,13 +112,13 @@ public class WindowLogin{
 					JOptionPane.showMessageDialog(null, "There are empty fields.");
 				} else {
 					// IF USER AND PASSWORD ARE IN THE XML FILE, THE LOGIN IS SUCCESSFUL
-					if(r.validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
+					if(getReadXML().validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {
 						JOptionPane.showMessageDialog(null, "Login successful.");
 						userDBA = userName.getText();
 						
-						windowLogin.setVisible(false);
+						getWindowFrame().setVisible(false);
 						
-						/*ivo*/
+						/* IVO */
 						WindowLoading windowloading = new WindowLoading();						
 						windowloading.start();
 						
@@ -168,11 +134,9 @@ public class WindowLogin{
 		});
 
 		// CONFIGURAÇÃO WINDOW FRAME
-		windowLogin.setSize(350, 170);
-		windowLogin.setLocationRelativeTo(null);
-		windowLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		windowLogin.setResizable(false);
-		windowLogin.validate();
-		windowLogin.setVisible(true);
+		getWindowFrame().setSize(350, 170);
+		getWindowFrame().setLocationRelativeTo(null);
+		getWindowFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 }
