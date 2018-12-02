@@ -5,20 +5,21 @@ import java.util.ArrayList;
 import javax.mail.Message;
 import javax.swing.table.DefaultTableModel;
 import org.junit.jupiter.api.Test;
-import Email.ReadEmails;
-import Email.SendEmail;
-import Facebook.WriteComment;
-import GUI.WindowDBA;
-import GUI.WindowFilter;
-import GUI.WindowGUI;
-import GUI.WindowLoading;
-import GUI.WindowLogin;
-import GUI.WindowMessage;
-import GUI.WindowRegister;
-import GUI.WindowUnsubscribe;
-import Twitter.Retweet;
-import XML.ReadXMLfile;
-import XML.WriteXMLfile;
+
+import BDA.ReadEmails;
+import BDA.ReadXMLfile;
+import BDA.Retweet;
+import BDA.SendEmail;
+import BDA.WindowDBA;
+import BDA.WindowFilter;
+import BDA.WindowGUI;
+import BDA.WindowLoading;
+import BDA.WindowLogin;
+import BDA.WindowMessage;
+import BDA.WindowRegister;
+import BDA.WindowUnsubscribe;
+import BDA.WriteComment;
+import BDA.WriteXMLfile;
 
 class JUnitTests {
 
