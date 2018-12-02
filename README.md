@@ -2,6 +2,5 @@
 
 Grupo:
 68092 - Diana Salvador
-69980 - Diogo Reis
 65799 - Ricardo Ferreira
 73422 - Ivo Carvalho
