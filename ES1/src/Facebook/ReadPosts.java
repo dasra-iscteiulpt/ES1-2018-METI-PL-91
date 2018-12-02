@@ -14,22 +14,17 @@ import com.restfb.types.Post;
 import Others.Attributes;
 import XML.ReadXMLfile;
 
-
-/** 
- * Read Facebook Posts
- * @author GROUP 91
- * @version 1.0
- * @since September 2018
- */
-
 public class ReadPosts {
 
 	private static ReadXMLfile r = new ReadXMLfile();
 
 	/**
 	 * Utility method to read posts that contain specific keywords 
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
 	 * @param username is the BDA user
-	 * @return fbPosts, ArrayList of Post
+	 * @return fbPosts, ArrayList of Posts
 	 */
 	public ArrayList<Post> readPosts(String username){
 		r.validateUserFacebook(username);

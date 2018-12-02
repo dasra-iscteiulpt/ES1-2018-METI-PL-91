@@ -26,7 +26,13 @@ public class WindowRegister extends WindowGUI {
 	// VARIABLES
 	private JFrame windowLogin;
 
-	// CONSTRUCTOR
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param windowLogin, a JFrame
+	 */
 	public WindowRegister(JFrame windowLogin) {
 		this.windowLogin = windowLogin;
 		getWindowFrame().setTitle("Register");

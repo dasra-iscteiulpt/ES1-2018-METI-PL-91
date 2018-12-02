@@ -20,7 +20,12 @@ public class WindowLogin extends WindowGUI {
 	private String userDBA;
 	private JCheckBox chkOffline;
 	
-	// CONSTRUCTOR
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	public WindowLogin() {
 		chkOffline = new JCheckBox("Offline");
 		getWindowFrame().setTitle("Login");
@@ -118,7 +123,6 @@ public class WindowLogin extends WindowGUI {
 						
 						getWindowFrame().setVisible(false);
 						
-						/* IVO */
 						WindowLoading windowloading = new WindowLoading();						
 						windowloading.start();
 						
@@ -133,7 +137,7 @@ public class WindowLogin extends WindowGUI {
 			}
 		});
 
-		// CONFIGURAÇÃO WINDOW FRAME
+		// CONFIGURATION WINDOW FRAME
 		getWindowFrame().setSize(350, 170);
 		getWindowFrame().setLocationRelativeTo(null);
 		getWindowFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

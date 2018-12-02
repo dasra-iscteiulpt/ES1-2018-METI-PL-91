@@ -27,8 +27,13 @@ public class ReadXMLfile {
 	public static String[] userData = new String[3];
 	public static String[] twitterData = new String[4];
 	public static String facebookData = new String();
-
-	// CONSTRUCTOR
+	
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	public ReadXMLfile() {
 
 	}
@@ -98,6 +103,7 @@ public class ReadXMLfile {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
+	 * @param username, the user identification
 	 * @return A list with all messages
 	 */
 	public ArrayList<GenericMessage> readMessagesXMLfile(String username) {

@@ -24,6 +24,19 @@ public class WindowMessage extends WindowGUI {
 	private JButton sendM;
 	private String userDBA;
 
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param date, the message date
+	 * @param from, the message sender
+	 * @param title, the message subject
+	 * @param content, the message body
+	 * @param canal, the message service
+	 * @param userDBA, the username
+	 * @param workOffline, true if user is working offline and false otherwise
+	 */
 	public WindowMessage(String date, String from, String title, String content, String canal, String userDBA, boolean workOffline) {
 		getWindowFrame().setTitle(canal);
 		dateM = new JLabel("Date: " + date);
@@ -181,11 +194,9 @@ public class WindowMessage extends WindowGUI {
 
 	/** 
 	 * Utility method to get the JButton
-	 * @return A JButton
+	 * @return sendM, A JButton
 	 */
 	public JButton sendM() {
 		return sendM;
 	}
-
-
 }

@@ -27,7 +27,13 @@ public class WindowFilter extends WindowGUI {
 	private DefaultListModel listModel;
 	private JFrame windowDBA;
 
-	// CONSTRUCTOR
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param windowDBA, a JFrame
+	 */
 	public WindowFilter(JFrame windowDBA) {
 		this.windowDBA = windowDBA;
 		listFilters = new JList<String>();
@@ -114,7 +120,7 @@ public class WindowFilter extends WindowGUI {
 	
 	/** 
 	 * Utility method to get the DefaultListModel
-	 * @return A DefaultListModel
+	 * @return listModel, A DefaultListModel
 	 */
 	public DefaultListModel getListModel() {
 		return listModel;

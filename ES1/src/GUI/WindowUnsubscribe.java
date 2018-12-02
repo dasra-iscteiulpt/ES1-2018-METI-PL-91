@@ -26,7 +26,13 @@ public class WindowUnsubscribe extends WindowGUI {
 	// VARIABLES
 	private JFrame windowLogin;
 
-	// CONSTRUCTOR
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param windowLogin a JFrame
+	 */
 	public WindowUnsubscribe(JFrame windowLogin) {
 		this.windowLogin = windowLogin;
 		getWindowFrame().setTitle("Unsubscribe");
@@ -89,7 +95,6 @@ public class WindowUnsubscribe extends WindowGUI {
 			}
 		});
 
-		
 		// CLICK ON BUTTON UNBSUBSCRIBE
 		btNunsub.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
@@ -109,9 +114,7 @@ public class WindowUnsubscribe extends WindowGUI {
 
 			}
 		});
-		
-		
-		
+
 		// CLICK ON BUTTON CANCEL
 		btNcancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -120,5 +123,4 @@ public class WindowUnsubscribe extends WindowGUI {
 			}
 		});
 	}
-
 }

@@ -7,19 +7,15 @@ import com.restfb.Version;
 
 import XML.ReadXMLfile;
 
-/** 
- * Write a comment in a specific Facebook post
- * @author GROUP 91
- * @version 1.0
- * @since September 2018
- */
-
 public class WriteComment { 
 
 	private static ReadXMLfile r = new ReadXMLfile();
 
 	/**
 	 * Utility method to write a comment in a Facebook Post
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
 	 * @param postId, is the post identification
 	 * @param fromUser, is the BDA user
 	 * @param comment, is the text of the comment

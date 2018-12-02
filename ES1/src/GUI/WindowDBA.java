@@ -36,7 +36,7 @@ import javax.swing.JOptionPane;
  */
 
 public class WindowDBA extends Thread {
-	
+
 	// VARIABLES
 	private JFrame windowFrame;
 	private ArrayList<JPanel> panels;
@@ -54,8 +54,16 @@ public class WindowDBA extends Thread {
 	private ReadXMLfile rXML;
 	private Filters filtersForData;
 	private WindowLoading loading;
-	
-	// CONSTRUCTOR
+
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param workOffline, true if user is workingOffline and false otherwise
+	 * @param userDBA, the identification of the user
+	 * @param loading, a WindowLoading
+	 */
 	public WindowDBA(boolean workOffline, String userDBA, WindowLoading loading) {
 		this.loading = loading;
 		windowFrame = new JFrame("Good Morning Academy!");
@@ -66,23 +74,41 @@ public class WindowDBA extends Thread {
 		rXML = new ReadXMLfile();
 		textFont = new Font("Calibri", Font.BOLD, 12);
 	}
-	
+
 	@Override
 	public void run() {
 		startConfigWindow();
 		endConfigWindow();
 	}
 
-	// GETTERS
+	/** 
+	 * Utility method to get the window frame
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @return windowFrame, a JFrame
+	 */
 	public JFrame getFrame() {
 		return windowFrame;
 	}
 
+	/** 
+	 * Utility method to get the JPanel
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @return panels, an arrayList of JPanel
+	 */
 	public ArrayList<JPanel> getPanels() {
 		return panels;
 	}
 
-	// AUXILIARY METHODS
+	/** 
+	 * Utility method to add JPanels
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -136,7 +162,7 @@ public class WindowDBA extends Thread {
 			chkboxTwitter.setSelected(true);
 			chkboxFacebook.setSelected(true);
 		}
-		
+
 		aboutMenu.add(about);
 		aboutMenu.add(help);
 		generalMenu.add(fileMenu);
@@ -168,17 +194,17 @@ public class WindowDBA extends Thread {
 		// TABLE CONFIGURATION
 		JTable tableContent = new JTable(0,6);
 		tableContent.setTableHeader(null); // Hides default A B C... table header
-		
+
 		//tableContent.setAutoscrolls(true);
 		tableContent.setFont(textFont);
 		panels.get(3).add(tableContent);
 		JScrollPane scroll = new JScrollPane(tableContent);
 		panels.get(3).add(scroll);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	        
+
 		modelTable = (DefaultTableModel) tableContent.getModel();
 		modelTable.addRow(new String[]{"ID", "DATE", "CHANNEL", "FROM", "SUBJECT", "CONTENT"});
-		
+
 		if(workOffline == false) { // CHECKBOX NOT SELECTED
 			try {
 				getAndFillNewsOnTable(generalMenu, modelTable);
@@ -205,12 +231,11 @@ public class WindowDBA extends Thread {
 		windowFrame.setResizable(false);
 		windowFrame.validate();
 		windowFrame.setVisible(true);
-		
+
 		/**
 		 * Interrupt sent to WindowLoading (gif image loading)
 		 * */
 		loading.interrupt();
-		
 	}
 
 	/** 
@@ -360,10 +385,11 @@ public class WindowDBA extends Thread {
 	}
 
 	/** 
-	 * Main method for collecting messages
+	 * Method for collecting messages
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
+	 * @param generalMenu, is the JMenuBar 
 	 * @param modelTable, is the JTABLE that contains the messages
 	 */
 	private void getAndFillNewsOnTable(JMenuBar generalMenu, DefaultTableModel modelTable) {
@@ -379,71 +405,76 @@ public class WindowDBA extends Thread {
 		indicatorFilters = genericMessages.size();
 	}
 
-
-	//Method to fill the messages on the table
+	/** 
+	 * Method to fill the messages on the table
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param gM, is the JMenuBar 
+	 */
 	private void fillOnTable(JMenuBar gM) {
 		int count = 1;
-	
+
 		boolean servMail = gM.getMenu(2).getItem(0).isSelected();
 		boolean servTwitter = gM.getMenu(2).getItem(1).isSelected();
 		boolean servFacebook = gM.getMenu(2).getItem(2).isSelected();
-		
+
 		indicatorFilters = 0;
 		removeRows(modelTable);
 		genericMessages.clear();
 		try {
-				if(servMail) {
-					System.out.print("E-Mail checked.");
-					for (GenericMessage genM: messagesMail) {
-						String dateM = genM.getDateM();
-						String channelM = genM.getCanalM();
-						String fromM = genM.getFromM();
-						String subjectM = genM.getTitleM();
-						String contentM = genM.getContentM();
-	
-						genericMessages.add(genM);
-						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-						count++;
-						indicatorFilters++;
-					}
-				} 
-				if(servTwitter) {
-					System.out.print("Twitter checked.");
-					for (GenericMessage genM: messagesTwitter) {
-						String dateM = genM.getDateM();
-						String channelM = genM.getCanalM();
-						String fromM = genM.getFromM();
-						String subjectM = genM.getTitleM();
-						String contentM = genM.getContentM();
-						
-						genericMessages.add(genM);
-						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-						count++;
-						indicatorFilters++;
-					}
+			if(servMail) {
+				System.out.print("E-Mail checked.");
+				for (GenericMessage genM: messagesMail) {
+					String dateM = genM.getDateM();
+					String channelM = genM.getCanalM();
+					String fromM = genM.getFromM();
+					String subjectM = genM.getTitleM();
+					String contentM = genM.getContentM();
+
+					genericMessages.add(genM);
+					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+					count++;
+					indicatorFilters++;
 				}
-				if(servFacebook) {
-					System.out.print("Facebook checked.");
-					for (GenericMessage genM: messagesFacebook) {
-						String dateM = genM.getDateM();
-						String channelM = genM.getCanalM();
-						String fromM = genM.getFromM();
-						String subjectM = genM.getTitleM();
-						String contentM = genM.getContentM();
-		
-						genericMessages.add(genM);
-						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
-						count++;
-						indicatorFilters++;
-					}
+			} 
+			if(servTwitter) {
+				System.out.print("Twitter checked.");
+				for (GenericMessage genM: messagesTwitter) {
+					String dateM = genM.getDateM();
+					String channelM = genM.getCanalM();
+					String fromM = genM.getFromM();
+					String subjectM = genM.getTitleM();
+					String contentM = genM.getContentM();
+
+					genericMessages.add(genM);
+					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+					count++;
+					indicatorFilters++;
 				}
+			}
+			if(servFacebook) {
+				System.out.print("Facebook checked.");
+				for (GenericMessage genM: messagesFacebook) {
+					String dateM = genM.getDateM();
+					String channelM = genM.getCanalM();
+					String fromM = genM.getFromM();
+					String subjectM = genM.getTitleM();
+					String contentM = genM.getContentM();
+
+					genericMessages.add(genM);
+					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });
+					count++;
+					indicatorFilters++;
+				}
+			}
 		} catch(Exception e) {
 			System.out.print("Error in reading emails: " + e.toString());
 		} finally {
 			WriteXMLfile.writeMessage("dasra");
 			rXML.readMessagesXMLfile("dasra");
 		}
-		
+
 		/*if(servMail && servTwitter && servFacebook) {
 			sortOne.setEnabled(true);
 			sortTwo.setEnabled(true);
@@ -454,11 +485,11 @@ public class WindowDBA extends Thread {
 	}
 
 	/** 
-	 * Auxiliary method to control date filters
+	 * Auxiliary method to remove rows from the JTable
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
-	 * @param modelTable is the JTABLE that contains the messages
+	 * @param modelTable, is the JTABLE that contains the messages
 	 */
 	private void removeRows(DefaultTableModel modelTable) {
 		int linhasNaTabela = indicatorFilters;
@@ -468,10 +499,15 @@ public class WindowDBA extends Thread {
 		}
 	}
 
+	/** 
+	 * Auxiliary method to fill the table with the messages from XML file (when working offline)
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	private void getNewsWorkingOffline() {
 		int count = 1;
 		indicatorFilters = 0;
-
 		for (GenericMessage genM: rXML.readMessagesXMLfile(userDBA)) {
 			String dateM = genM.getDateM();
 			String channelM = genM.getCanalM();
@@ -485,30 +521,58 @@ public class WindowDBA extends Thread {
 		}
 	}
 
+	/** 
+	 * Utility method to get the emails
+	 * @return messagesMail, an ArrayList of GenericMessage
+	 */
 	public ArrayList<GenericMessage> getGMemail() {
 		return messagesMail;
 	}
 
+	/** 
+	 * Utility method to get the tweets
+	 * @return messagesTwitter, an ArrayList of GenericMessage
+	 */
 	public ArrayList<GenericMessage> getGMtweets() {
 		return messagesTwitter;
 	}
 
+	/** 
+	 * Utility method to get the posts from Facebook
+	 * @return messagesFacebook, an ArrayList of GenericMessage
+	 */
 	public ArrayList<GenericMessage> getGMposts() {
 		return messagesFacebook;
 	}
 
+	/** 
+	 * Utility method to get messages
+	 * @return genericMessages, an ArrayList of GenericMessage
+	 */
 	public static ArrayList<GenericMessage> getGM() {
 		return genericMessages;
 	}
 
+	/** 
+	 * Utility method to get a DefaultTableModel
+	 * @return modelTable, a DefaultTableModel
+	 */
 	public DefaultTableModel getModelTable() {
 		return modelTable;
 	}
-	
+
+	/** 
+	 * Utility method to get the indicator filters
+	 * @return indicatorFilters, an integer
+	 */
 	public int getIndicatorFilters() {
 		return indicatorFilters;
 	}
-	
+
+	/** 
+	 * Utility method to get filters
+	 * @return filtersForData, an Filters
+	 */
 	public Filters getFiltersForData() {
 		return filtersForData;
 	}

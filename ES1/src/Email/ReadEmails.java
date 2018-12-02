@@ -19,7 +19,12 @@ public class ReadEmails {
 	// VARIABLES
 	private static ReadXMLfile r = new ReadXMLfile();
 
-	// CONSTRUCTOR
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	public ReadEmails() {
 
 	}

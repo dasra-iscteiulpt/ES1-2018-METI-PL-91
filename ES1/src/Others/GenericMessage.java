@@ -26,6 +26,17 @@ public class GenericMessage {
 	private String titleM;
 	private String contentM;
 
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param dateM, the message date
+	 * @param canalM, the message service
+	 * @param fromM, the message sender
+	 * @param titleM, the message subject
+	 * @param contentM, the message body
+	 */
 	public GenericMessage(String dateM, String canalM, String fromM, String titleM, String contentM) {
 		this.dateM = dateM;
 		this.canalM = canalM;
