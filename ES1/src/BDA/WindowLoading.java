@@ -12,7 +12,11 @@ public class WindowLoading extends Thread  {
 	private JPanel panel;
 	
 	/** 
-	 * Utility method for construction of the loading window
+	 * Constructor
+	 * Construction of the loading window
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
 	 */
 	public WindowLoading() {
 		window = new JFrame();

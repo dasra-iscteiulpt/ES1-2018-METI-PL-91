@@ -11,12 +11,19 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 
+import Others.Attributes;
+
 public class ReadEmails {
 
 	// VARIABLES
 	private static ReadXMLfile r = new ReadXMLfile();
 
-	// CONSTRUCTOR
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	public ReadEmails() {
 
 	}

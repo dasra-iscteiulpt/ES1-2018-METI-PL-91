@@ -24,7 +24,7 @@ public class Retweet {
 	 * @param comment, is the text of the retweet
 	 * @return int, 0 = successful, 1 = failed
 	 */
-	public int retweet(String toUser, String fromUser, Long tweetId, String comment) {{
+	public int retweet(String toUser, String fromUser, Long tweetId, String comment) {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		r.validateUserTwitter(fromUser);
 		cb.setDebugEnabled(true)
@@ -48,7 +48,6 @@ public class Retweet {
 			System.out.println("Failed to retweet: " + te.getMessage());
 			return 1;
 		}
-	}
 	}
 }
 

@@ -17,6 +17,9 @@ public class Filters {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
+	 * @param indicatorFilters, is a counter
+	 * @param genericMessages, is an ArrayList of messages
+	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLast24Hours(DefaultTableModel modelTable, int indicatorFilters, ArrayList<GenericMessage> genericMessages) {
 		removeRows(modelTable, indicatorFilters);
@@ -54,6 +57,9 @@ public class Filters {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
+	 * @param indicatorFilters, is a counter 
+	 * @param genericMessages, is an ArrayList of messages
+	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLast48Hours(DefaultTableModel modelTable, int indicatorFilters, ArrayList<GenericMessage> genericMessages) {
 		removeRows(modelTable, indicatorFilters);
@@ -86,7 +92,6 @@ public class Filters {
 			System.out.print("Error in filtering by hour: " + e.toString());
 		}
 		return indicatorFilters;
-
 	}
 
 	/** 
@@ -95,6 +100,9 @@ public class Filters {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
+	 * @param indicatorFilters, is a counter
+	 * @param genericMessages, is an ArrayList of messages
+	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLastWeek(DefaultTableModel modelTable, int indicatorFilters, ArrayList<GenericMessage> genericMessages) {
 		removeRows(modelTable, indicatorFilters);
@@ -134,6 +142,9 @@ public class Filters {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
+	 * @param indicatorFilters, is a counter
+	 * @param genericMessages, is an ArrayList of messages
+	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLastMonth(DefaultTableModel modelTable, int indicatorFilters, ArrayList<GenericMessage> genericMessages) {
 		removeRows(modelTable, indicatorFilters);
@@ -174,6 +185,9 @@ public class Filters {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
+	 * @param indicatorFilters, is a counter
+	 * @param genericMessages, is an ArrayList of messages
+	 * @return indicatorFilters, the number messages
 	 */
 	public int filterMessagesAll(DefaultTableModel modelTable, int indicatorFilters, ArrayList<GenericMessage> genericMessages) {
 		removeRows(modelTable, indicatorFilters);
@@ -204,7 +218,10 @@ public class Filters {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
-	 * @param gM
+	 * @param gM, is the JMenuBar
+	 * @param indicatorFilters, is a counter
+	 * @param genericMessages, is an ArrayList of messages
+	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int sortByOldest(DefaultTableModel modelTable, JMenuBar gM, int indicatorFilters, ArrayList<GenericMessage> genericMessages) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -252,7 +269,10 @@ public class Filters {
 	 * @version 1.0
 	 * @since September
 	 * @param modelTable is the JTABLE that contains the messages
-	 * @param gM
+	 * @param gM, is the JMenuBar
+	 * @param indicatorFilters, is a counter
+	 * @param genericMessages, is an ArrayList of messages
+	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int sortByNewest(DefaultTableModel modelTable, JMenuBar gM, int indicatorFilters, ArrayList<GenericMessage> genericMessages) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -292,7 +312,15 @@ public class Filters {
 		}
 		return indicatorFilters;
 	}
-	
+
+	/** 
+	 * Utility method to remove rows from the table
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param modelTable is the JTABLE that contains the messages
+	 * @param indicatorFilters, is a counter
+	 */
 	private void removeRows(DefaultTableModel modelTable, int indicatorFilters) {
 		int linhasNaTabela = indicatorFilters;
 		for(int i = linhasNaTabela; i > 0; i--) {
@@ -300,5 +328,5 @@ public class Filters {
 			System.out.println("Row " + i + " deleted.");
 		}
 	}
-	
+
 }

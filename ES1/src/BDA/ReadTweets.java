@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import Others.Attributes;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -24,7 +25,7 @@ public class ReadTweets {
 	/**
 	 * Utility method to read ISCTE tweets that contain specific keywords
 	 * @param username, is the BDA user
-	 * @return ArrayList<Status>, is an array that contains tweets
+	 * @return twitterStatus, is an array that contains tweets
 	 */
 	public ArrayList<Status> readTweets(String username){
 		ArrayList<Status> twitterStatus = new ArrayList<Status>();
@@ -64,7 +65,7 @@ public class ReadTweets {
 	 * @since September 
 	 * @param keyword, is the tweet text
 	 * @param list, is the list with keywords
-	 * @return True if the post contains academic keywords
+	 * @return True if the post contains academic keywords, else otherwise
 	 */
 	public static boolean keywordValidation(String keyword, List<Attributes> list) {
 		String s = "";

@@ -12,6 +12,12 @@ public class WindowGUI {
 	private Font textFont;
 	private ReadXMLfile rXML;
 
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	public WindowGUI() {
 		windowFrame = new JFrame();
 		textFont = new Font("Calibri", Font.BOLD, 12);
@@ -20,6 +26,12 @@ public class WindowGUI {
 		configWindow();
 	}
 	
+	/** 
+	 * Utility method to add JPanels
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	private void addPanels() {
 		panels = new ArrayList<>();
 		panels.add(new JPanel()); // 0 SOUTH
@@ -28,6 +40,12 @@ public class WindowGUI {
 		panels.add(new JPanel()); // 3 NORTH
 	}
 	
+	/** 
+	 * Construction of the main window structure
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
 	private void configWindow() {
 		// PANELS CONFIGURATION
 		windowFrame.add(panels.get(0), BorderLayout.SOUTH);
@@ -41,19 +59,34 @@ public class WindowGUI {
 		windowFrame.setVisible(true);
 	}
 	
-	// GETTERS
+	/** 
+	 * Utility method to get the JFrame
+	 * @return windowFrame, a JFrame
+	 */
 	public JFrame getWindowFrame() {
 		return windowFrame;
 	}
 	
+	/** 
+	 * Utility method to get the JPanels
+	 * @return panels, an arrayList of JPanel
+	 */
 	public ArrayList<JPanel> getPanels() {
 		return panels;
 	}
 	
+	/** 
+	 * Utility method to get the text font
+	 * @return texFont, a font
+	 */
 	public Font getTextFont() {
 		return textFont;
 	}
 	
+	/** 
+	 * Utility method to get a ReadXMLfile
+	 * @return rXML, a ReadXMLFile
+	 */
 	public ReadXMLfile getReadXML() {
 		return rXML;
 	}
