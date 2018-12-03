@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="BDA.WindowGUI" x="275" y="15">
+    <Class name="BDA.WindowGUI" x="272" y="15">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -9,7 +9,7 @@
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
     </Class>
-    <Class name="BDA.WindowLogin" x="62" y="67">
+    <Class name="BDA.WindowLogin" x="75" y="25">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>

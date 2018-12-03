@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WindowMessage.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">WindowMessage.java</span></div><h1>WindowMessage.java</h1><pre class="source lang-java linenums">package BDA;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+
+public class WindowMessage extends WindowGUI {
+
+	// VARIABLES
+	private JLabel dateM;
+	private JLabel fromM;
+	private JLabel titleM;
+	private JTextArea contentM;
+	private JButton sendM;
+	private String userDBA;
+
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param date, the message date
+	 * @param from, the message sender
+	 * @param title, the message subject
+	 * @param content, the message body
+	 * @param canal, the message service
+	 * @param userDBA, the username
+	 * @param workOffline, true if user is working offline and false otherwise
+	 */
+<span class="fc" id="L37">	public WindowMessage(String date, String from, String title, String content, String canal, String userDBA, boolean workOffline) {</span>
+<span class="fc" id="L38">		getWindowFrame().setTitle(canal);</span>
+<span class="fc" id="L39">		dateM = new JLabel(&quot;Date: &quot; + date);</span>
+<span class="fc" id="L40">		fromM = new JLabel(&quot;From: &quot; + from);</span>
+<span class="fc" id="L41">		titleM = new JLabel(&quot;Subject: &quot; + title);</span>
+<span class="fc" id="L42">		contentM = new JTextArea(content);</span>
+<span class="fc" id="L43">		this.userDBA = userDBA;</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if(canal.equals(&quot;E-Mail&quot;)) {</span>
+<span class="nc" id="L45">			sendM = new JButton(&quot;Reply&quot;);</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">		} else if(canal.equals(&quot;Twitter&quot;)) {</span>
+<span class="fc" id="L47">			sendM = new JButton(&quot;Retweet&quot;);</span>
+<span class="pc bnc" id="L48" title="All 2 branches missed.">		} else if(canal.equals(&quot;Facebook&quot;)) {</span>
+<span class="nc" id="L49">			sendM = new JButton(&quot;Comment&quot;);</span>
+		}
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if(workOffline) {</span>
+<span class="nc" id="L52">			sendM.setEnabled(false);</span>
+		}
+<span class="fc" id="L54">		configWindow();</span>
+<span class="fc" id="L55">		endConfigWindow();</span>
+<span class="fc" id="L56">	}</span>
+
+
+	/** 
+	 * Construction of the main window structure
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void configWindow() {
+<span class="fc" id="L66">		getWindowFrame().setSize(700, 200);</span>
+
+<span class="fc" id="L68">		contentM.setPreferredSize(new Dimension(200,20));</span>
+<span class="fc" id="L69">		contentM.setLineWrap(true);</span>
+<span class="fc" id="L70">		contentM.setWrapStyleWord(true);</span>
+<span class="fc" id="L71">		contentM.setEditable(false);</span>
+
+		//COMPONENTS CONFIGURATION
+<span class="fc" id="L74">		getPanels().get(3).add(dateM);</span>
+<span class="fc" id="L75">		getPanels().get(3).add(fromM);</span>
+<span class="fc" id="L76">		getPanels().get(3).add(titleM);</span>
+
+<span class="fc" id="L78">		getWindowFrame().add(contentM, BorderLayout.CENTER);</span>
+
+<span class="fc" id="L80">		getPanels().get(0).add(sendM);</span>
+<span class="fc" id="L81">	}</span>
+
+	/** 
+	 * Construction of the main window structure
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void endConfigWindow() {
+		//WINDOW FRAME CONFIGURATION
+<span class="fc" id="L91">		getWindowFrame().setLocationRelativeTo(null);</span>
+
+<span class="fc" id="L93">		getWindowFrame().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);</span>
+
+<span class="fc" id="L95">		sendM.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				if(getWindowFrame().getTitle().equals(&quot;E-Mail&quot;)) {		</span>
+<span class="nc" id="L98">					SendEmail sMail = new SendEmail();</span>
+
+					// JOPTION PANE
+<span class="nc" id="L101">					JTextField emailTo = new JTextField();</span>
+<span class="nc" id="L102">					emailTo.setFont(getTextFont());</span>
+<span class="nc" id="L103">					JTextField contentTo = new JTextField();</span>
+<span class="nc" id="L104">					contentTo.setFont(getTextFont());</span>
+
+<span class="nc" id="L106">					String fromMOnlyEmail = fromM.getText().split(&quot;&lt;&quot;)[1];</span>
+<span class="nc" id="L107">					String emailToFinal = fromMOnlyEmail.substring(0, fromMOnlyEmail.length()-1).toLowerCase();</span>
+
+<span class="nc" id="L109">					emailTo.setText(emailToFinal);</span>
+<span class="nc" id="L110">					emailTo.setEditable(false);</span>
+<span class="nc" id="L111">					Object[] f = {&quot;E-mail to: &quot;, emailTo, &quot;Message: &quot;, contentTo};</span>
+<span class="nc" id="L112">					int okOrCancel = JOptionPane.showConfirmDialog(null, f, &quot;This is a header&quot;, JOptionPane.OK_CANCEL_OPTION);</span>
+
+<span class="nc" id="L114">					String toEmail = emailTo.getText().toString();</span>
+<span class="nc" id="L115">					String toContent = contentTo.getText().toString();</span>
+
+					try {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">						if(okOrCancel == JOptionPane.CANCEL_OPTION) {</span>
+<span class="nc" id="L119">							getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L120">						} else {</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">							if(!toEmail.isEmpty() &amp;&amp; !toContent.isEmpty()) {</span>
+<span class="nc" id="L122">								String fromEmail = ReadXMLfile.userData[0];</span>
+<span class="nc" id="L123">								String fromPWEmail = ReadXMLfile.userData[1];</span>
+<span class="nc" id="L124">								int resultMail = sMail.senderMail(toEmail, fromEmail, fromPWEmail, toContent, titleM.getText());</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">								if(resultMail == 1) {</span>
+<span class="nc" id="L126">									JOptionPane.showMessageDialog(null, &quot;E-mail sent to: &quot; + toEmail + &quot; and the message is &quot; + toContent);</span>
+<span class="nc" id="L127">									getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L128">								} else {</span>
+<span class="nc" id="L129">									JOptionPane.showMessageDialog(null, &quot;The email couldn't be sent. Please try again.&quot;);</span>
+								}
+<span class="nc" id="L131">							} else {</span>
+<span class="nc" id="L132">								JOptionPane.showMessageDialog(null, &quot;There are empty fields.&quot;);</span>
+<span class="nc" id="L133">								sendM.doClick();</span>
+							}
+						}
+<span class="nc" id="L136">					} catch (Exception excep) {</span>
+<span class="nc" id="L137">						System.out.println(&quot;Button cancel.&quot; + excep);</span>
+					}
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				} else if(getWindowFrame().getTitle().equals(&quot;Twitter&quot;)) {</span>
+<span class="nc" id="L140">					JTextField retweet = new JTextField();</span>
+<span class="nc" id="L141">					retweet.setFont(getTextFont());</span>
+<span class="nc" id="L142">					Object[] f = {&quot;Retweet message:&quot;, retweet};</span>
+<span class="nc" id="L143">					int okOrCancel = JOptionPane.showConfirmDialog(null, f, &quot;This is a header&quot;, JOptionPane.OK_CANCEL_OPTION);</span>
+<span class="nc" id="L144">					String retweetText = retweet.getText().toString();</span>
+
+<span class="nc bnc" id="L146" title="All 2 branches missed.">					if(okOrCancel == JOptionPane.CANCEL_OPTION) {</span>
+<span class="nc" id="L147">						getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L148">					} else {	</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">						if(!retweetText.isEmpty()) {</span>
+<span class="nc" id="L150">							Retweet rTwitter = new Retweet();</span>
+<span class="nc" id="L151">							int sucessOrInsucess = rTwitter.retweet(&quot;iscteiul&quot;, ReadXMLfile.userData[2], Long.valueOf(titleM.getText().split(&quot; &quot;)[1]), retweetText);	</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">							if(sucessOrInsucess == 0) {</span>
+<span class="nc" id="L153">								JOptionPane.showMessageDialog(null, &quot;Retweet successful.&quot;);</span>
+<span class="nc" id="L154">								getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L155">							} else {</span>
+<span class="nc" id="L156">								JOptionPane.showMessageDialog(null, &quot;Error in retweet. Please try again.&quot;);</span>
+							}
+<span class="nc" id="L158">						} else {</span>
+<span class="nc" id="L159">							JOptionPane.showMessageDialog(null, &quot;There are empty fields.&quot;);</span>
+<span class="nc" id="L160">							sendM.doClick();</span>
+						}
+					}
+<span class="nc bnc" id="L163" title="All 2 branches missed.">				} else if(getWindowFrame().getTitle().equals(&quot;Facebook&quot;)) {</span>
+<span class="nc" id="L164">					JTextField comment = new JTextField();</span>
+<span class="nc" id="L165">					comment.setFont(getTextFont());</span>
+<span class="nc" id="L166">					Object[] f = {&quot;Comment: &quot;, comment};</span>
+<span class="nc" id="L167">					int okOrCancel = JOptionPane.showConfirmDialog(null, f, &quot;This is a header&quot;, JOptionPane.OK_CANCEL_OPTION);</span>
+<span class="nc" id="L168">					String commentText = comment.getText().toString();</span>
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">					if(okOrCancel == JOptionPane.CANCEL_OPTION) {</span>
+<span class="nc" id="L171">						getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L172">					} else {	</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">						if(!commentText.isEmpty()) {</span>
+<span class="nc" id="L174">							WriteComment commentFace = new WriteComment();</span>
+<span class="nc" id="L175">							int sucessOrInsucess = commentFace.writeComment(titleM.getText().split(&quot; &quot;)[1], userDBA, comment.getText());</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">							if(sucessOrInsucess == 1) {</span>
+<span class="nc" id="L177">								JOptionPane.showMessageDialog(null, &quot;Comment successful.&quot;);</span>
+<span class="nc" id="L178">								getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L179">							} else {</span>
+<span class="nc" id="L180">								JOptionPane.showMessageDialog(null, &quot;Error in writing a comment. Please try again.&quot;);</span>
+							}
+<span class="nc" id="L182">						} else {</span>
+<span class="nc" id="L183">							JOptionPane.showMessageDialog(null, &quot;There are empty fields.&quot;);</span>
+<span class="nc" id="L184">							sendM.doClick();</span>
+						}
+					}
+				}
+<span class="nc" id="L188">			}</span>
+		});
+<span class="fc" id="L190">	}</span>
+
+	/** 
+	 * Utility method to get the JButton
+	 * @return sendM, A JButton
+	 */
+	public JButton sendM() {
+<span class="nc" id="L197">		return sendM;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

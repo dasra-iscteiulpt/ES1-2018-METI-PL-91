@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReadTweets.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">ReadTweets.java</span></div><h1>ReadTweets.java</h1><pre class="source lang-java linenums">package BDA;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+
+/** 
+* Reads Tweets
+* @author GROUP 91
+* @version 1.0
+* @since September 2018
+*/
+
+<span class="fc" id="L20">public class ReadTweets {</span>
+
+<span class="fc" id="L22">	private static ReadXMLfile r = new ReadXMLfile();</span>
+
+	/**
+	 * Utility method to read ISCTE tweets that contain specific keywords
+	 * @param username, is the BDA user
+	 * @return twitterStatus, is an array that contains tweets
+	 */
+	public ArrayList&lt;Status&gt; readTweets(String username){
+<span class="fc" id="L30">		ArrayList&lt;Status&gt; twitterStatus = new ArrayList&lt;Status&gt;();</span>
+<span class="fc" id="L31">		r.validateUserTwitter(username);</span>
+<span class="fc" id="L32">		ConfigurationBuilder cb = new ConfigurationBuilder();</span>
+<span class="fc" id="L33">		cb.setDebugEnabled(true)</span>
+<span class="fc" id="L34">		.setOAuthConsumerKey(ReadXMLfile.twitterData[0])</span>
+<span class="fc" id="L35">		.setOAuthConsumerSecret(ReadXMLfile.twitterData[1])</span>
+<span class="fc" id="L36">		.setOAuthAccessToken(ReadXMLfile.twitterData[2])</span>
+<span class="fc" id="L37">		.setOAuthAccessTokenSecret(ReadXMLfile.twitterData[3]);</span>
+<span class="fc" id="L38">		TwitterFactory tf = new TwitterFactory(cb.build());</span>
+<span class="fc" id="L39">		Twitter twitter = tf.getInstance();</span>
+
+		try {
+<span class="fc" id="L42">			SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L43">			Paging paging = new Paging(1, 200);</span>
+<span class="fc" id="L44">			List&lt;Status&gt; statusList = twitter.getUserTimeline(&quot;iscteiul&quot;, paging);</span>
+<span class="fc" id="L45">			List&lt;Attributes&gt; filtersList = new ArrayList&lt;Attributes&gt;();</span>
+<span class="fc" id="L46">			filtersList = r.readFiltersXMLfile();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">			for (Status status : statusList) {</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">				if(keywordValidation(status.getText(), filtersList)) {</span>
+<span class="fc" id="L49">					twitterStatus.add(status);</span>
+<span class="fc" id="L50">					System.out.println(&quot;Tweet from: &quot; + status.getUser().getName() + System.lineSeparator() + &quot;Text : &quot; + status.getText() + System.lineSeparator() + &quot;Id : &quot; + status.getId() + System.lineSeparator() + &quot;Created at : &quot; + sdf.format(status.getCreatedAt()) + System.lineSeparator());</span>
+				}
+			}
+<span class="pc" id="L53">		} catch (TwitterException te) {</span>
+<span class="nc" id="L54">			te.printStackTrace();</span>
+<span class="nc" id="L55">			System.out.println(&quot;Failed to read tweets: &quot; + te.getMessage());</span>
+		}
+<span class="fc" id="L57">		return twitterStatus;</span>
+	}
+	
+	/** 
+	 * Check for academic keywords in the tweet
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September 
+	 * @param keyword, is the tweet text
+	 * @param list, is the list with keywords
+	 * @return True if the post contains academic keywords, else otherwise
+	 */
+	public static boolean keywordValidation(String keyword, List&lt;Attributes&gt; list) {
+<span class="fc" id="L70">		String s = &quot;&quot;;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc" id="L72">			s =list.get(i).getKeyword();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			if (keyword.toLowerCase().contains(s.toLowerCase())) {</span>
+<span class="fc" id="L74">				return true; </span>
+			}
+		}
+<span class="fc" id="L77">		return false; </span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

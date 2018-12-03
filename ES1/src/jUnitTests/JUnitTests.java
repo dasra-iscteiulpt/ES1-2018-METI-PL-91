@@ -5,20 +5,22 @@ import java.util.ArrayList;
 import javax.mail.Message;
 import javax.swing.table.DefaultTableModel;
 import org.junit.jupiter.api.Test;
-import Email.ReadEmails;
-import Email.SendEmail;
-import Facebook.WriteComment;
-import GUI.WindowDBA;
-import GUI.WindowFilter;
-import GUI.WindowGUI;
-import GUI.WindowLoading;
-import GUI.WindowLogin;
-import GUI.WindowMessage;
-import GUI.WindowRegister;
-import GUI.WindowUnsubscribe;
-import Twitter.Retweet;
-import XML.ReadXMLfile;
-import XML.WriteXMLfile;
+
+import BDA.Main;
+import BDA.ReadEmails;
+import BDA.ReadXMLfile;
+import BDA.Retweet;
+import BDA.SendEmail;
+import BDA.WindowDBA;
+import BDA.WindowFilter;
+import BDA.WindowGUI;
+import BDA.WindowLoading;
+import BDA.WindowLogin;
+import BDA.WindowMessage;
+import BDA.WindowRegister;
+import BDA.WindowUnsubscribe;
+import BDA.WriteComment;
+import BDA.WriteXMLfile;
 
 class JUnitTests {
 
@@ -35,15 +37,15 @@ class JUnitTests {
 		messageArrayOne = rEmails.readMessages("imap.gmail.com", "imaps3", "diana.es.pl.91@gmail.com", "engenhariasoftware");
 
 		String subjectMail1 = rEmails.getSubject(messageArrayOne.get(0));
-		String subjectMail2 = rEmails.getSubject(messageArrayOne.get(5));
+		String subjectMail2 = rEmails.getSubject(messageArrayOne.get(2));
 		messageArrayTwo.add(messageArrayOne.get(0));
 
 		assertNotEquals(messageArrayOne, messageArrayTwo);
 		assertNotEquals(messageArrayOne.size(), messageArrayTwo.size());
-		assertEquals(messageArrayOne.size(),6);
+		assertEquals(messageArrayOne.size(),4);
 		assertNotEquals(subjectMail1, "Exame");
-		assertEquals(subjectMail1,"Inscrição universidade");
-		assertEquals(subjectMail2,"Q&A Highlights for Diana Salvador");
+		assertEquals(subjectMail1,"FW: Call for Registration  - 2nd International SeminarArchitectures of the Soul | 8th and 9th November");
+		assertEquals(subjectMail2,"Erasmus");
 	}
 
 	@Test
@@ -135,33 +137,33 @@ class JUnitTests {
 		windDBA.run();
 		assertTrue(windDBA.getGM().get(1).getCanalM().equals("E-Mail"));
 		assertTrue(windDBA.getGM().get(10).getCanalM().equals("Twitter"));
-		assertTrue(windDBA.getGM().get(23).getCanalM().equals("Facebook"));
+		assertTrue(windDBA.getGM().get(102).getCanalM().equals("Facebook"));
 		
 		DefaultTableModel modelTable = windDBA.getModelTable();
 		assertNotNull(modelTable);
 				
-		windDBA.getFiltersForData().filterMessagesAll(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
+		windDBA.getFiltersForData().filterMessagesAll(modelTable, 0, WindowDBA.getGM());
 		boolean sizeTableAll = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTableAll);
 		
-		windDBA.getFiltersForData().filterMessagesLast24Hours(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
-		boolean sizeTable24H = (modelTable.getRowCount() > 0);
-		assertTrue(sizeTable24H);
-		
-		windDBA.getFiltersForData().filterMessagesLast48Hours(modelTable,windDBA.getIndicatorFilters(), WindowDBA.getGM());
+		windDBA.getFiltersForData().filterMessagesLast48Hours(modelTable, 0, WindowDBA.getGM());
 		boolean sizeTable48H = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTable48H);
 		
-		windDBA.getFiltersForData().filterMessagesLastMonth(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
+		windDBA.getFiltersForData().filterMessagesLast24Hours(modelTable, 0, WindowDBA.getGM());
+		boolean sizeTable24H = (modelTable.getRowCount() > 0);
+		assertTrue(sizeTable24H);
+		
+		windDBA.getFiltersForData().filterMessagesLastMonth(modelTable, 0, WindowDBA.getGM());
 		boolean sizeTableMonth = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTableMonth);
 
-		windDBA.getFiltersForData().filterMessagesLastWeek(modelTable, windDBA.getIndicatorFilters(), WindowDBA.getGM());
+		windDBA.getFiltersForData().filterMessagesLastWeek(modelTable, 0, WindowDBA.getGM());
 		boolean sizeTableWeek = (modelTable.getRowCount() > 0);
 		assertTrue(sizeTableWeek);
 		
 		int sizeTableBeforeSortNewest = modelTable.getRowCount();
-		windDBA.getFiltersForData().sortByNewest(modelTable, null, windDBA.getIndicatorFilters(), WindowDBA.getGM());
+		windDBA.getFiltersForData().sortByNewest(modelTable, null, 0, WindowDBA.getGM());
 		boolean sizeTableAfterSortNewest = (sizeTableBeforeSortNewest == modelTable.getRowCount());
 		assertFalse(sizeTableAfterSortNewest);	
 	}
@@ -174,7 +176,7 @@ class JUnitTests {
 		@SuppressWarnings("static-access")
 		boolean existsUsers = (rXML.readUsersXMLfile().size() > 0);
 		
-		assertTrue(existFilter);
+		assertFalse(existFilter);
 		assertTrue(existUser);
 		assertTrue(existsFilters);
 		assertTrue(existsUsers);
@@ -198,5 +200,11 @@ class JUnitTests {
 		assertTrue(removeUser);
 		assertTrue(removeFilter);
 		assertTrue(setUserAtt);
+	}
+	
+	@Test
+	public void mainTest() {
+		Main main = new Main();
+		assertNotNull(main);
 	}
 }

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>JUnitTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">jUnitTests</a> &gt; <span class="el_source">JUnitTests.java</span></div><h1>JUnitTests.java</h1><pre class="source lang-java linenums">package jUnitTests;
+import static org.junit.jupiter.api.Assertions.*;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import javax.mail.Message;
+import javax.swing.table.DefaultTableModel;
+import org.junit.jupiter.api.Test;
+
+import BDA.Main;
+import BDA.ReadEmails;
+import BDA.ReadXMLfile;
+import BDA.Retweet;
+import BDA.SendEmail;
+import BDA.WindowDBA;
+import BDA.WindowFilter;
+import BDA.WindowGUI;
+import BDA.WindowLoading;
+import BDA.WindowLogin;
+import BDA.WindowMessage;
+import BDA.WindowRegister;
+import BDA.WindowUnsubscribe;
+import BDA.WriteComment;
+import BDA.WriteXMLfile;
+
+<span class="fc" id="L25">class JUnitTests {</span>
+
+<span class="fc" id="L27">	ReadEmails rEmails = new ReadEmails();</span>
+<span class="fc" id="L28">	ReadXMLfile rXML = new ReadXMLfile();</span>
+<span class="fc" id="L29">	WriteXMLfile wXML = new WriteXMLfile();</span>
+<span class="fc" id="L30">	SendEmail sEmail = new SendEmail();</span>
+	WindowMessage wMessage;
+
+	@Test
+	public void testReadEmails() throws Exception {
+<span class="fc" id="L35">		ArrayList&lt;Message&gt; messageArrayOne = new ArrayList&lt;Message&gt;();</span>
+<span class="fc" id="L36">		ArrayList&lt;Message&gt; messageArrayTwo = new ArrayList&lt;Message&gt;();</span>
+<span class="fc" id="L37">		messageArrayOne = rEmails.readMessages(&quot;imap.gmail.com&quot;, &quot;imaps3&quot;, &quot;diana.es.pl.91@gmail.com&quot;, &quot;engenhariasoftware&quot;);</span>
+
+<span class="fc" id="L39">		String subjectMail1 = rEmails.getSubject(messageArrayOne.get(0));</span>
+<span class="fc" id="L40">		String subjectMail2 = rEmails.getSubject(messageArrayOne.get(2));</span>
+<span class="fc" id="L41">		messageArrayTwo.add(messageArrayOne.get(0));</span>
+
+<span class="fc" id="L43">		assertNotEquals(messageArrayOne, messageArrayTwo);</span>
+<span class="fc" id="L44">		assertNotEquals(messageArrayOne.size(), messageArrayTwo.size());</span>
+<span class="fc" id="L45">		assertEquals(messageArrayOne.size(),4);</span>
+<span class="fc" id="L46">		assertNotEquals(subjectMail1, &quot;Exame&quot;);</span>
+<span class="fc" id="L47">		assertEquals(subjectMail1,&quot;FW: Call for Registration  - 2nd International SeminarArchitectures of the Soul | 8th and 9th November&quot;);</span>
+<span class="fc" id="L48">		assertEquals(subjectMail2,&quot;Erasmus&quot;);</span>
+<span class="fc" id="L49">	}</span>
+
+	@Test
+	public void testReadXMLfile() {
+<span class="fc" id="L53">		boolean xmlValidateOne = rXML.validateUserBDA(&quot;dasra&quot;, &quot;dasra123&quot;);</span>
+<span class="fc" id="L54">		boolean xmlValidateTwo = rXML.validateUserBDA(&quot;vmbfs&quot;, &quot;vmbfs123&quot;);</span>
+<span class="fc" id="L55">		assertNotEquals(xmlValidateOne, xmlValidateTwo);</span>
+<span class="fc" id="L56">		assertTrue(xmlValidateOne);</span>
+<span class="fc" id="L57">		assertFalse(xmlValidateTwo);</span>
+<span class="fc" id="L58">	}</span>
+
+	@Test
+	public void testSendEmail() {
+<span class="fc" id="L62">		int sucessSendMail = sEmail.senderMail(&quot;rjfae1@iscte-iul.pt&quot;, &quot;diana.es.pl.91@gmail.com&quot;, &quot;engenhariasoftware&quot;, &quot;Teste JUnit&quot;, &quot;Teste JUnit&quot;);</span>
+
+<span class="fc" id="L64">		assertNotEquals(sucessSendMail, 0);</span>
+<span class="fc" id="L65">		assertEquals(sucessSendMail, 1);</span>
+<span class="fc" id="L66">	}</span>
+
+	@Test
+	public void testNullAndNotNull() {
+<span class="fc" id="L70">		assertNotNull(rEmails);</span>
+<span class="fc" id="L71">		assertNotNull(rXML);</span>
+<span class="fc" id="L72">		assertNotNull(sEmail);</span>
+<span class="fc" id="L73">		assertNull(wMessage);</span>
+<span class="fc" id="L74">	}</span>
+	
+	@Test
+	public void testWindowLogin() {
+<span class="fc" id="L78">		WindowGUI wind = new WindowLogin();</span>
+<span class="fc" id="L79">		Dimension windowSize = new Dimension(350,170);</span>
+<span class="fc" id="L80">		assertEquals(windowSize, wind.getWindowFrame().getSize());</span>
+<span class="fc" id="L81">	}</span>
+	
+	@Test
+	public void testWindowUnsubscribe() {
+<span class="fc" id="L85">		WindowLogin windL = new WindowLogin();</span>
+<span class="fc" id="L86">		assertNotNull(windL);</span>
+<span class="fc" id="L87">		WindowGUI windU = new WindowUnsubscribe(windL.getWindowFrame());</span>
+<span class="fc" id="L88">		assertEquals(windU.getPanels().size(), 4);</span>
+<span class="fc" id="L89">	}</span>
+	
+	@Test
+	public void testWindowRegister() {
+<span class="fc" id="L93">		WindowGUI windL = null;</span>
+<span class="fc" id="L94">		assertNull(windL);</span>
+<span class="fc" id="L95">		windL = new WindowLogin();</span>
+<span class="fc" id="L96">		assertNotNull(windL);</span>
+<span class="fc" id="L97">		WindowGUI windReg = new WindowRegister(windL.getWindowFrame());</span>
+<span class="fc" id="L98">		assertTrue(windReg.getWindowFrame().isVisible());</span>
+<span class="fc" id="L99">	}</span>
+		
+	@Test
+	public void testWindowFilter() {
+<span class="fc" id="L103">		WindowDBA windDBA = new WindowDBA(false, &quot;dasra&quot;, new WindowLoading());</span>
+<span class="fc" id="L104">		WindowFilter windF = new WindowFilter(windDBA.getFrame());</span>
+<span class="fc" id="L105">		windF.fillFilters();</span>
+<span class="fc" id="L106">		windF.getListModel().addElement(&quot;ISCTE&quot;);</span>
+<span class="fc" id="L107">		assertNotEquals(windF.getListModel().get(0), &quot;ISCTE&quot;);</span>
+<span class="fc" id="L108">	}</span>
+	
+	@Test
+	public void testWriteComment() {
+<span class="fc" id="L112">		WriteComment comm = new WriteComment();</span>
+<span class="fc" id="L113">		assertNotNull(comm);</span>
+<span class="fc" id="L114">		int result = comm.writeComment(&quot;2210486695854771_2210487832521324&quot;, &quot;dasra&quot;, &quot;Comentário p/ JUNIT!&quot;);</span>
+<span class="fc" id="L115">		assertEquals(result, 1);</span>
+<span class="fc" id="L116">	}</span>
+	
+	@Test
+	public void testRetweet() {
+<span class="fc" id="L120">		Retweet twitter = new Retweet();</span>
+<span class="fc" id="L121">		assertNotNull(twitter);</span>
+<span class="fc" id="L122">		long tId = Long.parseLong(&quot;1019834231432843265&quot;);</span>
+<span class="fc" id="L123">		int result = twitter.retweet(&quot;iscteiul&quot;, &quot;diana.es.pl.91@gmail.com&quot;, tId, &quot;Tweet p/ JUNIT!&quot;);</span>
+<span class="fc" id="L124">		assertNotEquals(result, 0);</span>
+<span class="fc" id="L125">	}</span>
+	
+	@Test
+	public void testWindowMessage() {
+<span class="fc" id="L129">		WindowMessage windMess = new WindowMessage(&quot;04/07/2018&quot;, &quot;ISCTE-IUL&quot;, &quot;Subject - 101454389886004837&quot;, &quot;Adicionei um vídeo a uma playlist @YouTube https://t.co/8iK7Nei6DM do Mês junho 2018 Biblioteca ISCTE-IUL&quot;, &quot;Twitter&quot;, &quot;dasra&quot;, false);</span>
+<span class="fc" id="L130">		assertFalse(windMess.getWindowFrame().isResizable());</span>
+<span class="fc" id="L131">	} </span>
+	
+	@SuppressWarnings(&quot;static-access&quot;)
+	@Test
+	public void testWindowDBA() {
+<span class="fc" id="L136">		WindowDBA windDBA = new WindowDBA(false, &quot;dasra&quot;, new WindowLoading());</span>
+<span class="fc" id="L137">		windDBA.run();</span>
+<span class="fc" id="L138">		assertTrue(windDBA.getGM().get(1).getCanalM().equals(&quot;E-Mail&quot;));</span>
+<span class="fc" id="L139">		assertTrue(windDBA.getGM().get(10).getCanalM().equals(&quot;Twitter&quot;));</span>
+<span class="fc" id="L140">		assertTrue(windDBA.getGM().get(102).getCanalM().equals(&quot;Facebook&quot;));</span>
+		
+<span class="fc" id="L142">		DefaultTableModel modelTable = windDBA.getModelTable();</span>
+<span class="fc" id="L143">		assertNotNull(modelTable);</span>
+				
+<span class="fc" id="L145">		windDBA.getFiltersForData().filterMessagesAll(modelTable, 0, WindowDBA.getGM());</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		boolean sizeTableAll = (modelTable.getRowCount() &gt; 0);</span>
+<span class="fc" id="L147">		assertTrue(sizeTableAll);</span>
+		
+<span class="fc" id="L149">		windDBA.getFiltersForData().filterMessagesLast48Hours(modelTable, 0, WindowDBA.getGM());</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		boolean sizeTable48H = (modelTable.getRowCount() &gt; 0);</span>
+<span class="fc" id="L151">		assertTrue(sizeTable48H);</span>
+		
+<span class="fc" id="L153">		windDBA.getFiltersForData().filterMessagesLast24Hours(modelTable, 0, WindowDBA.getGM());</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		boolean sizeTable24H = (modelTable.getRowCount() &gt; 0);</span>
+<span class="fc" id="L155">		assertTrue(sizeTable24H);</span>
+		
+<span class="fc" id="L157">		windDBA.getFiltersForData().filterMessagesLastMonth(modelTable, 0, WindowDBA.getGM());</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		boolean sizeTableMonth = (modelTable.getRowCount() &gt; 0);</span>
+<span class="fc" id="L159">		assertTrue(sizeTableMonth);</span>
+
+<span class="fc" id="L161">		windDBA.getFiltersForData().filterMessagesLastWeek(modelTable, 0, WindowDBA.getGM());</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		boolean sizeTableWeek = (modelTable.getRowCount() &gt; 0);</span>
+<span class="fc" id="L163">		assertTrue(sizeTableWeek);</span>
+		
+<span class="fc" id="L165">		int sizeTableBeforeSortNewest = modelTable.getRowCount();</span>
+<span class="fc" id="L166">		windDBA.getFiltersForData().sortByNewest(modelTable, null, 0, WindowDBA.getGM());</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		boolean sizeTableAfterSortNewest = (sizeTableBeforeSortNewest == modelTable.getRowCount());</span>
+<span class="fc" id="L168">		assertFalse(sizeTableAfterSortNewest);	</span>
+<span class="fc" id="L169">	}</span>
+	
+	@Test
+	public void testXMLFile() {
+<span class="fc" id="L173">		boolean existFilter = rXML.validateFilter(&quot;universidade&quot;);</span>
+<span class="fc" id="L174">		boolean existUser = rXML.validateUserBDA(&quot;dasra&quot;, &quot;dasra123&quot;);</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		boolean existsFilters = (rXML.readFiltersXMLfile().size() &gt; 0);</span>
+		@SuppressWarnings(&quot;static-access&quot;)
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		boolean existsUsers = (rXML.readUsersXMLfile().size() &gt; 0);</span>
+		
+<span class="fc" id="L179">		assertFalse(existFilter);</span>
+<span class="fc" id="L180">		assertTrue(existUser);</span>
+<span class="fc" id="L181">		assertTrue(existsFilters);</span>
+<span class="fc" id="L182">		assertTrue(existsUsers);</span>
+<span class="fc" id="L183">	}</span>
+	
+	@Test
+	public void writeXMLFile() {
+		@SuppressWarnings(&quot;static-access&quot;)
+<span class="fc" id="L188">		boolean addUser = wXML.addUser(&quot;teste&quot;, &quot;teste123&quot;, &quot;teste@gmail.com&quot;, &quot;teste123&quot;, &quot;dpthvBBPVVsWxWituNu1CBx9h&quot;, &quot;Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W&quot;, &quot;1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B&quot;, &quot;B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N&quot;, &quot;EAADpFZBDLw5QBADta3Qw8JqjHPFlShpQHhsodQhywzIZBTfdQp5oJJMBSZBP8qQrVkaiA7fmmBFZAE5xKazkRJRzyekZBL8gnThcJ0f7RoLtaNwseHJgZCUJtYZC6yyoLS1q0ZBvgumVQMG56c1rovf5iWwZAX5jjIi4nVcwM39ZABCRZCd3HZA9TN7daJZC79HSw4kcZD&quot;);</span>
+		@SuppressWarnings(&quot;static-access&quot;)
+<span class="fc" id="L190">		boolean addFilter = wXML.addFilter(&quot;professor&quot;);</span>
+		@SuppressWarnings(&quot;static-access&quot;)
+<span class="fc" id="L192">		boolean removeUser = wXML.removeUser(&quot;teste&quot;);</span>
+		@SuppressWarnings(&quot;static-access&quot;)
+<span class="fc" id="L194">		boolean removeFilter = (wXML.removeFilter(&quot;professor&quot;));</span>
+		@SuppressWarnings(&quot;static-access&quot;)
+<span class="fc" id="L196">		boolean setUserAtt = (wXML.setUserAttribute(&quot;iccco&quot;, &quot;password&quot;, &quot;teste&quot;));</span>
+				
+<span class="fc" id="L198">		assertTrue(addUser);</span>
+<span class="fc" id="L199">		assertTrue(addFilter);</span>
+<span class="fc" id="L200">		assertTrue(removeUser);</span>
+<span class="fc" id="L201">		assertTrue(removeFilter);</span>
+<span class="fc" id="L202">		assertTrue(setUserAtt);</span>
+<span class="fc" id="L203">	}</span>
+	
+	@Test
+	public void mainTest() {
+<span class="fc" id="L207">		Main main = new Main();</span>
+<span class="fc" id="L208">		assertNotNull(main);</span>
+<span class="fc" id="L209">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

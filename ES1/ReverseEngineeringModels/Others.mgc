@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="BDA.Main" x="710" y="327">
+    <Class name="jUnitTests.JUnitTests" x="710" y="1">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"
+            accessors-accepted="true" constructors-accepted="true"/>
+        <Communication destinationClassName="BDA.Filters"/>
+    </Class>
+    <Class name="BDA.Main" x="711" y="342">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -17,16 +27,6 @@
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
-    </Class>
-    <Class name="JUNIT.JUnitTests" x="708" y="1">
-        <AttributesDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="true"/>
-        <MethodDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="true"
-            accessors-accepted="true" constructors-accepted="true"/>
-        <Communication destinationClassName="BDA.Filters"/>
     </Class>
     <Class name="BDA.Filters" x="5" y="329">
         <AttributesDisplayFilter public-accepted="true"

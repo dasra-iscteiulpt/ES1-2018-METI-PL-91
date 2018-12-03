@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WindowLogin.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">WindowLogin.java</span></div><h1>WindowLogin.java</h1><pre class="source lang-java linenums">package BDA;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class WindowLogin extends WindowGUI {
+
+	// VARIABLES
+	private String userDBA;
+	private JCheckBox chkOffline;
+	
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+<span class="fc" id="L29">	public WindowLogin() {</span>
+<span class="fc" id="L30">		chkOffline = new JCheckBox(&quot;Offline&quot;);</span>
+<span class="fc" id="L31">		getWindowFrame().setTitle(&quot;Login&quot;);</span>
+<span class="fc" id="L32">		configWindow();</span>
+<span class="fc" id="L33">	}</span>
+	
+	/** 
+	* Construction of the main window structure
+	* @author GROUP 91
+	* @version 1.0
+	* @since September
+	*/
+	private void configWindow() {
+
+		// COMPONENTS CONFIGURATION
+<span class="fc" id="L44">		JPanel panelCenter = new JPanel(new FlowLayout());</span>
+<span class="fc" id="L45">		getWindowFrame().add(panelCenter);</span>
+		
+<span class="fc" id="L47">		JLabel labInfoLog = new JLabel(&quot;Do you have an account? Please login.&quot;);</span>
+<span class="fc" id="L48">		JLabel labInfoRegister = new JLabel(&quot;Not registered? Please sign up.&quot;);</span>
+		
+<span class="fc" id="L50">		JLabel labInfoUser = new JLabel(&quot;Username: &quot;);</span>
+<span class="fc" id="L51">		JLabel labInfoPw = new JLabel(&quot;Password: &quot;);</span>
+		
+<span class="fc" id="L53">		JTextField userName = new JTextField();	</span>
+<span class="fc" id="L54">		userName.setFont(getTextFont());</span>
+<span class="fc" id="L55">		userName.setPreferredSize(new Dimension(130,20));</span>
+		
+<span class="fc" id="L57">		JPasswordField passWord = new JPasswordField();</span>
+<span class="fc" id="L58">		passWord.setFont(getTextFont());</span>
+<span class="fc" id="L59">		passWord.setPreferredSize(new Dimension(204,20));</span>
+<span class="fc" id="L60">		JLabel labEmail = new JLabel(&quot;@iscte-iul.pt&quot;);</span>
+<span class="fc" id="L61">		JButton btNlog = new JButton(&quot;Login&quot;);</span>
+<span class="fc" id="L62">		JButton btNreg = new JButton(&quot;Register&quot;);</span>
+<span class="fc" id="L63">		JButton btNunsub = new JButton(&quot;Unsubscribe&quot;);</span>
+		
+<span class="fc" id="L65">		getPanels().get(3).add(labInfoLog);</span>
+<span class="fc" id="L66">		panelCenter.add(labInfoUser);</span>
+<span class="fc" id="L67">		panelCenter.add(userName);</span>
+<span class="fc" id="L68">		panelCenter.add(labEmail);</span>
+
+<span class="fc" id="L70">		panelCenter.add(labInfoPw);</span>
+<span class="fc" id="L71">		panelCenter.add(passWord);</span>
+<span class="fc" id="L72">		panelCenter.add(labInfoRegister);</span>
+
+<span class="fc" id="L74">		getPanels().get(0).add(btNlog);</span>
+<span class="fc" id="L75">		getPanels().get(0).add(btNreg);</span>
+<span class="fc" id="L76">		getPanels().get(0).add(btNunsub);</span>
+<span class="fc" id="L77">		getPanels().get(0).add(chkOffline);</span>
+
+		// CLICK ON TEXTFIELD USERNAME
+<span class="fc" id="L80">        userName.addMouseListener(new MouseAdapter(){</span>
+            public void mouseClicked(MouseEvent e){
+<span class="nc" id="L82">                userName.setText(&quot;&quot;);</span>
+<span class="nc" id="L83">            }</span>
+        });
+        
+		// CLICK ON TEXTFIELD PASSWORD
+<span class="fc" id="L87">        passWord.addMouseListener(new MouseAdapter(){</span>
+            public void mouseClicked(MouseEvent e){
+<span class="nc" id="L89">                passWord.setText(&quot;&quot;);</span>
+<span class="nc" id="L90">            }</span>
+        });
+        
+		// CLICK ON BUTTON REGISTER
+<span class="fc" id="L94">		btNreg.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L96">				WindowGUI windReg = new WindowRegister(getWindowFrame());</span>
+<span class="nc" id="L97">				getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L98">				windReg.getWindowFrame().setVisible(true);</span>
+				
+<span class="nc" id="L100">			}</span>
+		});
+		
+		// CLICK ON BUTTON UNSUBSCRIBE
+<span class="fc" id="L104">		btNunsub.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L106">				WindowGUI windUnsub = new WindowUnsubscribe(getWindowFrame());</span>
+<span class="nc" id="L107">				getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L108">				windUnsub.getWindowFrame().setVisible(true);</span>
+<span class="nc" id="L109">			}</span>
+		});
+		
+		// CLICK ON BUTTON LOGIN
+<span class="fc" id="L113">		btNlog.addActionListener(new ActionListener() {</span>
+			@SuppressWarnings(&quot;deprecation&quot;)
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L116" title="All 4 branches missed.">				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty()) {</span>
+<span class="nc" id="L117">					JOptionPane.showMessageDialog(null, &quot;There are empty fields.&quot;);</span>
+<span class="nc" id="L118">				} else {</span>
+					// IF USER AND PASSWORD ARE IN THE XML FILE, THE LOGIN IS SUCCESSFUL
+<span class="nc bnc" id="L120" title="All 2 branches missed.">					if(getReadXML().validateUserBDA(userName.getText().trim(),passWord.getText().toString().trim()) == true) {</span>
+<span class="nc" id="L121">						JOptionPane.showMessageDialog(null, &quot;Login successful.&quot;);</span>
+<span class="nc" id="L122">						userDBA = userName.getText();</span>
+						
+<span class="nc" id="L124">						getWindowFrame().setVisible(false);</span>
+						
+<span class="nc" id="L126">						WindowLoading windowloading = new WindowLoading();						</span>
+<span class="nc" id="L127">						windowloading.start();</span>
+						
+						@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L130">						WindowDBA w = new WindowDBA(chkOffline.isSelected(), userDBA, windowloading);</span>
+<span class="nc" id="L131">						w.start();</span>
+																				
+<span class="nc" id="L133">					} else {</span>
+<span class="nc" id="L134">						JOptionPane.showMessageDialog(null, &quot;Incorrect login. Please review the access data.&quot;);</span>
+					}
+				}
+<span class="nc" id="L137">			}</span>
+		});
+
+		// CONFIGURATION WINDOW FRAME
+<span class="fc" id="L141">		getWindowFrame().setSize(350, 170);</span>
+<span class="fc" id="L142">		getWindowFrame().setLocationRelativeTo(null);</span>
+<span class="fc" id="L143">		getWindowFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+
+<span class="fc" id="L145">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

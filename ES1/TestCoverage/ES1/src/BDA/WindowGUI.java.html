@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WindowGUI.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">WindowGUI.java</span></div><h1>WindowGUI.java</h1><pre class="source lang-java linenums">package BDA;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class WindowGUI {
+	
+	private JFrame windowFrame;
+	private ArrayList&lt;JPanel&gt; panels;
+	private Font textFont;
+	private ReadXMLfile rXML;
+
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+<span class="fc" id="L21">	public WindowGUI() {</span>
+<span class="fc" id="L22">		windowFrame = new JFrame();</span>
+<span class="fc" id="L23">		textFont = new Font(&quot;Calibri&quot;, Font.BOLD, 12);</span>
+<span class="fc" id="L24">		rXML = new ReadXMLfile();</span>
+<span class="fc" id="L25">		addPanels();</span>
+<span class="fc" id="L26">		configWindow();</span>
+<span class="fc" id="L27">	}</span>
+	
+	/** 
+	 * Utility method to add JPanels
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void addPanels() {
+<span class="fc" id="L36">		panels = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">		panels.add(new JPanel()); // 0 SOUTH</span>
+<span class="fc" id="L38">		panels.add(new JPanel()); // 1 WEST</span>
+<span class="fc" id="L39">		panels.add(new JPanel()); // 2 EAST</span>
+<span class="fc" id="L40">		panels.add(new JPanel()); // 3 NORTH</span>
+<span class="fc" id="L41">	}</span>
+	
+	/** 
+	 * Construction of the main window structure
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void configWindow() {
+		// PANELS CONFIGURATION
+<span class="fc" id="L51">		windowFrame.add(panels.get(0), BorderLayout.SOUTH);</span>
+<span class="fc" id="L52">		windowFrame.add(panels.get(1), BorderLayout.WEST);</span>
+<span class="fc" id="L53">		windowFrame.add(panels.get(2), BorderLayout.EAST);</span>
+<span class="fc" id="L54">		windowFrame.add(panels.get(3), BorderLayout.NORTH);</span>
+		
+		// FINAL CONFIGURATION
+<span class="fc" id="L57">		windowFrame.setResizable(false);</span>
+<span class="fc" id="L58">		windowFrame.validate();</span>
+<span class="fc" id="L59">		windowFrame.setVisible(true);</span>
+<span class="fc" id="L60">	}</span>
+	
+	/** 
+	 * Utility method to get the JFrame
+	 * @return windowFrame, a JFrame
+	 */
+	public JFrame getWindowFrame() {
+<span class="fc" id="L67">		return windowFrame;</span>
+	}
+	
+	/** 
+	 * Utility method to get the JPanels
+	 * @return panels, an arrayList of JPanel
+	 */
+	public ArrayList&lt;JPanel&gt; getPanels() {
+<span class="fc" id="L75">		return panels;</span>
+	}
+	
+	/** 
+	 * Utility method to get the text font
+	 * @return texFont, a font
+	 */
+	public Font getTextFont() {
+<span class="fc" id="L83">		return textFont;</span>
+	}
+	
+	/** 
+	 * Utility method to get a ReadXMLfile
+	 * @return rXML, a ReadXMLFile
+	 */
+	public ReadXMLfile getReadXML() {
+<span class="fc" id="L91">		return rXML;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WriteXMLfile.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">WriteXMLfile.java</span></div><h1>WriteXMLfile.java</h1><pre class="source lang-java linenums">package BDA;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+/** 
+ * Write in a XML file that contains a set of attributes per user and keywords
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
+
+<span class="fc" id="L29">public class WriteXMLfile {</span>
+
+	public static void main(String argv[]) throws ParserConfigurationException, SAXException, IOException, TransformerException {
+
+<span class="nc" id="L33">		setupFile();</span>
+
+		//These data have to be read from the data entered in the GUI
+<span class="nc" id="L36">		addUser(&quot;dasra&quot;, &quot;dasra123&quot;, &quot;diana.es.pl.91@gmail.com&quot;, &quot;engenhariasoftware&quot;, &quot;dpthvBBPVVsWxWituNu1CBx9h&quot;, &quot;Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W&quot;, &quot;1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B&quot;, &quot;B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N&quot;, &quot;EAADpFZBDLw5QBADta3Qw8JqjHPFlShpQHhsodQhywzIZBTfdQp5oJJMBSZBP8qQrVkaiA7fmmBFZAE5xKazkRJRzyekZBL8gnThcJ0f7RoLtaNwseHJgZCUJtYZC6yyoLS1q0ZBvgumVQMG56c1rovf5iWwZAX5jjIi4nVcwM39ZABCRZCd3HZA9TN7daJZC79HSw4kcZD&quot;);</span>
+<span class="nc" id="L37">		addUser(&quot;rjfae1&quot;, &quot;rjfae123&quot;, &quot;ricardo.f.es.pl.91@gmail.com&quot;, &quot;engenhariasoftware&quot;, &quot;DF5DCJ5FACNHxE1tLXZwU6Psb&quot;, &quot;IPezOOcIibcLbdGextZlwPrV86f19BuBz4ltTVh2Ki9XSr3X4L&quot;, &quot;1056591307521646593-dBBRKbiDGKn7CDqI9x0uu34FybAWeA&quot;, &quot;lQfqJuHcliUr0iQdMHh11M8IJMFUW0WBwc898ePUZNaHb&quot;, &quot;EAAgq4lhYUWYBAOcVQlFoJumaZBUUiPGDuSSW0xOFrH0JqZCZBCFx04q3YIlBrpZCga4ZBEp2S7ZBXlkAllFuTDfishHVXvze0YEAuOOjy02BwnJteWhdhkWVZBlCkd6WUcnHwGK8fT2fzKEumkte4eJfvf1paXViPEEDLhQV6YMZCOFSsBSDq2JuH5HPXrp0OAQZD&quot;);</span>
+		//These data have to be read from the data entered in the GUI	
+<span class="nc" id="L39">		addFilter(&quot;tecnologia&quot;);</span>
+<span class="nc" id="L40">		addFilter(&quot;biblioteca&quot;);</span>
+<span class="nc" id="L41">		addFilter(&quot;mestrado&quot;);</span>
+<span class="nc" id="L42">		addFilter(&quot;universidade&quot;);</span>
+		//removeUser(&quot;teste&quot;);
+		//removeUser(&quot;rjfae1&quot;);
+		//removeFilter(&quot;universidade&quot;);
+<span class="nc" id="L46">		setUserAttribute(&quot;iccco&quot;, &quot;password&quot;, &quot;teste&quot;);</span>
+<span class="nc" id="L47">	}</span>
+
+	/**
+	 * Utility method to setup an initial file 
+	 */
+	private static void setupFile(){
+		try {
+			// Instance of a DocumentBuilderFactory
+<span class="nc" id="L55">			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();</span>
+
+			// Use factory to get an instance of document builder
+<span class="nc" id="L58">			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();</span>
+
+			// User elements
+<span class="nc" id="L61">			Document doc = docBuilder.newDocument();</span>
+
+			// Add the new users node
+<span class="nc" id="L64">			Element userElement = doc.createElement(&quot;users&quot;);</span>
+<span class="nc" id="L65">			doc.appendChild(userElement);</span>
+
+			// Add the new user and filter nodes
+<span class="nc" id="L68">			userElement.appendChild(createUserBDA(doc, &quot;iccco&quot;, &quot;iccco123&quot;, &quot;ivo.es.pl.91@gmail.com&quot;, &quot;engenhariasoftware&quot;, &quot;dpthvBBPVVsWxWituNu1CBx9h&quot;, &quot;Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W&quot;, &quot;1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B&quot;, &quot;B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N&quot;, &quot;EAAgq4lhYUWYBAAXNa26kJl11NBPtOLllQrHxq6b1WhmT78hOsiFnoBfccD6Q71NEM4ZATBZCiuu6MEg47HZAzxFLocvTbJSWASWnvbKbLgGFJ4eYp6SQ9EgxZAonJBBYJ8I3sdRyhCeZBad7H9Gq7zB9cWC1Vm443XDxVvJukrTWtgqZBzOMXi&quot;));</span>
+			//userElement.appendChild(createFilter(doc,&quot;iscte&quot;));
+<span class="nc" id="L70">			userElement.appendChild(createFilter(doc,&quot;aula&quot;));</span>
+<span class="nc" id="L71">			userElement.appendChild(createFilter(doc,&quot;universidade&quot;));</span>
+<span class="nc" id="L72">			userElement.appendChild(createFilter(doc,&quot;disciplina&quot;));</span>
+<span class="nc" id="L73">			userElement.appendChild(createFilter(doc,&quot;projecto&quot;));</span>
+
+<span class="nc" id="L75">			TransformerFactory transformerFactory = TransformerFactory.newInstance();</span>
+<span class="nc" id="L76">			Transformer transformer = transformerFactory.newTransformer();</span>
+<span class="nc" id="L77">			DOMSource source = new DOMSource(doc);</span>
+<span class="nc" id="L78">			StreamResult result = new StreamResult(new File(&quot;config.xml&quot;));</span>
+<span class="nc" id="L79">			transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="nc" id="L80">			transformer.transform(source, result);</span>
+<span class="nc" id="L81">			System.out.println(&quot;XML file updated successfully&quot;);</span>
+
+<span class="nc" id="L83">		} catch (ParserConfigurationException pce) {</span>
+<span class="nc" id="L84">			pce.printStackTrace();</span>
+<span class="nc" id="L85">		} catch (TransformerException tfe) {</span>
+<span class="nc" id="L86">			tfe.printStackTrace();</span>
+		}
+<span class="nc" id="L88">	}</span>
+
+	/**
+	 * Utility method to write an XML with all the messages
+	 * @param username, is one of the mandatory parameters for writing the backup file
+	 */
+	public static void writeMessage(String username){
+		try {
+			// Instance of a DocumentBuilderFactory
+<span class="fc" id="L97">			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();</span>
+
+			// Use factory to get an instance of document builder
+<span class="fc" id="L100">			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();</span>
+
+			// Message elements
+<span class="fc" id="L103">			Document doc = docBuilder.newDocument();</span>
+
+			// Add the new message node
+<span class="fc" id="L106">			Element userElement = doc.createElement(&quot;Message&quot;);</span>
+<span class="fc" id="L107">			doc.appendChild(userElement);</span>
+
+			// Add the new message
+<span class="fc" id="L110">			ArrayList&lt;GenericMessage&gt; gm = WindowDBA.getGM(); </span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			for (int i = 0; i &lt; gm.size(); i++) {</span>
+<span class="fc" id="L112">				userElement.appendChild(createMessage(doc, gm.get(i).getDateM(), gm.get(i).getCanalM(), gm.get(i).getFromM(), gm.get(i).getTitleM(), gm.get(i).getContentM()));</span>
+<span class="fc" id="L113">				System.out.println(gm.get(i));</span>
+			}
+
+<span class="fc" id="L116">			TransformerFactory transformerFactory = TransformerFactory.newInstance();</span>
+<span class="fc" id="L117">			Transformer transformer = transformerFactory.newTransformer();</span>
+<span class="fc" id="L118">			DOMSource source = new DOMSource(doc);</span>
+<span class="fc" id="L119">			StreamResult result = new StreamResult(new File(&quot;WorkOfflineBackup/userBackup_&quot; + username + &quot;.xml&quot;));</span>
+<span class="fc" id="L120">			transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="fc" id="L121">			transformer.transform(source, result);</span>
+<span class="fc" id="L122">			System.out.println(&quot;XML file updated successfully&quot;);</span>
+
+<span class="pc" id="L124">		} catch (ParserConfigurationException pce) {</span>
+<span class="nc" id="L125">			pce.printStackTrace();</span>
+<span class="nc" id="L126">		} catch (TransformerException tfe) {</span>
+<span class="nc" id="L127">			tfe.printStackTrace();</span>
+		}
+<span class="fc" id="L129">	}</span>
+
+	/**
+	 * Utility method to add an user to an existing XML file
+	 * @param username, is one of the mandatory parameters for adding an user
+	 * @param password, is one of the mandatory parameters for adding an user
+	 * @param email, is one of the mandatory parameters for adding an user
+	 * @param passwordEmail, is one of the mandatory parameters for adding an user
+	 * @param OAuthConsumerKey, is one of the mandatory parameters for adding an user
+	 * @param OAuthConsumerSecret, is one of the mandatory parameters for adding an user
+	 * @param OAuthAccessToken, is one of the mandatory parameters for adding an user
+	 * @param OAuthAccessTokenSecret, is one of the mandatory parameters for adding an user
+	 * @param userAccessToken, is one of the mandatory parameters for adding an user
+	 * @return Returns true case user is successfully added and false otherwise
+	 */
+	public static boolean addUser(String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken){
+		try {
+			// Instance of a DocumentBuilderFactory
+<span class="fc" id="L147">			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();</span>
+
+			// Use factory to get an instance of document builder
+<span class="fc" id="L150">			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();</span>
+
+			// Get an instance of existing document
+<span class="fc" id="L153">			Document existingdoc = docBuilder.parse(&quot;config.xml&quot;);</span>
+
+			// Create an empty document
+<span class="fc" id="L156">			Document doc = docBuilder.newDocument();</span>
+
+			// Add the new root node
+<span class="fc" id="L159">			Node copy = doc.importNode(existingdoc.getDocumentElement(), true);</span>
+<span class="fc" id="L160">			doc.appendChild(copy);</span>
+<span class="fc" id="L161">			copy.appendChild(createUserBDA(doc, username, password, email, passwordEmail, OAuthConsumerKey, OAuthConsumerSecret, OAuthAccessToken, OAuthAccessTokenSecret, userAccessToken));</span>
+
+<span class="fc" id="L163">			TransformerFactory transformerFactory = TransformerFactory.newInstance();</span>
+<span class="fc" id="L164">			Transformer transformer = transformerFactory.newTransformer();</span>
+<span class="fc" id="L165">			DOMSource source = new DOMSource(doc);</span>
+<span class="fc" id="L166">			StreamResult result = new StreamResult(new File(&quot;config.xml&quot;));</span>
+			//transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);
+<span class="fc" id="L168">			transformer.transform(source, result);</span>
+<span class="fc" id="L169">			System.out.println(&quot;User added successfully&quot;);</span>
+<span class="fc" id="L170">			return true;</span>
+
+<span class="nc" id="L172">		} catch (ParserConfigurationException pce) {</span>
+<span class="nc" id="L173">			pce.printStackTrace();</span>
+<span class="nc" id="L174">			return false;</span>
+<span class="nc" id="L175">		} catch (TransformerException tfe) {</span>
+<span class="nc" id="L176">			tfe.printStackTrace();</span>
+<span class="nc" id="L177">			return false;</span>
+<span class="nc" id="L178">		} catch (SAXException sax) {</span>
+<span class="nc" id="L179">			sax.printStackTrace();</span>
+<span class="nc" id="L180">			return false;</span>
+<span class="nc" id="L181">		} catch (IOException io) {</span>
+<span class="nc" id="L182">			io.printStackTrace();</span>
+<span class="nc" id="L183">			return false;</span>
+		}
+	}
+
+	/**
+	 * Utility method to add a filter to an existing XML file
+	 * @param keyword, is one of the mandatory parameters for adding a filter
+	 * @return Returns true case filter is successfully added and false otherwise
+	 */
+	public static boolean addFilter(String keyword){
+		try {
+			// Instance of a DocumentBuilderFactory
+<span class="fc" id="L195">			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();</span>
+
+			// Use factory to get an instance of document builder
+<span class="fc" id="L198">			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();</span>
+
+			// Get an instance of existing document
+<span class="fc" id="L201">			Document existingdoc = docBuilder.parse(&quot;config.xml&quot;);</span>
+
+			// Create an empty document
+<span class="fc" id="L204">			Document doc = docBuilder.newDocument();</span>
+
+			// Add the new root node
+<span class="fc" id="L207">			Node copy = doc.importNode(existingdoc.getDocumentElement(), true);</span>
+<span class="fc" id="L208">			doc.appendChild(copy);</span>
+<span class="fc" id="L209">			copy.appendChild(createFilter(doc, keyword));</span>
+
+<span class="fc" id="L211">			TransformerFactory transformerFactory = TransformerFactory.newInstance();</span>
+<span class="fc" id="L212">			Transformer transformer = transformerFactory.newTransformer();</span>
+<span class="fc" id="L213">			DOMSource source = new DOMSource(doc);</span>
+<span class="fc" id="L214">			StreamResult result = new StreamResult(new File(&quot;config.xml&quot;));</span>
+			//transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);
+<span class="fc" id="L216">			transformer.transform(source, result);</span>
+<span class="fc" id="L217">			System.out.println(&quot;Filter added successfully&quot;);</span>
+<span class="fc" id="L218">			return true;</span>
+
+<span class="nc" id="L220">		} catch (ParserConfigurationException pce) {</span>
+<span class="nc" id="L221">			pce.printStackTrace();</span>
+<span class="nc" id="L222">			return false;</span>
+<span class="nc" id="L223">		} catch (TransformerException tfe) {</span>
+<span class="nc" id="L224">			tfe.printStackTrace();</span>
+<span class="nc" id="L225">			return false;</span>
+<span class="nc" id="L226">		} catch (SAXException sax) {</span>
+<span class="nc" id="L227">			sax.printStackTrace();</span>
+<span class="nc" id="L228">			return false;</span>
+<span class="nc" id="L229">		} catch (IOException io) {</span>
+<span class="nc" id="L230">			io.printStackTrace();</span>
+<span class="nc" id="L231">			return false;</span>
+		}
+	}
+
+	/**
+	 * Utility method to remove an user of an existing XML file
+	 * @param username, is one of the mandatory parameters for removing an user
+	 * @return Returns true case user is successfully removed and false otherwise
+	 */
+	public static boolean removeUser(String username){
+		try {
+			// Instance of a DocumentBuilderFactory
+<span class="fc" id="L243">			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();</span>
+
+			// Use factory to get an instance of document builder
+<span class="fc" id="L246">			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();</span>
+
+			// Instance of existing document
+<span class="fc" id="L249">			Document doc = docBuilder.parse(&quot;config.xml&quot;);</span>
+
+			// Get user nodes
+<span class="fc" id="L252">			NodeList usersList = doc.getElementsByTagName(&quot;User&quot;);</span>
+<span class="fc" id="L253">			System.out.println(usersList.getLength());</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">			for (int i = 0; i &lt; usersList.getLength(); i++) {</span>
+<span class="fc" id="L255">				Node node = usersList.item(i);</span>
+<span class="fc" id="L256">				Element e = (Element) node;</span>
+<span class="fc" id="L257">				String s = e.getAttributes().getNamedItem(&quot;Id&quot;).getNodeValue();</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">				if(username.equals(s)) {</span>
+<span class="fc" id="L259">					doc.getDocumentElement().removeChild(node);</span>
+				}
+			}
+
+<span class="fc" id="L263">			TransformerFactory transformerFactory = TransformerFactory.newInstance();</span>
+<span class="fc" id="L264">			Transformer transformer = transformerFactory.newTransformer();</span>
+<span class="fc" id="L265">			DOMSource source = new DOMSource(doc);</span>
+<span class="fc" id="L266">			StreamResult result = new StreamResult(new File(&quot;config.xml&quot;));</span>
+<span class="fc" id="L267">			transformer.transform(source, result);</span>
+<span class="fc" id="L268">			System.out.println(&quot;User removed successfully&quot;);</span>
+<span class="fc" id="L269">			return true;</span>
+
+<span class="nc" id="L271">		} catch (ParserConfigurationException pce) {</span>
+<span class="nc" id="L272">			pce.printStackTrace();</span>
+<span class="nc" id="L273">			return false;</span>
+<span class="nc" id="L274">		} catch (TransformerException tfe) {</span>
+<span class="nc" id="L275">			tfe.printStackTrace();</span>
+<span class="nc" id="L276">			return false;</span>
+<span class="nc" id="L277">		} catch (SAXException sax) {</span>
+<span class="nc" id="L278">			sax.printStackTrace();</span>
+<span class="nc" id="L279">			return false;</span>
+<span class="nc" id="L280">		} catch (IOException io) {</span>
+<span class="nc" id="L281">			io.printStackTrace();</span>
+<span class="nc" id="L282">			return false;</span>
+		}
+	}
+
+	/**
+	 * Utility method to remove a filter of an existing XML file
+	 * @param keyword, is one of the mandatory parameters for removing a filter
+	 * @return Returns true case filter is successfully removed and false otherwise
+	 */
+	public static boolean removeFilter(String keyword) {
+		try {
+			// Instance of a DocumentBuilderFactory
+<span class="fc" id="L294">			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();</span>
+
+			// Use factory to get an instance of document builder
+<span class="fc" id="L297">			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();</span>
+
+			// Instance of existing document
+<span class="fc" id="L300">			Document doc = docBuilder.parse(&quot;config.xml&quot;);</span>
+
+<span class="fc" id="L302">			Attributes filter = new Attributes();</span>
+
+			// Get filter nodes
+<span class="fc" id="L305">			NodeList filtersList = doc.getElementsByTagName(&quot;Filter&quot;);</span>
+<span class="fc" id="L306">			System.out.println(filtersList.getLength());</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">			for (int i = 0; i &lt; filtersList.getLength(); i++) {</span>
+<span class="fc" id="L308">				Node node = filtersList.item(i);</span>
+<span class="fc" id="L309">				Element e = (Element) node;</span>
+<span class="fc" id="L310">				filter.setKeyword(ReadXMLfile.getTagValue(&quot;keyword&quot;, e));</span>
+<span class="fc" id="L311">				String s = filter.getKeyword();</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">				if(keyword.equals(s)) {</span>
+<span class="fc" id="L313">					doc.getDocumentElement().removeChild(node);</span>
+				}
+			}
+
+<span class="fc" id="L317">			TransformerFactory transformerFactory = TransformerFactory.newInstance();</span>
+<span class="fc" id="L318">			Transformer transformer = transformerFactory.newTransformer();</span>
+<span class="fc" id="L319">			DOMSource source = new DOMSource(doc);</span>
+<span class="fc" id="L320">			StreamResult result = new StreamResult(new File(&quot;config.xml&quot;));</span>
+<span class="fc" id="L321">			transformer.transform(source, result);</span>
+<span class="fc" id="L322">			System.out.println(&quot;Filter removed successfully&quot;);</span>
+<span class="fc" id="L323">			return true;</span>
+
+<span class="nc" id="L325">		} catch (ParserConfigurationException pce) {</span>
+<span class="nc" id="L326">			pce.printStackTrace();</span>
+<span class="nc" id="L327">			return false;</span>
+<span class="nc" id="L328">		} catch (TransformerException tfe) {</span>
+<span class="nc" id="L329">			tfe.printStackTrace();</span>
+<span class="nc" id="L330">			return false;</span>
+<span class="nc" id="L331">		} catch (SAXException sax) {</span>
+<span class="nc" id="L332">			sax.printStackTrace();</span>
+<span class="nc" id="L333">			return false;</span>
+<span class="nc" id="L334">		} catch (IOException io) {</span>
+<span class="nc" id="L335">			io.printStackTrace();</span>
+<span class="nc" id="L336">			return false;</span>
+		}
+	}
+
+	/**
+	 * Utility method to modify an user attribute in an existing XML file
+	 * @param username, is one of the mandatory parameters for setting an attribute
+	 * @param tag, is one of the mandatory parameters for setting an attribute
+	 * @param newValue, is one of the mandatory parameters for setting an attribute
+	 * @return Returns true case attribute is successfully modified and false otherwise
+	 */
+	public static boolean setUserAttribute(String username, String tag, String newValue){
+		try {
+			// Instance of a DocumentBuilderFactory
+<span class="fc" id="L350">			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();</span>
+
+			// Use factory to get an instance of document builder
+<span class="fc" id="L353">			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();</span>
+
+			// Get an instance of existing document
+<span class="fc" id="L356">			Document doc = docBuilder.parse(&quot;config.xml&quot;);</span>
+<span class="fc" id="L357">			doc.getDocumentElement().normalize();</span>
+
+<span class="fc" id="L359">			NodeList usersList = doc.getElementsByTagName(&quot;User&quot;);</span>
+			//Get the user element by tag name directly
+<span class="fc bfc" id="L361" title="All 2 branches covered.">			for (int i = 0; i &lt; usersList.getLength(); i++) {</span>
+<span class="fc" id="L362">				Node user = usersList.item(i);</span>
+<span class="fc" id="L363">				Element e = (Element) user;</span>
+<span class="fc" id="L364">				String s = e.getAttributes().getNamedItem(&quot;Id&quot;).getNodeValue();</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">				if(username.equals(s)) {</span>
+<span class="fc" id="L366">					Node node = doc.getElementsByTagName(tag).item(i);</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">					if (node.getNodeName().equals(tag)) {</span>
+<span class="fc" id="L368">						node.getFirstChild().setNodeValue(newValue) ;</span>
+					}
+				}
+			}
+
+<span class="fc" id="L373">			TransformerFactory transformerFactory = TransformerFactory.newInstance();</span>
+<span class="fc" id="L374">			Transformer transformer = transformerFactory.newTransformer();</span>
+<span class="fc" id="L375">			DOMSource source = new DOMSource(doc);</span>
+<span class="fc" id="L376">			StreamResult result = new StreamResult(new File(&quot;config.xml&quot;));</span>
+			//transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);
+<span class="fc" id="L378">			transformer.transform(source, result);</span>
+<span class="fc" id="L379">			System.out.println(&quot;User tag value modified successfully&quot;);</span>
+<span class="fc" id="L380">			return true;</span>
+
+<span class="nc" id="L382">		} catch (ParserConfigurationException pce) {</span>
+<span class="nc" id="L383">			pce.printStackTrace();</span>
+<span class="nc" id="L384">			return false;</span>
+<span class="nc" id="L385">		} catch (TransformerException tfe) {</span>
+<span class="nc" id="L386">			tfe.printStackTrace();</span>
+<span class="nc" id="L387">			return false;</span>
+<span class="nc" id="L388">		} catch (SAXException sax) {</span>
+<span class="nc" id="L389">			sax.printStackTrace();</span>
+<span class="nc" id="L390">			return false;</span>
+<span class="nc" id="L391">		} catch (IOException io) {</span>
+<span class="nc" id="L392">			io.printStackTrace();</span>
+<span class="nc" id="L393">			return false;</span>
+		}
+	}
+
+	/**
+	 * Utility method to create a user
+	 * @param doc, is one of the mandatory parameters for creating an user
+	 * @param username, is one of the mandatory parameters for creating an user
+	 * @param password, is one of the mandatory parameters for creating an user
+	 * @param email, is one of the mandatory parameters for creating an user
+	 * @param passwordEmail, is one of the mandatory parameters for creating an user
+	 * @param OAuthConsumerKey, is one of the mandatory parameters for creating an user
+	 * @param OAuthConsumerSecret, is one of the mandatory parameters for creating an user
+	 * @param OAuthAccessToken, is one of the mandatory parameters for creating an user
+	 * @param OAuthAccessTokenSecret, is one of the mandatory parameters for creating an user
+	 * @param userAccessToken, is one of the mandatory parameters for creating an user
+	 * @return Returns an user Node
+	 */
+	public static Node createUserBDA(Document doc, String username, String password, String email, String passwordEmail, String OAuthConsumerKey, String OAuthConsumerSecret, String OAuthAccessToken, String OAuthAccessTokenSecret, String userAccessToken) {
+<span class="fc" id="L412">		Element user = doc.createElement(&quot;User&quot;);</span>
+
+		// Set id attribute
+<span class="fc" id="L415">		user.setAttribute(&quot;Id&quot;, username);</span>
+
+		// Create user element
+<span class="fc" id="L418">		user.appendChild(getUserElements(doc, user, &quot;username&quot;, username));</span>
+
+		// Create password element
+<span class="fc" id="L421">		user.appendChild(getUserElements(doc, user, &quot;password&quot;, password));</span>
+
+		// Create email element
+<span class="fc" id="L424">		user.appendChild(getUserElements(doc, user, &quot;email&quot;, email));</span>
+
+		// Create password email element
+<span class="fc" id="L427">		user.appendChild(getUserElements(doc, user, &quot;passwordEmail&quot;, passwordEmail));</span>
+
+		// Create OAuthConsumerKey element
+<span class="fc" id="L430">		user.appendChild(getUserElements(doc, user, &quot;OAuthConsumerKey&quot;, OAuthConsumerKey));</span>
+
+		// Create OAuthConsumerSecret element
+<span class="fc" id="L433">		user.appendChild(getUserElements(doc, user, &quot;OAuthConsumerSecret&quot;, OAuthConsumerSecret));</span>
+
+		// Create OAuthAccessToken element
+<span class="fc" id="L436">		user.appendChild(getUserElements(doc, user, &quot;OAuthAccessToken&quot;, OAuthAccessToken));</span>
+
+		// Create OAuthAccessTokenSecret element
+<span class="fc" id="L439">		user.appendChild(getUserElements(doc, user, &quot;OAuthAccessTokenSecret&quot;, OAuthAccessTokenSecret));</span>
+
+		// Create userAccessToken element
+<span class="fc" id="L442">		user.appendChild(getUserElements(doc, user, &quot;userAccessToken&quot;, userAccessToken));</span>
+
+<span class="fc" id="L444">		return user;</span>
+	}
+
+	/**
+	 * Utility method to create a message
+	 * @param doc, is one of the mandatory parameters for creating a message
+	 * @param date, is one of the mandatory parameters for creating a message
+	 * @param channel, is one of the mandatory parameters for creating a message
+	 * @param from, is one of the mandatory parameters for creating a message
+	 * @param subject, is one of the mandatory parameters for creating a message
+	 * @param content, is one of the mandatory parameters for creating a message
+	 * @return Returns an user Node
+	 */
+	public static Node createMessage(Document doc, String date, String channel, String from, String subject, String content) {
+<span class="fc" id="L458">		Element user = doc.createElement(&quot;GM&quot;);</span>
+
+		// Create date element
+<span class="fc" id="L461">		user.appendChild(getMessageElements(doc, user, &quot;date&quot;, date));</span>
+
+		// Create channel element
+<span class="fc" id="L464">		user.appendChild(getMessageElements(doc, user, &quot;channel&quot;, channel));</span>
+
+		// Create from element
+<span class="fc" id="L467">		user.appendChild(getMessageElements(doc, user, &quot;from&quot;, from));</span>
+
+		// Create subject element
+<span class="fc" id="L470">		user.appendChild(getMessageElements(doc, user, &quot;subject&quot;, subject));</span>
+
+		// Create content element
+<span class="fc" id="L473">		user.appendChild(getMessageElements(doc, user, &quot;content&quot;, content));</span>
+
+<span class="fc" id="L475">		return user;</span>
+	}
+
+	/**
+	 * Utility method to create user element
+	 * @param doc, is one of the mandatory parameters for getting an element
+	 * @param element, is one of the mandatory parameters for getting an element
+	 * @param name, is one of the mandatory parameters for getting an element
+	 * @param value, is one of the mandatory parameters for getting an element
+	 * @return Returns an element Node  
+	 */
+	private static Node getUserElements(Document doc, Element element, String name, String value) {
+<span class="fc" id="L487">		Element node = doc.createElement(name);</span>
+<span class="fc" id="L488">		node.appendChild(doc.createTextNode(value));</span>
+<span class="fc" id="L489">		return node;</span>
+	}
+
+	/**
+	 * Utility method to create message element
+	 * @param doc, is one of the mandatory parameters for getting an element
+	 * @param element, is one of the mandatory parameters for getting an element
+	 * @param name, is one of the mandatory parameters for getting an element
+	 * @param value, is one of the mandatory parameters for getting an element
+	 * @return Returns an element Node  
+	 */
+	private static Node getMessageElements(Document doc, Element element, String name, String value) {
+<span class="fc" id="L501">		Element node = doc.createElement(name);</span>
+<span class="fc" id="L502">		node.appendChild(doc.createTextNode(value));</span>
+<span class="fc" id="L503">		return node;</span>
+	}
+
+	/**
+	 * Utility method to create a filter
+	 * @param doc, is one of the mandatory parameters for creating a filter
+	 * @param keyword, is one of the mandatory parameters for creating a filter
+	 * @return Returns a filter Node 
+	 */
+	private static Node createFilter(Document doc, String keyword) {
+<span class="fc" id="L513">		Element filter = doc.createElement(&quot;Filter&quot;);</span>
+<span class="fc" id="L514">		filter.appendChild(getFilterElements(doc, filter, &quot;keyword&quot;, keyword));</span>
+<span class="fc" id="L515">		return filter;</span>
+	}
+
+	/**
+	 * Utility method to create filter element
+	 * @param doc, is one of the mandatory parameters for getting an element
+	 * @param element, is one of the mandatory parameters for getting an element
+	 * @param name, is one of the mandatory parameters for getting an element
+	 * @param value, is one of the mandatory parameters for getting an element
+	 * @return Returns an element Node 
+	 */
+	private static Node getFilterElements(Document doc, Element element, String name, String value) {
+<span class="fc" id="L527">		Element node = doc.createElement(name);</span>
+<span class="fc" id="L528">		node.appendChild(doc.createTextNode(value));</span>
+<span class="fc" id="L529">		return node;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

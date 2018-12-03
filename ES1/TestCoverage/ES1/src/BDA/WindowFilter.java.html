@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WindowFilter.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">WindowFilter.java</span></div><h1>WindowFilter.java</h1><pre class="source lang-java linenums">package BDA;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/** 
+ * Content filters window for registered users.
+ * Here a user is able to edit content filters from its own profile by writing and adding them or by removing existing ones.
+ * Filters will decide which information will be shown in the content list.
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
+
+public class WindowFilter extends WindowGUI {
+	
+	// VARIABLES
+	private JList&lt;String&gt; listFilters;
+	private DefaultListModel listModel;
+	private JFrame windowDBA;
+
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param windowDBA, a JFrame
+	 */
+<span class="fc" id="L35">	public WindowFilter(JFrame windowDBA) {</span>
+<span class="fc" id="L36">		this.windowDBA = windowDBA;</span>
+<span class="fc" id="L37">		listFilters = new JList&lt;String&gt;();</span>
+<span class="fc" id="L38">		listModel = new DefaultListModel();</span>
+<span class="fc" id="L39">		listFilters.setModel(listModel);</span>
+<span class="fc" id="L40">		getWindowFrame().setTitle(&quot;Filters&quot;);</span>
+<span class="fc" id="L41">		configWindow();</span>
+<span class="fc" id="L42">	}</span>
+
+	/** 
+	 * Utility method for construction of the main window structure
+	 */
+	private void configWindow() {
+
+		// COMPONENTS CONFIGURATION
+<span class="fc" id="L50">		JPanel panelCenter = new JPanel(new FlowLayout());</span>
+<span class="fc" id="L51">		getWindowFrame().add(panelCenter);</span>
+		
+<span class="fc" id="L53">		JButton btNadd = new JButton(&quot;Add&quot;);</span>
+<span class="fc" id="L54">		JButton btNcancel = new JButton(&quot;Cancel&quot;);</span>
+<span class="fc" id="L55">		JButton btNremove = new JButton(&quot;Remove&quot;);</span>
+		
+<span class="fc" id="L57">		panelCenter.add(listFilters);</span>
+<span class="fc" id="L58">		fillFilters();</span>
+
+<span class="fc" id="L60">		getPanels().get(0).add(btNadd);</span>
+<span class="fc" id="L61">		getPanels().get(0).add(btNremove);</span>
+<span class="fc" id="L62">		getPanels().get(0).add(btNcancel);</span>
+		
+		// BUTTON ADD
+<span class="fc" id="L65">		btNadd.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L67">				String filter = JOptionPane.showInputDialog(null, &quot;Please add the filter:&quot;);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">				if(filter != null) {</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">					if(!filter.isEmpty() &amp;&amp; listModel.size() &lt; 10) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">						if(!getReadXML().validateFilter(filter)) {</span>
+<span class="nc" id="L71">							WriteXMLfile.addFilter(filter);</span>
+<span class="nc" id="L72">							JOptionPane.showMessageDialog(null, &quot;Filter &quot; + filter + &quot; added.&quot;);</span>
+<span class="nc" id="L73">							listModel.addElement(filter);</span>
+<span class="nc" id="L74">						} else {</span>
+<span class="nc" id="L75">							JOptionPane.showMessageDialog(null, &quot;The filter already exists.&quot;);</span>
+						}
+<span class="nc" id="L77">					} else {</span>
+<span class="nc" id="L78">						JOptionPane.showMessageDialog(null, &quot;Filtro vazio ou tamanho máximo atingido!&quot;);</span>
+					}
+				}
+<span class="nc" id="L81">			}</span>
+		});
+		
+		// BUTTON REMOVE
+<span class="fc" id="L85">		btNremove.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L87">				String itemSelected = listFilters.getSelectedValue();</span>
+<span class="nc" id="L88">				WriteXMLfile.removeFilter(itemSelected);</span>
+<span class="nc" id="L89">				JOptionPane.showMessageDialog(null, &quot;Filter &quot; + itemSelected + &quot; removed.&quot;);</span>
+<span class="nc" id="L90">				listModel.removeElement(itemSelected);</span>
+<span class="nc" id="L91">			}</span>
+		});
+		
+		// BUTTON CANCEL
+<span class="fc" id="L95">		btNcancel.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L97">				getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L98">				windowDBA.setVisible(true);</span>
+<span class="nc" id="L99">			}</span>
+		});
+		
+		// WINDOW FRAME CONFIGURATION
+<span class="fc" id="L103">		getWindowFrame().setSize(250, 270);</span>
+<span class="fc" id="L104">		getWindowFrame().setLocationRelativeTo(null);</span>
+<span class="fc" id="L105">		getWindowFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);</span>
+
+<span class="fc" id="L107">	}</span>
+	
+	/** 
+	 * Utility method to fill the table with filters 
+	 */
+	public void fillFilters() {
+<span class="fc" id="L113">		listModel.removeAllElements();</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for(Attributes filter: getReadXML().readFiltersXMLfile()) {</span>
+<span class="fc" id="L115">			listModel.addElement(filter.getKeyword());</span>
+		}
+<span class="fc" id="L117">	}</span>
+	
+	/** 
+	 * Utility method to get the DefaultListModel
+	 * @return listModel, A DefaultListModel
+	 */
+	public DefaultListModel getListModel() {
+<span class="fc" id="L124">		return listModel;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

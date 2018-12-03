@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WindowRegister.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">WindowRegister.java</span></div><h1>WindowRegister.java</h1><pre class="source lang-java linenums">package BDA;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+/** 
+ * Registration window for new users
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
+
+public class WindowRegister extends WindowGUI {
+	// VARIABLES
+	private JFrame windowLogin;
+
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param windowLogin, a JFrame
+	 */
+<span class="fc" id="L34">	public WindowRegister(JFrame windowLogin) {</span>
+<span class="fc" id="L35">		this.windowLogin = windowLogin;</span>
+<span class="fc" id="L36">		getWindowFrame().setTitle(&quot;Register&quot;);</span>
+<span class="fc" id="L37">		configWindow();</span>
+<span class="fc" id="L38">	}</span>
+
+	/** 
+	 * Construction of the main window structure
+	 */
+	private void configWindow() {
+
+		// COMPONENTS CONFIGURATION
+<span class="fc" id="L46">		JPanel panelCenter = new JPanel(new FlowLayout());</span>
+<span class="fc" id="L47">		getWindowFrame().add(panelCenter);</span>
+
+<span class="fc" id="L49">		JLabel labInfoRegister = new JLabel(&quot;Create your account: &quot;);</span>
+
+<span class="fc" id="L51">		JLabel labInfoUser = new JLabel(&quot;Username: &quot;);</span>
+<span class="fc" id="L52">		JLabel labInfoPw = new JLabel(&quot;Password: &quot;);</span>
+<span class="fc" id="L53">		JLabel labInfoEmail = new JLabel(&quot;E-mail: &quot;);</span>
+<span class="fc" id="L54">		JLabel labInfoEmailPw = new JLabel(&quot;E-mail pass: &quot;);</span>
+<span class="fc" id="L55">		JLabel labEmail = new JLabel(&quot;@iscte-iul.pt&quot;);</span>
+<span class="fc" id="L56">		JLabel labInfo1TokenT = new JLabel(&quot;   Token TW: &quot;);</span>
+<span class="fc" id="L57">		JLabel labInfo2TokenT = new JLabel(&quot;   Token TW: &quot;);</span>
+<span class="fc" id="L58">		JLabel labInfo3TokenT = new JLabel(&quot;   Token TW: &quot;);</span>
+<span class="fc" id="L59">		JLabel labInfo4TokenT = new JLabel(&quot;   Token TW: &quot;);</span>
+<span class="fc" id="L60">		JLabel labInfo1TokenF = new JLabel(&quot;    Token FB: &quot;);</span>
+
+<span class="fc" id="L62">		getReadXML().setupRegister(&quot;dasra&quot;);</span>
+
+<span class="fc" id="L64">		JTextField userName = new JTextField();</span>
+<span class="fc" id="L65">		userName.setFont(getTextFont());</span>
+<span class="fc" id="L66">		userName.setPreferredSize(new Dimension(130,20));</span>
+		
+<span class="fc" id="L68">		JPasswordField passWord = new JPasswordField();</span>
+<span class="fc" id="L69">		passWord.setFont(getTextFont());</span>
+<span class="fc" id="L70">		passWord.setPreferredSize(new Dimension(204,20));</span>
+
+<span class="fc" id="L72">		JTextField email = new JTextField();</span>
+<span class="fc" id="L73">		email.setFont(getTextFont());</span>
+<span class="fc" id="L74">		email.setText(ReadXMLfile.userData[0]);</span>
+<span class="fc" id="L75">		email.setPreferredSize(new Dimension(180,20));</span>
+		//email.setEditable(false);
+
+<span class="fc" id="L78">		JPasswordField emailPassWord = new JPasswordField();</span>
+<span class="fc" id="L79">		emailPassWord.setFont(getTextFont());</span>
+<span class="fc" id="L80">		emailPassWord.setText(ReadXMLfile.userData[1]);</span>
+<span class="fc" id="L81">		emailPassWord.setPreferredSize(new Dimension(210,20));</span>
+		//emailPassWord.setEditable(false);
+
+<span class="fc" id="L84">		JTextField oneTokenTwitter = new JTextField();</span>
+<span class="fc" id="L85">		oneTokenTwitter.setFont(getTextFont());</span>
+<span class="fc" id="L86">		oneTokenTwitter.setText(ReadXMLfile.twitterData[0]);</span>
+<span class="fc" id="L87">		oneTokenTwitter.setPreferredSize(new Dimension(210,20));</span>
+		//oneTokenTwitter.setEditable(false);
+
+<span class="fc" id="L90">		JTextField twoTokenTwitter = new JTextField();</span>
+<span class="fc" id="L91">		twoTokenTwitter.setFont(getTextFont());</span>
+<span class="fc" id="L92">		twoTokenTwitter.setText(ReadXMLfile.twitterData[1]);</span>
+<span class="fc" id="L93">		twoTokenTwitter.setPreferredSize(new Dimension(210,20));</span>
+		//twoTokenTwitter.setEditable(false);
+
+<span class="fc" id="L96">		JTextField threeTokenTwitter = new JTextField();</span>
+<span class="fc" id="L97">		threeTokenTwitter.setFont(getTextFont());</span>
+<span class="fc" id="L98">		threeTokenTwitter.setText(ReadXMLfile.twitterData[2]);</span>
+<span class="fc" id="L99">		threeTokenTwitter.setPreferredSize(new Dimension(210,20));</span>
+		//threeTokenTwitter.setEditable(false);
+
+<span class="fc" id="L102">		JTextField fourTokenTwitter = new JTextField();</span>
+<span class="fc" id="L103">		fourTokenTwitter.setFont(getTextFont());</span>
+<span class="fc" id="L104">		fourTokenTwitter.setText(ReadXMLfile.twitterData[3]);</span>
+<span class="fc" id="L105">		fourTokenTwitter.setPreferredSize(new Dimension(210,20));</span>
+		//fourTokenTwitter.setEditable(false);
+
+<span class="fc" id="L108">		JTextField oneTokenFacebook = new JTextField();</span>
+<span class="fc" id="L109">		oneTokenFacebook.setFont(getTextFont());</span>
+<span class="fc" id="L110">		oneTokenFacebook.setText(ReadXMLfile.facebookData);</span>
+<span class="fc" id="L111">		oneTokenFacebook.setPreferredSize(new Dimension(210,20));</span>
+		//oneTokenFacebook.setEditable(false);
+
+<span class="fc" id="L114">		JButton btNreg = new JButton(&quot;Register&quot;);</span>
+<span class="fc" id="L115">		JButton btNcancel = new JButton(&quot;Cancel&quot;);</span>
+
+<span class="fc" id="L117">		getPanels().get(3).add(labInfoRegister);</span>
+<span class="fc" id="L118">		panelCenter.add(labInfoUser);</span>
+<span class="fc" id="L119">		panelCenter.add(userName);</span>
+<span class="fc" id="L120">		panelCenter.add(labEmail);</span>
+<span class="fc" id="L121">		panelCenter.add(labInfoPw);</span>
+<span class="fc" id="L122">		panelCenter.add(passWord);</span>
+<span class="fc" id="L123">		panelCenter.add(labInfoEmail);</span>
+<span class="fc" id="L124">		panelCenter.add(email);</span>
+<span class="fc" id="L125">		panelCenter.add(labInfoEmailPw);</span>
+<span class="fc" id="L126">		panelCenter.add(emailPassWord);</span>
+<span class="fc" id="L127">		panelCenter.add(labInfo1TokenT);</span>
+<span class="fc" id="L128">		panelCenter.add(oneTokenTwitter);</span>
+<span class="fc" id="L129">		panelCenter.add(labInfo2TokenT);</span>
+<span class="fc" id="L130">		panelCenter.add(twoTokenTwitter);</span>
+<span class="fc" id="L131">		panelCenter.add(labInfo3TokenT);</span>
+<span class="fc" id="L132">		panelCenter.add(threeTokenTwitter);</span>
+<span class="fc" id="L133">		panelCenter.add(labInfo4TokenT);</span>
+<span class="fc" id="L134">		panelCenter.add(fourTokenTwitter);</span>
+<span class="fc" id="L135">		panelCenter.add(labInfo1TokenF);</span>
+<span class="fc" id="L136">		panelCenter.add(oneTokenFacebook);</span>
+
+<span class="fc" id="L138">		getPanels().get(0).add(btNreg);</span>
+<span class="fc" id="L139">		getPanels().get(0).add(btNcancel);</span>
+
+		// WINDOW FRAME CONFIGURATION
+<span class="fc" id="L142">		getWindowFrame().setSize(320, 350);</span>
+<span class="fc" id="L143">		getWindowFrame().setLocationRelativeTo(null);</span>
+<span class="fc" id="L144">		getWindowFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);</span>
+
+		// CLICK ON TEXTFIELD USERNAME
+<span class="fc" id="L147">		userName.addMouseListener(new MouseAdapter(){</span>
+			public void mouseClicked(MouseEvent e){
+<span class="nc" id="L149">				userName.setText(&quot;&quot;);</span>
+<span class="nc" id="L150">			}</span>
+		});
+
+		// CLICK ON TEXTFIELD PASSWORD
+<span class="fc" id="L154">		passWord.addMouseListener(new MouseAdapter(){</span>
+			public void mouseClicked(MouseEvent e){
+<span class="nc" id="L156">				passWord.setText(&quot;&quot;);</span>
+<span class="nc" id="L157">			}</span>
+		});
+
+		// CLICK ON BUTTON REGISTER
+<span class="fc" id="L161">		btNreg.addActionListener(new ActionListener() {</span>
+			@SuppressWarnings(&quot;deprecation&quot;)
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L164" title="All 8 branches missed.">				if(userName.getText().isEmpty() || passWord.getText().toString().isEmpty() || email.getText().isEmpty() || emailPassWord.getText().toString().isEmpty() ) {</span>
+<span class="nc" id="L165">					JOptionPane.showMessageDialog(null, &quot;There are empty fields.&quot;);</span>
+<span class="nc" id="L166">				} else {</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">					if(getReadXML().validateUserRegister(userName.getText().trim())== true) { // IF USER EXISTS IN XML FILE</span>
+<span class="nc" id="L168">						JOptionPane.showMessageDialog(null, &quot;This user altready exists. Please try again.&quot;);</span>
+<span class="nc" id="L169">					} else {</span>
+<span class="nc" id="L170">						WriteXMLfile.addUser(userName.getText().trim(), passWord.getText().trim(), email.getText().trim(), emailPassWord.getText().trim(), oneTokenTwitter.getText().trim(), twoTokenTwitter.getText().trim(), threeTokenTwitter.getText().trim(), fourTokenTwitter.getText().trim(), oneTokenFacebook.getText().trim());</span>
+<span class="nc" id="L171">						JOptionPane.showMessageDialog(null, &quot;Successful registration.&quot;);</span>
+<span class="nc" id="L172">						getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L173">						windowLogin.setVisible(true);</span>
+					}
+				}
+
+<span class="nc" id="L177">			}</span>
+		});
+
+		// CLICK ON BUTTON CANCEL
+<span class="fc" id="L181">		btNcancel.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L183">				getWindowFrame().setVisible(false);</span>
+<span class="nc" id="L184">				windowLogin.setVisible(true);</span>
+<span class="nc" id="L185">			}</span>
+		});
+<span class="fc" id="L187">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

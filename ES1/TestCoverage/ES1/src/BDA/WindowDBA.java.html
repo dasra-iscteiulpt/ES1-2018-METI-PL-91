@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WindowDBA.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">WindowDBA.java</span></div><h1>WindowDBA.java</h1><pre class="source lang-java linenums">package BDA;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+/** 
+ * &quot;Bom dia Academia&quot; content window called after a successful login
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
+
+public class WindowDBA extends Thread {
+
+	// VARIABLES
+	private JFrame windowFrame;
+	private ArrayList&lt;JPanel&gt; panels;
+	private static ArrayList&lt;GenericMessage&gt; genericMessages;
+	private ArrayList&lt;GenericMessage&gt; messagesMail;
+	private ArrayList&lt;GenericMessage&gt; messagesTwitter;
+	private ArrayList&lt;GenericMessage&gt; messagesFacebook;
+	private DefaultTableModel modelTable;
+<span class="fc" id="L41">	private int indicatorFilters = 0;</span>
+	private boolean workOffline;
+	private String userDBA;
+	private JRadioButton sortOne; // NEWEST
+	private JRadioButton sortTwo; // OLDEST
+	private Font textFont;
+	private ReadXMLfile rXML;
+	private Filters filtersForData;
+	private WindowLoading loading;
+
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param workOffline, true if user is workingOffline and false otherwise
+	 * @param userDBA, the identification of the user
+	 * @param loading, a WindowLoading
+	 */
+<span class="fc" id="L60">	public WindowDBA(boolean workOffline, String userDBA, WindowLoading loading) {</span>
+<span class="fc" id="L61">		this.loading = loading;</span>
+<span class="fc" id="L62">		windowFrame = new JFrame(&quot;Good Morning Academy!&quot;);</span>
+<span class="fc" id="L63">		genericMessages = new ArrayList&lt;GenericMessage&gt;();</span>
+<span class="fc" id="L64">		filtersForData = new Filters();</span>
+<span class="fc" id="L65">		this.workOffline = workOffline;</span>
+<span class="fc" id="L66">		this.userDBA = userDBA;</span>
+<span class="fc" id="L67">		rXML = new ReadXMLfile();</span>
+<span class="fc" id="L68">		textFont = new Font(&quot;Calibri&quot;, Font.BOLD, 12);</span>
+<span class="fc" id="L69">	}</span>
+
+	@Override
+	public void run() {
+<span class="fc" id="L73">		startConfigWindow();</span>
+<span class="fc" id="L74">		endConfigWindow();</span>
+<span class="fc" id="L75">	}</span>
+
+	/** 
+	 * Utility method to get the window frame
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @return windowFrame, a JFrame
+	 */
+	public JFrame getFrame() {
+<span class="fc" id="L85">		return windowFrame;</span>
+	}
+
+	/** 
+	 * Utility method to get the JPanel
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @return panels, an arrayList of JPanel
+	 */
+	public ArrayList&lt;JPanel&gt; getPanels() {
+<span class="nc" id="L96">		return panels;</span>
+	}
+
+	/** 
+	 * Utility method to add JPanels
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void addPanels() {
+<span class="fc" id="L106">		panels = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L107">		panels.add(new JPanel()); // 0 SOUTH</span>
+<span class="fc" id="L108">		panels.add(new JPanel()); // 1 WEST</span>
+<span class="fc" id="L109">		panels.add(new JPanel()); // 2 EAST</span>
+<span class="fc" id="L110">		panels.add(new JPanel()); // 3 NORTH</span>
+<span class="fc" id="L111">	}</span>
+
+	/** 
+	 * Construction of the main window structure
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void startConfigWindow() {
+<span class="fc" id="L120">		addPanels();</span>
+<span class="fc" id="L121">		windowFrame.setSize(500, 530);</span>
+		// JPANEL CONFIGURATION IN THE WINDOW FRAME
+<span class="fc" id="L123">		windowFrame.add(panels.get(0), BorderLayout.SOUTH);</span>
+<span class="fc" id="L124">		windowFrame.add(panels.get(1), BorderLayout.WEST);</span>
+<span class="fc" id="L125">		windowFrame.add(panels.get(2), BorderLayout.EAST);</span>
+<span class="fc" id="L126">		windowFrame.add(panels.get(3), BorderLayout.CENTER);</span>
+
+		// MENU CONFIGURATION
+<span class="fc" id="L129">		JMenuBar generalMenu = new JMenuBar();</span>
+<span class="fc" id="L130">		JMenu fileMenu = new JMenu(&quot;File&quot;);</span>
+<span class="fc" id="L131">		JMenu filterMenu = new JMenu(&quot;Filters&quot;);</span>
+<span class="fc" id="L132">		JMenu servicesMenu = new JMenu(&quot;Services&quot;);</span>
+<span class="fc" id="L133">		JMenu aboutMenu = new JMenu(&quot;More&quot;);</span>
+<span class="fc" id="L134">		JMenuItem exit = new JMenuItem(&quot;Exit&quot;);</span>
+<span class="fc" id="L135">		JMenuItem editFilters = new JMenuItem(&quot;Edit&quot;);</span>
+<span class="fc" id="L136">		JCheckBoxMenuItem chkboxMail = new JCheckBoxMenuItem(&quot;E-Mail&quot;);</span>
+<span class="fc" id="L137">		JCheckBoxMenuItem chkboxTwitter = new JCheckBoxMenuItem(&quot;Twitter&quot;);</span>
+<span class="fc" id="L138">		JCheckBoxMenuItem chkboxFacebook = new JCheckBoxMenuItem(&quot;Facebook&quot;);</span>
+<span class="fc" id="L139">		JMenuItem about = new JMenuItem(&quot;About&quot;);</span>
+<span class="fc" id="L140">		JMenuItem help = new JMenuItem(&quot;Help&quot;);</span>
+
+<span class="fc" id="L142">		fileMenu.add(exit);</span>
+<span class="fc" id="L143">		filterMenu.add(editFilters);</span>
+<span class="fc" id="L144">		servicesMenu.add(chkboxMail);</span>
+<span class="fc" id="L145">		servicesMenu.add(chkboxTwitter);</span>
+<span class="fc" id="L146">		servicesMenu.add(chkboxFacebook);</span>
+
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if(workOffline) {</span>
+<span class="nc" id="L149">			chkboxMail.setEnabled(false);</span>
+<span class="nc" id="L150">			chkboxTwitter.setEnabled(false);</span>
+<span class="nc" id="L151">			chkboxFacebook.setEnabled(false);</span>
+<span class="nc" id="L152">			editFilters.setEnabled(false);</span>
+<span class="nc" id="L153">		} else {</span>
+<span class="fc" id="L154">			chkboxMail.setSelected(true);</span>
+<span class="fc" id="L155">			chkboxTwitter.setSelected(true);</span>
+<span class="fc" id="L156">			chkboxFacebook.setSelected(true);</span>
+		}
+
+<span class="fc" id="L159">		aboutMenu.add(about);</span>
+<span class="fc" id="L160">		aboutMenu.add(help);</span>
+<span class="fc" id="L161">		generalMenu.add(fileMenu);</span>
+<span class="fc" id="L162">		generalMenu.add(filterMenu);</span>
+<span class="fc" id="L163">		generalMenu.add(servicesMenu);</span>
+<span class="fc" id="L164">		generalMenu.add(aboutMenu);</span>
+<span class="fc" id="L165">		windowFrame.add(generalMenu, BorderLayout.NORTH);</span>
+
+		// RADIO BUTTON, COMBOBOX &amp; CHECKBOX CONFIGURATION		
+<span class="fc" id="L168">		sortOne = new JRadioButton(&quot;Newest&quot;);</span>
+<span class="fc" id="L169">		sortTwo = new JRadioButton(&quot;Oldest&quot;);</span>
+
+<span class="fc" id="L171">		JComboBox&lt;String&gt; chkDate = new JComboBox&lt;String&gt;();</span>
+
+<span class="fc" id="L173">		chkDate.addItem(&quot;All&quot;);</span>
+<span class="fc" id="L174">		chkDate.addItem(&quot;Last 24 hours&quot;);</span>
+<span class="fc" id="L175">		chkDate.addItem(&quot;Last 48 hors&quot;);</span>
+<span class="fc" id="L176">		chkDate.addItem(&quot;Last 7 days&quot;);</span>
+<span class="fc" id="L177">		chkDate.addItem(&quot;Last 30 days&quot;);</span>
+
+<span class="fc" id="L179">		ButtonGroup sortOptions = new ButtonGroup();</span>
+<span class="fc" id="L180">		sortOptions.add(sortOne);</span>
+<span class="fc" id="L181">		sortOptions.add(sortTwo);</span>
+
+<span class="fc" id="L183">		panels.get(3).add(sortOne);</span>
+<span class="fc" id="L184">		panels.get(3).add(sortTwo);</span>
+<span class="fc" id="L185">		panels.get(3).add(chkDate);</span>
+
+		// TABLE CONFIGURATION
+<span class="fc" id="L188">		JTable tableContent = new JTable(0,6);</span>
+<span class="fc" id="L189">		tableContent.setTableHeader(null); // Hides default A B C... table header</span>
+
+		//tableContent.setAutoscrolls(true);
+<span class="fc" id="L192">		tableContent.setFont(textFont);</span>
+<span class="fc" id="L193">		panels.get(3).add(tableContent);</span>
+<span class="fc" id="L194">		JScrollPane scroll = new JScrollPane(tableContent);</span>
+<span class="fc" id="L195">		panels.get(3).add(scroll);</span>
+<span class="fc" id="L196">		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);</span>
+
+<span class="fc" id="L198">		modelTable = (DefaultTableModel) tableContent.getModel();</span>
+<span class="fc" id="L199">		modelTable.addRow(new String[]{&quot;ID&quot;, &quot;DATE&quot;, &quot;CHANNEL&quot;, &quot;FROM&quot;, &quot;SUBJECT&quot;, &quot;CONTENT&quot;});</span>
+
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if(workOffline == false) { // CHECKBOX NOT SELECTED</span>
+			try {
+<span class="fc" id="L203">				getAndFillNewsOnTable(generalMenu, modelTable);</span>
+<span class="fc" id="L204">				WriteXMLfile.writeMessage(userDBA);</span>
+<span class="pc" id="L205">			} catch (Exception e) {</span>
+<span class="nc" id="L206">				getNewsWorkingOffline();</span>
+			}
+<span class="nc" id="L208">		} else { // CHECKBOX SELECTED</span>
+<span class="nc" id="L209">			getNewsWorkingOffline();</span>
+		}
+<span class="fc" id="L211">		buttonsMenuConfig(generalMenu, sortOne, sortTwo, chkDate, modelTable, tableContent);</span>
+<span class="fc" id="L212">	}</span>
+
+	/** 
+	 * Construction of the main window structure
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void endConfigWindow() {
+		// WINDOW FRAME CONFIGURATION
+<span class="fc" id="L222">		windowFrame.setLocationRelativeTo(null);</span>
+<span class="fc" id="L223">		windowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);</span>
+<span class="fc" id="L224">		windowFrame.setResizable(false);</span>
+<span class="fc" id="L225">		windowFrame.validate();</span>
+<span class="fc" id="L226">		windowFrame.setVisible(true);</span>
+
+		/**
+		 * Interrupt sent to WindowLoading (gif image loading)
+		 * */
+<span class="fc" id="L231">		loading.interrupt();</span>
+<span class="fc" id="L232">	}</span>
+
+	/** 
+	 * Setting the menu and different buttons
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param gM, is the general bars
+	 * @param MR, is the radio button
+	 * @param MO, is the radio button
+	 * @param TC, is the table with news
+	 * @param MT, is the JTABLE that contains the messages
+	 * @param CB, is the combo box with filters date
+	 */
+	private void buttonsMenuConfig(JMenuBar gM, JRadioButton MR, JRadioButton MO, JComboBox&lt;String&gt; CB, DefaultTableModel MT, JTable TC) {
+
+		// EXIT BUTTON ACTION
+<span class="fc" id="L249">		gM.getMenu(0).getItem(0).addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L251">				windowFrame.setVisible(false);</span>
+<span class="nc" id="L252">			}</span>
+		});
+
+		// FILTERS
+<span class="fc" id="L256">		gM.getMenu(1).getItem(0).addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L259">				WindowFilter windFilter = new WindowFilter(windowFrame);</span>
+<span class="nc" id="L260">			}</span>
+		});
+
+		// SERVICE MAIL BUTTON ACTION
+<span class="fc" id="L264">		gM.getMenu(2).getItem(0).addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L266">				removeRows(modelTable);</span>
+<span class="nc" id="L267">				fillOnTable(gM);</span>
+<span class="nc" id="L268">			}</span>
+		});
+
+		// SERVICE TWITTER BUTTON ACTION
+<span class="fc" id="L272">		gM.getMenu(2).getItem(1).addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L274">				removeRows(modelTable);</span>
+<span class="nc" id="L275">				fillOnTable(gM);</span>
+<span class="nc" id="L276">			}</span>
+		});
+
+		// SERVICE FACEBOOK BUTTON ACTION
+<span class="fc" id="L280">		gM.getMenu(2).getItem(2).addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L282">				removeRows(modelTable);</span>
+<span class="nc" id="L283">				fillOnTable(gM);			</span>
+<span class="nc" id="L284">			}</span>
+		});
+
+		// ABOUT BUTTON ACTION
+<span class="fc" id="L288">		gM.getMenu(3).getItem(0).addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L290">				String lineSep = System.lineSeparator();</span>
+<span class="nc" id="L291">				String infoUC = &quot;Software Engineering I - Teacher Vitor Basto Fernandes&quot;;</span>
+<span class="nc" id="L292">				String numberGroup = &quot;Group 91 members:&quot; + lineSep;</span>
+<span class="nc" id="L293">				String infoGroup = &quot;68092 - Diana Salvador&quot; + lineSep + &quot;65799 - Ricardo Ferreira&quot; + lineSep + &quot;73422 - Ivo Carvalho&quot;;</span>
+<span class="nc" id="L294">				String toolsProj = &quot;Tools: GitHub, Trello, Maven &amp; EclEmma.&quot;;</span>
+<span class="nc" id="L295">				JOptionPane.showMessageDialog(null, infoUC + lineSep + numberGroup + infoGroup + lineSep + toolsProj);</span>
+<span class="nc" id="L296">			}</span>
+		});
+
+		// HELP BUTTON ACTION
+<span class="fc" id="L300">		gM.getMenu(3).getItem(1).addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L302">				String lineSep = System.lineSeparator();</span>
+<span class="nc" id="L303">				String infoHelp = &quot;Help page:&quot; + lineSep + &quot;Please check the JavaDoc documentation for further details about the software.&quot;;</span>
+<span class="nc" id="L304">				JOptionPane.showMessageDialog(null, infoHelp);</span>
+<span class="nc" id="L305">			}</span>
+		});
+
+		// CLICK TABLE ACTION
+<span class="fc" id="L309">		TC.addMouseListener(new MouseAdapter() {</span>
+			public void mouseClicked(MouseEvent e) {
+<span class="nc bnc" id="L311" title="All 2 branches missed.">				if (e.getClickCount() == 1) {</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">					if( !(TC.getSelectedRow() == 0)) {</span>
+<span class="nc" id="L313">						String dateM = TC.getModel().getValueAt(TC.getSelectedRow(),1).toString();</span>
+<span class="nc" id="L314">						String canalM = TC.getModel().getValueAt(TC.getSelectedRow(),2).toString();</span>
+<span class="nc" id="L315">						String fromM = TC.getModel().getValueAt(TC.getSelectedRow(),3).toString();</span>
+<span class="nc" id="L316">						String titleM = TC.getModel().getValueAt(TC.getSelectedRow(),4).toString();</span>
+<span class="nc" id="L317">						String contentM = TC.getModel().getValueAt(TC.getSelectedRow(),5).toString();</span>
+						@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L319">						WindowMessage windMess = new WindowMessage(dateM, fromM, titleM, contentM, canalM, userDBA, workOffline);</span>
+					}
+				}
+<span class="nc" id="L322">			}</span>
+		});
+
+		// RADIO BUTTON OLDEST
+<span class="fc" id="L326">		MR.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L328">				MR.setSelected(true);</span>
+<span class="nc" id="L329">				indicatorFilters = filtersForData.sortByNewest(modelTable, gM, indicatorFilters, genericMessages);</span>
+<span class="nc" id="L330">			}</span>
+		});
+
+		// RADIO BUTTON NEWEST
+<span class="fc" id="L334">		MO.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L336">				MO.setSelected(true);</span>
+<span class="nc" id="L337">				indicatorFilters = filtersForData.sortByOldest(modelTable, gM, indicatorFilters, genericMessages);</span>
+<span class="nc" id="L338">			}</span>
+		});
+
+		// COMBO BOX FILTER DATE
+<span class="fc" id="L342">		CB.addActionListener (new ActionListener () {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L344" title="All 5 branches missed.">				switch (CB.getSelectedIndex()) {</span>
+				case 0:
+<span class="nc" id="L346">					System.out.println(&quot;All&quot;);</span>
+<span class="nc" id="L347">					indicatorFilters = filtersForData.filterMessagesAll(MT, indicatorFilters, genericMessages);</span>
+<span class="nc" id="L348">					sortOne.setEnabled(true);</span>
+<span class="nc" id="L349">					sortTwo.setEnabled(true);</span>
+<span class="nc" id="L350">					break;</span>
+				case 1:
+<span class="nc" id="L352">					System.out.println(&quot;Last 24H&quot;);</span>
+<span class="nc" id="L353">					indicatorFilters = filtersForData.filterMessagesLast24Hours(MT, indicatorFilters, genericMessages);</span>
+<span class="nc" id="L354">					sortOne.setEnabled(false);</span>
+<span class="nc" id="L355">					sortTwo.setEnabled(false);</span>
+<span class="nc" id="L356">					break;</span>
+				case 2:
+<span class="nc" id="L358">					System.out.println(&quot;Last 48H&quot;);</span>
+<span class="nc" id="L359">					indicatorFilters = filtersForData.filterMessagesLast48Hours(MT, indicatorFilters, genericMessages);</span>
+<span class="nc" id="L360">					sortOne.setEnabled(false);</span>
+<span class="nc" id="L361">					sortTwo.setEnabled(false);</span>
+<span class="nc" id="L362">					break;</span>
+				case 3:
+<span class="nc" id="L364">					System.out.println(&quot;Last week&quot;);</span>
+<span class="nc" id="L365">					indicatorFilters = filtersForData.filterMessagesLastWeek(MT, indicatorFilters, genericMessages);</span>
+<span class="nc" id="L366">					sortOne.setEnabled(false);</span>
+<span class="nc" id="L367">					sortTwo.setEnabled(false);</span>
+<span class="nc" id="L368">					break;</span>
+				default:
+<span class="nc" id="L370">					System.out.println(&quot;Last month&quot;);</span>
+<span class="nc" id="L371">					indicatorFilters = filtersForData.filterMessagesLastMonth(MT, indicatorFilters, genericMessages);</span>
+<span class="nc" id="L372">					sortOne.setEnabled(false);</span>
+<span class="nc" id="L373">					sortTwo.setEnabled(false);</span>
+					break;             
+				} 
+<span class="nc" id="L376">			}</span>
+		});
+<span class="fc" id="L378">	}</span>
+
+	/** 
+	 * Method for collecting messages
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param generalMenu, is the JMenuBar 
+	 * @param modelTable, is the JTABLE that contains the messages
+	 */
+	private void getAndFillNewsOnTable(JMenuBar generalMenu, DefaultTableModel modelTable) {
+<span class="fc" id="L389">		ReadEmails rMails = new ReadEmails();</span>
+<span class="fc" id="L390">		ReadTweets rTweets = new ReadTweets();</span>
+<span class="fc" id="L391">		ReadPosts rPosts = new ReadPosts();</span>
+
+<span class="fc" id="L393">		messagesMail = GenericMessage.receiveMailReturnMessage(rMails.readMessages(&quot;imap.gmail.com&quot;, &quot;imaps3&quot;, ReadXMLfile.userData[0], ReadXMLfile.userData[1]));</span>
+<span class="fc" id="L394">		messagesTwitter = GenericMessage.receiveTweetsReturnMessage(rTweets.readTweets(ReadXMLfile.userData[2]));</span>
+<span class="fc" id="L395">		messagesFacebook = GenericMessage.receivePostsReturnMessage(rPosts.readPosts(ReadXMLfile.userData[2]));</span>
+
+<span class="fc" id="L397">		fillOnTable(generalMenu);</span>
+<span class="fc" id="L398">		indicatorFilters = genericMessages.size();</span>
+<span class="fc" id="L399">	}</span>
+
+	/** 
+	 * Method to fill the messages on the table
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param gM, is the JMenuBar 
+	 */
+	private void fillOnTable(JMenuBar gM) {
+<span class="fc" id="L409">		int count = 1;</span>
+
+<span class="fc" id="L411">		boolean servMail = gM.getMenu(2).getItem(0).isSelected();</span>
+<span class="fc" id="L412">		boolean servTwitter = gM.getMenu(2).getItem(1).isSelected();</span>
+<span class="fc" id="L413">		boolean servFacebook = gM.getMenu(2).getItem(2).isSelected();</span>
+
+<span class="fc" id="L415">		indicatorFilters = 0;</span>
+<span class="fc" id="L416">		removeRows(modelTable);</span>
+<span class="fc" id="L417">		genericMessages.clear();</span>
+		try {
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">			if(servMail) {</span>
+<span class="fc" id="L420">				System.out.print(&quot;E-Mail checked.&quot;);</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">				for (GenericMessage genM: messagesMail) {</span>
+<span class="fc" id="L422">					String dateM = genM.getDateM();</span>
+<span class="fc" id="L423">					String channelM = genM.getCanalM();</span>
+<span class="fc" id="L424">					String fromM = genM.getFromM();</span>
+<span class="fc" id="L425">					String subjectM = genM.getTitleM();</span>
+<span class="fc" id="L426">					String contentM = genM.getContentM();</span>
+
+<span class="fc" id="L428">					genericMessages.add(genM);</span>
+<span class="fc" id="L429">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L430">					count++;</span>
+<span class="fc" id="L431">					indicatorFilters++;</span>
+				}
+			} 
+<span class="pc bpc" id="L434" title="1 of 2 branches missed.">			if(servTwitter) {</span>
+<span class="fc" id="L435">				System.out.print(&quot;Twitter checked.&quot;);</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">				for (GenericMessage genM: messagesTwitter) {</span>
+<span class="fc" id="L437">					String dateM = genM.getDateM();</span>
+<span class="fc" id="L438">					String channelM = genM.getCanalM();</span>
+<span class="fc" id="L439">					String fromM = genM.getFromM();</span>
+<span class="fc" id="L440">					String subjectM = genM.getTitleM();</span>
+<span class="fc" id="L441">					String contentM = genM.getContentM();</span>
+
+<span class="fc" id="L443">					genericMessages.add(genM);</span>
+<span class="fc" id="L444">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L445">					count++;</span>
+<span class="fc" id="L446">					indicatorFilters++;</span>
+				}
+			}
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">			if(servFacebook) {</span>
+<span class="fc" id="L450">				System.out.print(&quot;Facebook checked.&quot;);</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">				for (GenericMessage genM: messagesFacebook) {</span>
+<span class="fc" id="L452">					String dateM = genM.getDateM();</span>
+<span class="fc" id="L453">					String channelM = genM.getCanalM();</span>
+<span class="fc" id="L454">					String fromM = genM.getFromM();</span>
+<span class="fc" id="L455">					String subjectM = genM.getTitleM();</span>
+<span class="fc" id="L456">					String contentM = genM.getContentM();</span>
+
+<span class="fc" id="L458">					genericMessages.add(genM);</span>
+<span class="fc" id="L459">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L460">					count++;</span>
+<span class="fc" id="L461">					indicatorFilters++;</span>
+				}
+			}
+<span class="pc" id="L464">		} catch(Exception e) {</span>
+<span class="nc" id="L465">			System.out.print(&quot;Error in reading emails: &quot; + e.toString());</span>
+		} finally {
+<span class="fc" id="L467">			WriteXMLfile.writeMessage(&quot;dasra&quot;);</span>
+<span class="fc" id="L468">			rXML.readMessagesXMLfile(&quot;dasra&quot;);</span>
+		}
+
+		/*if(servMail &amp;&amp; servTwitter &amp;&amp; servFacebook) {
+			sortOne.setEnabled(true);
+			sortTwo.setEnabled(true);
+		} else {
+			sortOne.setEnabled(false);
+			sortTwo.setEnabled(false);
+		}*/
+<span class="fc" id="L478">	}</span>
+
+	/** 
+	 * Auxiliary method to remove rows from the JTable
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param modelTable, is the JTABLE that contains the messages
+	 */
+	private void removeRows(DefaultTableModel modelTable) {
+<span class="fc" id="L488">		int linhasNaTabela = indicatorFilters;</span>
+<span class="pc bpc" id="L489" title="1 of 2 branches missed.">		for(int i = linhasNaTabela; i &gt; 0; i--) {</span>
+<span class="nc" id="L490">			modelTable.removeRow(i);</span>
+<span class="nc" id="L491">			System.out.println(&quot;Row &quot; + i + &quot; deleted.&quot;);</span>
+		}
+<span class="fc" id="L493">	}</span>
+
+	/** 
+	 * Auxiliary method to fill the table with the messages from XML file (when working offline)
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 */
+	private void getNewsWorkingOffline() {
+<span class="nc" id="L502">		int count = 1;</span>
+<span class="nc" id="L503">		indicatorFilters = 0;</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">		for (GenericMessage genM: rXML.readMessagesXMLfile(userDBA)) {</span>
+<span class="nc" id="L505">			String dateM = genM.getDateM();</span>
+<span class="nc" id="L506">			String channelM = genM.getCanalM();</span>
+<span class="nc" id="L507">			String fromM = genM.getFromM();</span>
+<span class="nc" id="L508">			String subjectM = genM.getTitleM();</span>
+<span class="nc" id="L509">			String contentM = genM.getContentM();</span>
+<span class="nc" id="L510">			genericMessages.add(genM);</span>
+<span class="nc" id="L511">			modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="nc" id="L512">			count++;</span>
+<span class="nc" id="L513">			indicatorFilters++;</span>
+		}
+<span class="nc" id="L515">	}</span>
+
+	/** 
+	 * Utility method to get the emails
+	 * @return messagesMail, an ArrayList of GenericMessage
+	 */
+	public ArrayList&lt;GenericMessage&gt; getGMemail() {
+<span class="nc" id="L522">		return messagesMail;</span>
+	}
+
+	/** 
+	 * Utility method to get the tweets
+	 * @return messagesTwitter, an ArrayList of GenericMessage
+	 */
+	public ArrayList&lt;GenericMessage&gt; getGMtweets() {
+<span class="nc" id="L530">		return messagesTwitter;</span>
+	}
+
+	/** 
+	 * Utility method to get the posts from Facebook
+	 * @return messagesFacebook, an ArrayList of GenericMessage
+	 */
+	public ArrayList&lt;GenericMessage&gt; getGMposts() {
+<span class="nc" id="L538">		return messagesFacebook;</span>
+	}
+
+	/** 
+	 * Utility method to get messages
+	 * @return genericMessages, an ArrayList of GenericMessage
+	 */
+	public static ArrayList&lt;GenericMessage&gt; getGM() {
+<span class="fc" id="L546">		return genericMessages;</span>
+	}
+
+	/** 
+	 * Utility method to get a DefaultTableModel
+	 * @return modelTable, a DefaultTableModel
+	 */
+	public DefaultTableModel getModelTable() {
+<span class="fc" id="L554">		return modelTable;</span>
+	}
+
+	/** 
+	 * Utility method to get the indicator filters
+	 * @return indicatorFilters, an integer
+	 */
+	public int getIndicatorFilters() {
+<span class="nc" id="L562">		return indicatorFilters;</span>
+	}
+
+	/** 
+	 * Utility method to get filters
+	 * @return filtersForData, an Filters
+	 */
+	public Filters getFiltersForData() {
+<span class="fc" id="L570">		return filtersForData;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

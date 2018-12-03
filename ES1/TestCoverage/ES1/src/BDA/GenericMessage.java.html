@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GenericMessage.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">GenericMessage.java</span></div><h1>GenericMessage.java</h1><pre class="source lang-java linenums">package BDA;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import javax.mail.Message;
+
+import com.restfb.types.Post;
+
+import twitter4j.Status;
+
+/** 
+ * Generic Message 
+ * @author GROUP 91
+ * @version 1.0
+ * @since September 2018
+ */
+
+public class GenericMessage {
+
+	private String dateM;
+	private String canalM;
+	private String fromM;
+	private String titleM;
+	private String contentM;
+
+	/** 
+	 * Constructor
+	 * @author GROUP 91
+	 * @version 1.0
+	 * @since September
+	 * @param dateM, the message date
+	 * @param canalM, the message service
+	 * @param fromM, the message sender
+	 * @param titleM, the message subject
+	 * @param contentM, the message body
+	 */
+<span class="fc" id="L39">	public GenericMessage(String dateM, String canalM, String fromM, String titleM, String contentM) {</span>
+<span class="fc" id="L40">		this.dateM = dateM;</span>
+<span class="fc" id="L41">		this.canalM = canalM;</span>
+<span class="fc" id="L42">		this.fromM = fromM;</span>
+<span class="fc" id="L43">		this.titleM = titleM;</span>
+<span class="fc" id="L44">		this.contentM = contentM;</span>
+<span class="fc" id="L45">	}</span>
+
+	/**
+	 * Receive Mail Return Message
+	 * @param listMail, ArrayList of Message
+	 * @return genMessage, ArrayList of GenericMessage
+	 */	
+	public static ArrayList&lt;GenericMessage&gt; receiveMailReturnMessage(ArrayList&lt;Message&gt; listMail) {
+<span class="fc" id="L53">		ArrayList&lt;GenericMessage&gt; genMessage = new ArrayList&lt;GenericMessage&gt;();</span>
+<span class="fc" id="L54">		SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+		String dateM;
+		String canalM;
+		String fromM;
+		String titleM;
+		String contentM;
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		for(Message mail: listMail) {</span>
+			try {
+<span class="fc" id="L62">				dateM = sdf.format(mail.getReceivedDate());</span>
+<span class="fc" id="L63">				canalM = &quot;E-Mail&quot;;</span>
+<span class="fc" id="L64">				fromM = mail.getFrom()[0].toString();</span>
+<span class="fc" id="L65">				titleM = mail.getSubject().toString();</span>
+<span class="fc" id="L66">				contentM = ReadEmails.getBody(mail);</span>
+<span class="fc" id="L67">				genMessage.add(new GenericMessage(dateM, canalM, fromM, titleM, contentM));</span>
+<span class="pc" id="L68">			} catch (Exception e) {</span>
+<span class="nc" id="L69">				e.printStackTrace();</span>
+			}
+		}
+<span class="fc" id="L72">		return genMessage;</span>
+	}
+
+	/**
+	 * Receive Tweet Return Message
+	 * @param listTweets, List of Status
+	 * @return genMessage, ArrayList of GenericMessage
+	 */	
+	public static ArrayList&lt;GenericMessage&gt; receiveTweetsReturnMessage(List&lt;Status&gt; listTweets) {
+<span class="fc" id="L81">		ArrayList&lt;GenericMessage&gt; genMessage = new ArrayList&lt;GenericMessage&gt;();</span>
+<span class="fc" id="L82">		SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+		String dateM;
+		String canalM;
+		String fromM;
+		String titleM;
+		String contentM;
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		for(Status tweet: listTweets) {</span>
+			try {
+<span class="fc" id="L90">				dateM = sdf.format(tweet.getCreatedAt());</span>
+<span class="fc" id="L91">				canalM = &quot;Twitter&quot;;</span>
+<span class="fc" id="L92">				fromM = tweet.getUser().getName();</span>
+<span class="fc" id="L93">				titleM = Long.toString(tweet.getId());</span>
+<span class="fc" id="L94">				contentM = tweet.getText(); </span>
+<span class="fc" id="L95">				genMessage.add(new GenericMessage(dateM, canalM, fromM, titleM, contentM));</span>
+<span class="pc" id="L96">			} catch (Exception e) {</span>
+<span class="nc" id="L97">				e.printStackTrace();</span>
+			}
+		}
+<span class="fc" id="L100">		return genMessage;</span>
+	}
+
+	/**
+	 * Receive Posts Return Message
+	 * @param listPosts, List of Post
+	 * @return genMessage, ArrayList of GenericMessage
+	 */
+	public static ArrayList&lt;GenericMessage&gt; receivePostsReturnMessage(List&lt;Post&gt; listPosts) {
+<span class="fc" id="L109">		ArrayList&lt;GenericMessage&gt; genMessage = new ArrayList&lt;GenericMessage&gt;();</span>
+<span class="fc" id="L110">		SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+		String dateM;
+		String canalM;
+		String fromM;
+		String titleM;
+		String contentM;
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for(Post post: listPosts) {</span>
+			try {
+<span class="fc" id="L118">				dateM = sdf.format(post.getCreatedTime());</span>
+<span class="fc" id="L119">				canalM = &quot;Facebook&quot;;</span>
+<span class="fc" id="L120">				fromM = &quot;Teste&quot;;</span>
+<span class="fc" id="L121">				titleM = post.getId();</span>
+<span class="fc" id="L122">				contentM = post.getMessage(); </span>
+<span class="fc" id="L123">				genMessage.add(new GenericMessage(dateM, canalM, fromM, titleM, contentM));</span>
+<span class="pc" id="L124">			} catch (Exception e) {</span>
+<span class="nc" id="L125">				e.printStackTrace();</span>
+			}
+		}
+<span class="fc" id="L128">		return genMessage;</span>
+	}
+
+	public String getContentM() {
+<span class="fc" id="L132">		return contentM;</span>
+	}
+
+	public String getCanalM() {
+<span class="fc" id="L136">		return canalM;</span>
+	}
+
+	public String getDateM() {
+<span class="fc" id="L140">		return dateM;</span>
+	}
+
+	public String getFromM() {
+<span class="fc" id="L144">		return fromM;</span>
+	}
+
+	public String getTitleM() {
+<span class="fc" id="L148">		return titleM;</span>
+	}
+	public void setContentM(String content) {
+<span class="fc" id="L151">		this.contentM = content;</span>
+<span class="fc" id="L152">	}</span>
+
+	public void setCanalM(String canal) {
+<span class="fc" id="L155">		this.canalM = canal;</span>
+<span class="fc" id="L156">	}</span>
+
+	public void setDateM(String date) {
+<span class="fc" id="L159">		this.dateM = date;</span>
+<span class="fc" id="L160">	}</span>
+
+	public void setFromM(String from) {
+<span class="fc" id="L163">		this.fromM = from;</span>
+<span class="fc" id="L164">	}</span>
+
+	public void setTitleM(String title) {
+<span class="fc" id="L167">		this.titleM = title;</span>
+<span class="fc" id="L168">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>

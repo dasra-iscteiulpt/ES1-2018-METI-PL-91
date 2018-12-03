@@ -37,7 +37,7 @@ public class ReadEmails {
 	 * @param password is the access data to the email
 	 * @return An array with all academic messages
 	 */
-	
+
 	public ArrayList<Message> readMessages(String imapHost, String storeType, String user, String password) {
 		ArrayList<Message> m = new ArrayList<Message>();
 		try {
@@ -88,7 +88,7 @@ public class ReadEmails {
 	 * @param list, is the list with keywords
 	 * @return True if the message contains academic keywords
 	 */
-	
+
 	public static boolean keywordValidation(String body, String subject, List<Attributes> list) {
 		String s = "";
 		for (int i = 0; i < list.size(); i++) {
@@ -108,13 +108,18 @@ public class ReadEmails {
 	 * @param m, is the subject of the message
 	 * @return s, if the message contains academic keywords
 	 */
-	public String getSubject(Message m) throws Exception {
+	public String getSubject(Message m) {
 		String s="";
-		if (m.getSubject() != null)
-			s=m.getSubject();
-		return s;	
+		try {
+			if (m.getSubject() != null)
+				s=m.getSubject();
+			return s;
+		}catch (Exception e){
+			System.out.println("Error -> " + e);
+		}
+		return null;
 	}
-	
+
 	/** 
 	 * Get the text of the email if the type is MIME multipart, used in the getBody(Message) method
 	 * @author GROUP 91
@@ -150,16 +155,22 @@ public class ReadEmails {
 	 * @param m, Message object
 	 * @return body, text from the body of email 
 	 */
-	public static String getBody(Message m) throws Exception {
+	public static String getBody(Message m){
 		String body = "";
-		if (m.isMimeType("text/plain")) {
-			body = m.getContent().toString();
+		try {
+			if (m.isMimeType("text/plain")) {
+				body = m.getContent().toString();
+			}
+			else if (m.isMimeType("multipart/*")) {
+				MimeMultipart mimeMultipart = (MimeMultipart) m.getContent();
+				body = getTextFromMimeMultipart(mimeMultipart);
+			}
+			return body;
 		}
-		else if (m.isMimeType("multipart/*")) {
-			MimeMultipart mimeMultipart = (MimeMultipart) m.getContent();
-			body = getTextFromMimeMultipart(mimeMultipart);
+		catch (Exception e) {
+			System.out.println("Error ->" + e);
 		}
-		return body;
+		return null;
 	}
 
 }
