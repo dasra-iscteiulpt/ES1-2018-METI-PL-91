@@ -11,7 +11,6 @@ import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Post;
 
-import Others.Attributes;
 
 public class ReadPosts {
 

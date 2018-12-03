@@ -11,8 +11,6 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 
-import Others.Attributes;
-
 public class ReadEmails {
 
 	// VARIABLES

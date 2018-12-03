@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import Others.Attributes;
-import XML.WriteXMLfile;
 
 /** 
  * Content filters window for registered users.

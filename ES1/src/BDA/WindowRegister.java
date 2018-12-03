@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import XML.WriteXMLfile;
-
 /** 
  * Registration window for new users
  * @author GROUP 91

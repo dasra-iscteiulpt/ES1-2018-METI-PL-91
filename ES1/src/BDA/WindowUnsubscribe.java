@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import XML.WriteXMLfile;
 
 /** 
  * Unsubscribe window for registered users.

@@ -15,8 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
-
-import XML.WriteXMLfile;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JMenuBar;
