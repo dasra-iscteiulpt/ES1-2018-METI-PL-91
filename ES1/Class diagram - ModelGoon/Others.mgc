@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="Others.GenericMessage" x="10" y="12">
+    <Class name="BDA.Main" x="710" y="327">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -9,7 +9,7 @@
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
     </Class>
-    <Class name="Others.Attributes" x="485" y="12">
+    <Class name="BDA.Attributes" x="467" y="1">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -18,7 +18,7 @@
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
     </Class>
-    <Class name="Others.Filters" x="11" y="340">
+    <Class name="JUNIT.JUnitTests" x="708" y="1">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -26,9 +26,9 @@
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
-        <Communication destinationClassName="Others.GenericMessage"/>
+        <Communication destinationClassName="BDA.Filters"/>
     </Class>
-    <Class name="JUNIT.JUnitTests" x="732" y="13">
+    <Class name="BDA.Filters" x="5" y="329">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -36,6 +36,15 @@
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
-        <Communication destinationClassName="Others.Filters"/>
+        <Communication destinationClassName="BDA.GenericMessage"/>
+    </Class>
+    <Class name="BDA.GenericMessage" x="4" y="4">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"
+            accessors-accepted="true" constructors-accepted="true"/>
     </Class>
 </ClassDiagram>

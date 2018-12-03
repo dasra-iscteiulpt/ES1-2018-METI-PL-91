@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="Facebook.WriteComment" x="322" y="10">
+    <Class name="BDA.WriteComment" x="326" y="24">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -9,7 +9,7 @@
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
     </Class>
-    <Class name="Facebook.ReadPosts" x="15" y="10">
+    <Class name="BDA.ReadPosts" x="20" y="23">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>

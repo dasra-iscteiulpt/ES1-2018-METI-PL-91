@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="Email.SendEmail" x="370" y="14">
+    <Class name="BDA.SendEmail" x="371" y="9">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -9,7 +9,7 @@
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
     </Class>
-    <Class name="Email.ReadEmails" x="11" y="13">
+    <Class name="BDA.ReadEmails" x="10" y="8">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>

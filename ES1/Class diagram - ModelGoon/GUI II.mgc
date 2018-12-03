@@ -1,26 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="GUI.WindowUnsubscribe" x="8" y="66">
-        <AttributesDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="true"/>
-        <MethodDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="true"
-            accessors-accepted="true" constructors-accepted="true"/>
-        <Extension destinationClassName="GUI.WindowGUI"/>
-    </Class>
-    <Class name="GUI.WindowLogin" x="177" y="269">
-        <AttributesDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="true"/>
-        <MethodDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="true"
-            accessors-accepted="true" constructors-accepted="true"/>
-        <Extension destinationClassName="GUI.WindowGUI"/>
-    </Class>
-    <Class name="GUI.WindowGUI" x="245" y="8">
+    <Class name="BDA.WindowGUI" x="275" y="15">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -29,7 +9,7 @@
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
     </Class>
-    <Class name="GUI.WindowRegister" x="16" y="187">
+    <Class name="BDA.WindowLogin" x="62" y="67">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -37,9 +17,9 @@
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
-        <Extension destinationClassName="GUI.WindowGUI"/>
+        <Extension destinationClassName="BDA.WindowGUI"/>
     </Class>
-    <Class name="GUI.WindowFilter" x="330" y="270">
+    <Class name="BDA.WindowUnsubscribe" x="384" y="275">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -47,9 +27,9 @@
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
-        <Extension destinationClassName="GUI.WindowGUI"/>
+        <Extension destinationClassName="BDA.WindowGUI"/>
     </Class>
-    <Class name="GUI.WindowMessage" x="523" y="13">
+    <Class name="BDA.WindowRegister" x="232" y="275">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"/>
@@ -57,6 +37,26 @@
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="true"
             accessors-accepted="true" constructors-accepted="true"/>
-        <Extension destinationClassName="GUI.WindowGUI"/>
+        <Extension destinationClassName="BDA.WindowGUI"/>
+    </Class>
+    <Class name="BDA.WindowMessage" x="58" y="216">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"
+            accessors-accepted="true" constructors-accepted="true"/>
+        <Extension destinationClassName="BDA.WindowGUI"/>
+    </Class>
+    <Class name="BDA.WindowFilter" x="503" y="44">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"
+            accessors-accepted="true" constructors-accepted="true"/>
+        <Extension destinationClassName="BDA.WindowGUI"/>
     </Class>
 </ClassDiagram>
