@@ -111,7 +111,8 @@ public class WriteXMLfile {
 			doc.appendChild(userElement);
 
 			// Add the new message
-			ArrayList<GenericMessage> gm = WindowDBA.getGM(); 
+			
+			ArrayList<GenericMessage> gm =  WindowDBA.getGM();
 			for (int i = 0; i < gm.size(); i++) {
 				userElement.appendChild(createMessage(doc, gm.get(i).getDateM(), gm.get(i).getCanalM(), gm.get(i).getFromM(), gm.get(i).getTitleM(), gm.get(i).getContentM()));
 				System.out.println(gm.get(i));

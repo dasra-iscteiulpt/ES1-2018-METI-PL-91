@@ -1,4 +1,4 @@
-package JUNIT;
+package jUnitTests;
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -128,13 +128,14 @@ class JUnitTests {
 		assertFalse(windMess.getWindowFrame().isResizable());
 	} 
 	
+	@SuppressWarnings("static-access")
 	@Test
 	public void testWindowDBA() {
 		WindowDBA windDBA = new WindowDBA(false, "dasra", new WindowLoading());
-
-		assertTrue(windDBA.getGMemail().get(0).getCanalM().equals("E-Mail"));
-		assertTrue(windDBA.getGMtweets().get(0).getCanalM().equals("Twitter"));
-		assertTrue(windDBA.getGMposts().get(0).getCanalM().equals("Facebook"));
+		windDBA.run();
+		assertTrue(windDBA.getGM().get(1).getCanalM().equals("E-Mail"));
+		assertTrue(windDBA.getGM().get(10).getCanalM().equals("Twitter"));
+		assertTrue(windDBA.getGM().get(23).getCanalM().equals("Facebook"));
 		
 		DefaultTableModel modelTable = windDBA.getModelTable();
 		assertNotNull(modelTable);

@@ -522,30 +522,6 @@ public class WindowDBA extends Thread {
 	}
 
 	/** 
-	 * Utility method to get the emails
-	 * @return messagesMail, an ArrayList of GenericMessage
-	 */
-	public ArrayList<GenericMessage> getGMemail() {
-		return messagesMail;
-	}
-
-	/** 
-	 * Utility method to get the tweets
-	 * @return messagesTwitter, an ArrayList of GenericMessage
-	 */
-	public ArrayList<GenericMessage> getGMtweets() {
-		return messagesTwitter;
-	}
-
-	/** 
-	 * Utility method to get the posts from Facebook
-	 * @return messagesFacebook, an ArrayList of GenericMessage
-	 */
-	public ArrayList<GenericMessage> getGMposts() {
-		return messagesFacebook;
-	}
-
-	/** 
 	 * Utility method to get messages
 	 * @return genericMessages, an ArrayList of GenericMessage
 	 */
