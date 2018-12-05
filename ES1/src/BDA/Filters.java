@@ -314,7 +314,7 @@ public class Filters {
 	}
 
 	/** 
-	 * Utility method to remove rows from the table
+	 * Utility method to remove rows from the table everytime the table model shows different data caused by filtering
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
