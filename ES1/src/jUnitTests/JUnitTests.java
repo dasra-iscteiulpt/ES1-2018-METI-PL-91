@@ -166,6 +166,10 @@ class JUnitTests {
 		windDBA.getFiltersForData().sortByNewest(modelTable, null, 0, WindowDBA.getGM());
 		boolean sizeTableAfterSortNewest = (sizeTableBeforeSortNewest == modelTable.getRowCount());
 		assertFalse(sizeTableAfterSortNewest);	
+		int sizeTableBeforeSortOldest = modelTable.getRowCount();
+		windDBA.getFiltersForData().sortByOldest(modelTable, null, 0, WindowDBA.getGM());
+		boolean sizeTableAfterSortOldest= (sizeTableBeforeSortOldest == modelTable.getRowCount());
+		assertFalse(sizeTableAfterSortOldest);	
 	}
 	
 	@Test

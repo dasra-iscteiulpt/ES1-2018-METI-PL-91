@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>JUnitTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">jUnitTests</a> &gt; <span class="el_source">JUnitTests.java</span></div><h1>JUnitTests.java</h1><pre class="source lang-java linenums">package jUnitTests;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>JUnitTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">jUnitTests</a> &gt; <span class="el_source">JUnitTests.java</span></div><h1>JUnitTests.java</h1><pre class="source lang-java linenums">package jUnitTests;
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -166,46 +166,49 @@ import BDA.WriteXMLfile;
 <span class="fc" id="L166">		windDBA.getFiltersForData().sortByNewest(modelTable, null, 0, WindowDBA.getGM());</span>
 <span class="pc bpc" id="L167" title="1 of 2 branches missed.">		boolean sizeTableAfterSortNewest = (sizeTableBeforeSortNewest == modelTable.getRowCount());</span>
 <span class="fc" id="L168">		assertFalse(sizeTableAfterSortNewest);	</span>
-<span class="fc" id="L169">	}</span>
+<span class="fc" id="L169">		int sizeTableBeforeSortOldest = modelTable.getRowCount();</span>
+<span class="fc" id="L170">		windDBA.getFiltersForData().sortByOldest(modelTable, null, 0, WindowDBA.getGM());</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		boolean sizeTableAfterSortOldest= (sizeTableBeforeSortOldest == modelTable.getRowCount());</span>
+<span class="fc" id="L172">		assertFalse(sizeTableAfterSortOldest);	</span>
+<span class="fc" id="L173">	}</span>
 	
 	@Test
 	public void testXMLFile() {
-<span class="fc" id="L173">		boolean existFilter = rXML.validateFilter(&quot;universidade&quot;);</span>
-<span class="fc" id="L174">		boolean existUser = rXML.validateUserBDA(&quot;dasra&quot;, &quot;dasra123&quot;);</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		boolean existsFilters = (rXML.readFiltersXMLfile().size() &gt; 0);</span>
-		@SuppressWarnings(&quot;static-access&quot;)
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		boolean existsUsers = (rXML.readUsersXMLfile().size() &gt; 0);</span>
+<span class="fc" id="L177">		boolean existFilter = rXML.validateFilter(&quot;universidade&quot;);</span>
+<span class="fc" id="L178">		boolean existUser = rXML.validateUserBDA(&quot;dasra&quot;, &quot;dasra123&quot;);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		boolean existsFilters = (rXML.readFiltersXMLfile().size() &gt; 0);		</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		boolean existsUsers = (rXML.getUsersListSize() &gt; 0);</span>
 		
-<span class="fc" id="L179">		assertFalse(existFilter);</span>
-<span class="fc" id="L180">		assertTrue(existUser);</span>
-<span class="fc" id="L181">		assertTrue(existsFilters);</span>
-<span class="fc" id="L182">		assertTrue(existsUsers);</span>
-<span class="fc" id="L183">	}</span>
+<span class="fc" id="L182">		assertFalse(existFilter);</span>
+<span class="fc" id="L183">		assertTrue(existUser);</span>
+<span class="fc" id="L184">		assertTrue(existsFilters);</span>
+<span class="fc" id="L185">		assertTrue(existsUsers);</span>
+<span class="fc" id="L186">	}</span>
 	
 	@Test
 	public void writeXMLFile() {
 		@SuppressWarnings(&quot;static-access&quot;)
-<span class="fc" id="L188">		boolean addUser = wXML.addUser(&quot;teste&quot;, &quot;teste123&quot;, &quot;teste@gmail.com&quot;, &quot;teste123&quot;, &quot;dpthvBBPVVsWxWituNu1CBx9h&quot;, &quot;Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W&quot;, &quot;1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B&quot;, &quot;B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N&quot;, &quot;EAADpFZBDLw5QBADta3Qw8JqjHPFlShpQHhsodQhywzIZBTfdQp5oJJMBSZBP8qQrVkaiA7fmmBFZAE5xKazkRJRzyekZBL8gnThcJ0f7RoLtaNwseHJgZCUJtYZC6yyoLS1q0ZBvgumVQMG56c1rovf5iWwZAX5jjIi4nVcwM39ZABCRZCd3HZA9TN7daJZC79HSw4kcZD&quot;);</span>
+<span class="fc" id="L191">		boolean addUser = wXML.addUser(&quot;teste&quot;, &quot;teste123&quot;, &quot;teste@gmail.com&quot;, &quot;teste123&quot;, &quot;dpthvBBPVVsWxWituNu1CBx9h&quot;, &quot;Nsuy5xBRdruPTaBms8GfQVtFsywI16zGyExf27THMHmmEm6d2W&quot;, &quot;1056561597659914240-pHb2DY7rIzqtPTVyohg7zVZGEoqX6B&quot;, &quot;B2WrSZcGM9LqmyrUbvmHKesS5S7hDYuvlHKKhmVlJU38N&quot;, &quot;EAADpFZBDLw5QBADta3Qw8JqjHPFlShpQHhsodQhywzIZBTfdQp5oJJMBSZBP8qQrVkaiA7fmmBFZAE5xKazkRJRzyekZBL8gnThcJ0f7RoLtaNwseHJgZCUJtYZC6yyoLS1q0ZBvgumVQMG56c1rovf5iWwZAX5jjIi4nVcwM39ZABCRZCd3HZA9TN7daJZC79HSw4kcZD&quot;);</span>
 		@SuppressWarnings(&quot;static-access&quot;)
-<span class="fc" id="L190">		boolean addFilter = wXML.addFilter(&quot;professor&quot;);</span>
+<span class="fc" id="L193">		boolean addFilter = wXML.addFilter(&quot;professor&quot;);</span>
 		@SuppressWarnings(&quot;static-access&quot;)
-<span class="fc" id="L192">		boolean removeUser = wXML.removeUser(&quot;teste&quot;);</span>
+<span class="fc" id="L195">		boolean removeUser = wXML.removeUser(&quot;teste&quot;);</span>
 		@SuppressWarnings(&quot;static-access&quot;)
-<span class="fc" id="L194">		boolean removeFilter = (wXML.removeFilter(&quot;professor&quot;));</span>
+<span class="fc" id="L197">		boolean removeFilter = (wXML.removeFilter(&quot;professor&quot;));</span>
 		@SuppressWarnings(&quot;static-access&quot;)
-<span class="fc" id="L196">		boolean setUserAtt = (wXML.setUserAttribute(&quot;iccco&quot;, &quot;password&quot;, &quot;teste&quot;));</span>
+<span class="fc" id="L199">		boolean setUserAtt = (wXML.setUserAttribute(&quot;iccco&quot;, &quot;password&quot;, &quot;teste&quot;));</span>
 				
-<span class="fc" id="L198">		assertTrue(addUser);</span>
-<span class="fc" id="L199">		assertTrue(addFilter);</span>
-<span class="fc" id="L200">		assertTrue(removeUser);</span>
-<span class="fc" id="L201">		assertTrue(removeFilter);</span>
-<span class="fc" id="L202">		assertTrue(setUserAtt);</span>
-<span class="fc" id="L203">	}</span>
+<span class="fc" id="L201">		assertTrue(addUser);</span>
+<span class="fc" id="L202">		assertTrue(addFilter);</span>
+<span class="fc" id="L203">		assertTrue(removeUser);</span>
+<span class="fc" id="L204">		assertTrue(removeFilter);</span>
+<span class="fc" id="L205">		assertTrue(setUserAtt);</span>
+<span class="fc" id="L206">	}</span>
 	
 	@Test
 	public void mainTest() {
-<span class="fc" id="L207">		Main main = new Main();</span>
-<span class="fc" id="L208">		assertNotNull(main);</span>
-<span class="fc" id="L209">	}</span>
+<span class="fc" id="L210">		Main main = new Main();</span>
+<span class="fc" id="L211">		assertNotNull(main);</span>
+<span class="fc" id="L212">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</div></body></html>

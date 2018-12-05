@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReadEmails.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">ReadEmails.java</span></div><h1>ReadEmails.java</h1><pre class="source lang-java linenums">package BDA;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReadEmails.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">ReadEmails.java</span></div><h1>ReadEmails.java</h1><pre class="source lang-java linenums">package BDA;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,17 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 
+/** 
+* Reads e-emails
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class ReadEmails {
 
 	// VARIABLES
-<span class="fc" id="L17">	private static ReadXMLfile r = new ReadXMLfile();</span>
+<span class="fc" id="L24">	private static ReadXMLfile r = new ReadXMLfile();</span>
 
 	/** 
 	 * Constructor
@@ -22,9 +29,9 @@ public class ReadEmails {
 	 * @version 1.0
 	 * @since September
 	 */
-<span class="fc" id="L25">	public ReadEmails() {</span>
+<span class="fc" id="L32">	public ReadEmails() {</span>
 
-<span class="fc" id="L27">	}</span>
+<span class="fc" id="L34">	}</span>
 
 	/** 
 	 * Connects to the Email API and saves all messages that contain academic filters in an array
@@ -39,43 +46,43 @@ public class ReadEmails {
 	 */
 
 	public ArrayList&lt;Message&gt; readMessages(String imapHost, String storeType, String user, String password) {
-<span class="fc" id="L42">		ArrayList&lt;Message&gt; m = new ArrayList&lt;Message&gt;();</span>
+<span class="fc" id="L49">		ArrayList&lt;Message&gt; m = new ArrayList&lt;Message&gt;();</span>
 		try {
 
 			// Create properties field
-<span class="fc" id="L46">			Properties properties = new Properties();</span>
-<span class="fc" id="L47">			properties.put(&quot;mail.store.protocol&quot;, &quot;imaps&quot;);</span>
-<span class="fc" id="L48">			properties.put(&quot;mail.imaps.host&quot;, imapHost);</span>
-<span class="fc" id="L49">			properties.put(&quot;mail.imaps.port&quot;, &quot;993&quot;);</span>
-<span class="fc" id="L50">			properties.put(&quot;mail.imaps.starttls.enable&quot;, &quot;true&quot;);</span>
-<span class="fc" id="L51">			Session emailSession = Session.getDefaultInstance(properties);</span>
+<span class="fc" id="L53">			Properties properties = new Properties();</span>
+<span class="fc" id="L54">			properties.put(&quot;mail.store.protocol&quot;, &quot;imaps&quot;);</span>
+<span class="fc" id="L55">			properties.put(&quot;mail.imaps.host&quot;, imapHost);</span>
+<span class="fc" id="L56">			properties.put(&quot;mail.imaps.port&quot;, &quot;993&quot;);</span>
+<span class="fc" id="L57">			properties.put(&quot;mail.imaps.starttls.enable&quot;, &quot;true&quot;);</span>
+<span class="fc" id="L58">			Session emailSession = Session.getDefaultInstance(properties);</span>
 
 			// Create the IMAP store object and connect with the server
-<span class="fc" id="L54">			Store store = emailSession.getStore(&quot;imaps&quot;);</span>
+<span class="fc" id="L61">			Store store = emailSession.getStore(&quot;imaps&quot;);</span>
 
-<span class="fc" id="L56">			store.connect(imapHost, user, password);</span>
+<span class="fc" id="L63">			store.connect(imapHost, user, password);</span>
 
 			// Create the folder object and open it
-<span class="fc" id="L59">			Folder emailFolder = store.getFolder(&quot;INBOX&quot;);</span>
-<span class="fc" id="L60">			emailFolder.open(Folder.READ_ONLY);</span>
+<span class="fc" id="L66">			Folder emailFolder = store.getFolder(&quot;INBOX&quot;);</span>
+<span class="fc" id="L67">			emailFolder.open(Folder.READ_ONLY);</span>
 
 			// Retrieve the messages from the folder in an array and print it
-<span class="fc" id="L63">			Message[] messages = emailFolder.getMessages();</span>
-<span class="fc" id="L64">			System.out.println(messages.length);</span>
-<span class="fc" id="L65">			List&lt;Attributes&gt; filtersList = new ArrayList&lt;Attributes&gt;();</span>
-<span class="fc" id="L66">			filtersList = r.readFiltersXMLfile();</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">			for (int i = 0; i &lt; messages.length; i++) {</span>
-<span class="fc" id="L68">				Message message = messages[i];				</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {</span>
-<span class="fc" id="L70">					m.add(messages[i]);</span>
+<span class="fc" id="L70">			Message[] messages = emailFolder.getMessages();</span>
+<span class="fc" id="L71">			System.out.println(messages.length);</span>
+<span class="fc" id="L72">			List&lt;Attributes&gt; filtersList = new ArrayList&lt;Attributes&gt;();</span>
+<span class="fc" id="L73">			filtersList = r.readFiltersXMLfile();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			for (int i = 0; i &lt; messages.length; i++) {</span>
+<span class="fc" id="L75">				Message message = messages[i];				</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">				if(keywordValidation(getBody(message), getSubject(message), filtersList)==true) {</span>
+<span class="fc" id="L77">					m.add(messages[i]);</span>
 				}
 			}
-<span class="fc" id="L73">			System.out.print(m.size());</span>
-<span class="pc" id="L74">		} catch (Exception e) {</span>
-<span class="nc" id="L75">			System.out.println(&quot;Erro: &quot; + e);</span>
+<span class="fc" id="L80">			System.out.print(m.size());</span>
+<span class="pc" id="L81">		} catch (Exception e) {</span>
+<span class="nc" id="L82">			System.out.println(&quot;Erro: &quot; + e);</span>
 		}
 
-<span class="fc" id="L78">		return m;</span>
+<span class="fc" id="L85">		return m;</span>
 	}
 
 	/** 
@@ -90,14 +97,14 @@ public class ReadEmails {
 	 */
 
 	public static boolean keywordValidation(String body, String subject, List&lt;Attributes&gt; list) {
-<span class="fc" id="L93">		String s = &quot;&quot;;</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (int i = 0; i &lt; list.size(); i++) {</span>
-<span class="fc" id="L95">			s =list.get(i).getKeyword();</span>
-<span class="fc bfc" id="L96" title="All 4 branches covered.">			if (body.toLowerCase().contains(s.toLowerCase()) || subject.toLowerCase().contains(s.toLowerCase())) {</span>
-<span class="fc" id="L97">				return true; </span>
+<span class="fc" id="L100">		String s = &quot;&quot;;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc" id="L102">			s =list.get(i).getKeyword();</span>
+<span class="fc bfc" id="L103" title="All 4 branches covered.">			if (body.toLowerCase().contains(s.toLowerCase()) || subject.toLowerCase().contains(s.toLowerCase())) {</span>
+<span class="fc" id="L104">				return true; </span>
 			}
 		}
-<span class="fc" id="L100">		return false; </span>
+<span class="fc" id="L107">		return false; </span>
 	}
 
 	/** 
@@ -109,15 +116,15 @@ public class ReadEmails {
 	 * @return s, if the message contains academic keywords
 	 */
 	public String getSubject(Message m) {
-<span class="fc" id="L112">		String s=&quot;&quot;;</span>
+<span class="fc" id="L119">		String s=&quot;&quot;;</span>
 		try {
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (m.getSubject() != null)</span>
-<span class="fc" id="L115">				s=m.getSubject();</span>
-<span class="fc" id="L116">			return s;</span>
-<span class="nc" id="L117">		}catch (Exception e){</span>
-<span class="nc" id="L118">			System.out.println(&quot;Error -&gt; &quot; + e);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			if (m.getSubject() != null)</span>
+<span class="fc" id="L122">				s=m.getSubject();</span>
+<span class="fc" id="L123">			return s;</span>
+<span class="nc" id="L124">		}catch (Exception e){</span>
+<span class="nc" id="L125">			System.out.println(&quot;Error -&gt; &quot; + e);</span>
 		}
-<span class="nc" id="L120">		return null;</span>
+<span class="nc" id="L127">		return null;</span>
 	}
 
 	/** 
@@ -129,22 +136,22 @@ public class ReadEmails {
 	 * @return body, a string from the body text
 	 */
 	private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException{
-<span class="fc" id="L132">		String body = &quot;&quot;;</span>
-<span class="fc" id="L133">		int count = mimeMultipart.getCount();</span>
+<span class="fc" id="L139">		String body = &quot;&quot;;</span>
+<span class="fc" id="L140">		int count = mimeMultipart.getCount();</span>
 
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		for (int i = 0; i &lt; count; i++) {</span>
-<span class="fc" id="L136">			BodyPart bodyPart = mimeMultipart.getBodyPart(i);</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (bodyPart.isMimeType(&quot;text/plain&quot;)) {</span>
-<span class="fc" id="L138">				body = body + &quot;\n&quot; + bodyPart.getContent();</span>
-<span class="fc" id="L139">				break; </span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			} else if (bodyPart.isMimeType(&quot;text/html&quot;)) {</span>
-<span class="nc" id="L141">				String html = (String) bodyPart.getContent();</span>
-<span class="nc" id="L142">				body= body + &quot;\n&quot; + org.jsoup.Jsoup.parse(html).text();</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">			} else if (bodyPart.getContent() instanceof MimeMultipart){</span>
-<span class="nc" id="L144">				body = body + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L143">			BodyPart bodyPart = mimeMultipart.getBodyPart(i);</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">			if (bodyPart.isMimeType(&quot;text/plain&quot;)) {</span>
+<span class="fc" id="L145">				body = body + &quot;\n&quot; + bodyPart.getContent();</span>
+<span class="fc" id="L146">				break; </span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			} else if (bodyPart.isMimeType(&quot;text/html&quot;)) {</span>
+<span class="nc" id="L148">				String html = (String) bodyPart.getContent();</span>
+<span class="nc" id="L149">				body= body + &quot;\n&quot; + org.jsoup.Jsoup.parse(html).text();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			} else if (bodyPart.getContent() instanceof MimeMultipart){</span>
+<span class="nc" id="L151">				body = body + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());</span>
 			}
 		}
-<span class="fc" id="L147">		return body;</span>
+<span class="fc" id="L154">		return body;</span>
 	}
 
 	/** 
@@ -156,22 +163,22 @@ public class ReadEmails {
 	 * @return body, text from the body of email 
 	 */
 	public static String getBody(Message m){
-<span class="fc" id="L159">		String body = &quot;&quot;;</span>
+<span class="fc" id="L166">		String body = &quot;&quot;;</span>
 		try {
-<span class="fc bfc" id="L161" title="All 2 branches covered.">			if (m.isMimeType(&quot;text/plain&quot;)) {</span>
-<span class="fc" id="L162">				body = m.getContent().toString();</span>
-<span class="fc" id="L163">			}</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			else if (m.isMimeType(&quot;multipart/*&quot;)) {</span>
-<span class="fc" id="L165">				MimeMultipart mimeMultipart = (MimeMultipart) m.getContent();</span>
-<span class="fc" id="L166">				body = getTextFromMimeMultipart(mimeMultipart);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">			if (m.isMimeType(&quot;text/plain&quot;)) {</span>
+<span class="fc" id="L169">				body = m.getContent().toString();</span>
+<span class="fc" id="L170">			}</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			else if (m.isMimeType(&quot;multipart/*&quot;)) {</span>
+<span class="fc" id="L172">				MimeMultipart mimeMultipart = (MimeMultipart) m.getContent();</span>
+<span class="fc" id="L173">				body = getTextFromMimeMultipart(mimeMultipart);</span>
 			}
-<span class="fc" id="L168">			return body;</span>
+<span class="fc" id="L175">			return body;</span>
 		}
-<span class="nc" id="L170">		catch (Exception e) {</span>
-<span class="nc" id="L171">			System.out.println(&quot;Error -&gt;&quot; + e);</span>
+<span class="nc" id="L177">		catch (Exception e) {</span>
+<span class="nc" id="L178">			System.out.println(&quot;Error -&gt;&quot; + e);</span>
 		}
-<span class="nc" id="L173">		return null;</span>
+<span class="nc" id="L180">		return null;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</div></body></html>

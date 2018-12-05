@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Filters.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">Filters.java</span></div><h1>Filters.java</h1><pre class="source lang-java linenums">package BDA;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Filters.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">Filters.java</span></div><h1>Filters.java</h1><pre class="source lang-java linenums">package BDA;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,7 +9,14 @@ import java.util.Date;
 import javax.swing.JMenuBar;
 import javax.swing.table.DefaultTableModel;
 
-<span class="fc" id="L12">public class Filters {</span>
+/** 
+* Filters and sorts messages
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
+<span class="fc" id="L19">public class Filters {</span>
 
 	/** 
 	 * Method to filter messages from the last 24 hours
@@ -22,32 +29,32 @@ import javax.swing.table.DefaultTableModel;
 	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLast24Hours(DefaultTableModel modelTable, int indicatorFilters, ArrayList&lt;GenericMessage&gt; genericMessages) {
-<span class="fc" id="L25">		removeRows(modelTable, indicatorFilters);</span>
-<span class="fc" id="L26">		Calendar c = Calendar.getInstance();</span>
-<span class="fc" id="L27">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
-<span class="fc" id="L28">		indicatorFilters = 0;</span>
-<span class="fc" id="L29">		int count = 1;</span>
+<span class="fc" id="L32">		removeRows(modelTable, indicatorFilters);</span>
+<span class="fc" id="L33">		Calendar c = Calendar.getInstance();</span>
+<span class="fc" id="L34">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L35">		indicatorFilters = 0;</span>
+<span class="fc" id="L36">		int count = 1;</span>
 		try {
-<span class="fc bfc" id="L31" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
-<span class="fc" id="L32">				c.setTime(new Date());</span>
-<span class="fc" id="L33">				c.add(Calendar.DATE, -1);</span>
-<span class="fc" id="L34">				Date d = c.getTime();</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">				if (df.parse(m.getDateM()).after(d)) {</span>
-<span class="fc" id="L36">					String dateM = m.getDateM();</span>
-<span class="fc" id="L37">					String channelM = m.getCanalM();</span>
-<span class="fc" id="L38">					String fromM = m.getFromM();</span>
-<span class="fc" id="L39">					String subjectM = m.getTitleM();</span>
-<span class="fc" id="L40">					String contentM = m.getContentM();</span>
-<span class="fc" id="L41">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
-<span class="fc" id="L42">					count++;</span>
-<span class="fc" id="L43">					indicatorFilters++;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
+<span class="fc" id="L39">				c.setTime(new Date());</span>
+<span class="fc" id="L40">				c.add(Calendar.DATE, -1);</span>
+<span class="fc" id="L41">				Date d = c.getTime();</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">				if (df.parse(m.getDateM()).after(d)) {</span>
+<span class="nc" id="L43">					String dateM = m.getDateM();</span>
+<span class="nc" id="L44">					String channelM = m.getCanalM();</span>
+<span class="nc" id="L45">					String fromM = m.getFromM();</span>
+<span class="nc" id="L46">					String subjectM = m.getTitleM();</span>
+<span class="nc" id="L47">					String contentM = m.getContentM();</span>
+<span class="nc" id="L48">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="nc" id="L49">					count++;</span>
+<span class="nc" id="L50">					indicatorFilters++;</span>
 				}
 			}
-<span class="fc" id="L46">			System.out.println(&quot;Emails from last 24h&quot;);</span>
-<span class="pc" id="L47">		} catch (Exception e) {</span>
-<span class="nc" id="L48">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
+<span class="fc" id="L53">			System.out.println(&quot;Emails from last 24h&quot;);</span>
+<span class="pc" id="L54">		} catch (Exception e) {</span>
+<span class="nc" id="L55">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
 		}
-<span class="fc" id="L50">		return indicatorFilters;</span>
+<span class="fc" id="L57">		return indicatorFilters;</span>
 
 	}
 
@@ -62,36 +69,36 @@ import javax.swing.table.DefaultTableModel;
 	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLast48Hours(DefaultTableModel modelTable, int indicatorFilters, ArrayList&lt;GenericMessage&gt; genericMessages) {
-<span class="fc" id="L65">		removeRows(modelTable, indicatorFilters);</span>
-<span class="fc" id="L66">		Calendar c = Calendar.getInstance();	</span>
-<span class="fc" id="L67">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L72">		removeRows(modelTable, indicatorFilters);</span>
+<span class="fc" id="L73">		Calendar c = Calendar.getInstance();	</span>
+<span class="fc" id="L74">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
 
-<span class="fc" id="L69">		indicatorFilters = 0;</span>
-<span class="fc" id="L70">		int count = 1;</span>
+<span class="fc" id="L76">		indicatorFilters = 0;</span>
+<span class="fc" id="L77">		int count = 1;</span>
 
 		try {
-<span class="fc" id="L73">			System.out.println(genericMessages.size());</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
-<span class="fc" id="L75">				System.out.println(&quot;INSIDE FOR&quot;);</span>
-<span class="fc" id="L76">				c.setTime(new Date());</span>
-<span class="fc" id="L77">				c.add(Calendar.DATE, -2);</span>
-<span class="fc" id="L78">				Date d = c.getTime();</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">				if (df.parse(m.getDateM()).after(d)) {</span>
-<span class="fc" id="L80">					String dateM = m.getDateM();</span>
-<span class="fc" id="L81">					String channelM = m.getCanalM();</span>
-<span class="fc" id="L82">					String fromM = m.getFromM();</span>
-<span class="fc" id="L83">					String subjectM = m.getTitleM();</span>
-<span class="fc" id="L84">					String contentM = m.getContentM();</span>
-<span class="fc" id="L85">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
-<span class="fc" id="L86">					count++;</span>
-<span class="fc" id="L87">					indicatorFilters++;</span>
+<span class="fc" id="L80">			System.out.println(genericMessages.size());</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
+<span class="fc" id="L82">				System.out.println(&quot;INSIDE FOR&quot;);</span>
+<span class="fc" id="L83">				c.setTime(new Date());</span>
+<span class="fc" id="L84">				c.add(Calendar.DATE, -2);</span>
+<span class="fc" id="L85">				Date d = c.getTime();</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">				if (df.parse(m.getDateM()).after(d)) {</span>
+<span class="nc" id="L87">					String dateM = m.getDateM();</span>
+<span class="nc" id="L88">					String channelM = m.getCanalM();</span>
+<span class="nc" id="L89">					String fromM = m.getFromM();</span>
+<span class="nc" id="L90">					String subjectM = m.getTitleM();</span>
+<span class="nc" id="L91">					String contentM = m.getContentM();</span>
+<span class="nc" id="L92">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="nc" id="L93">					count++;</span>
+<span class="nc" id="L94">					indicatorFilters++;</span>
 				}
 			}
-<span class="fc" id="L90">			System.out.println(&quot;Emails from last 48h&quot;);</span>
-<span class="pc" id="L91">		} catch (Exception e) {</span>
-<span class="nc" id="L92">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
+<span class="fc" id="L97">			System.out.println(&quot;Emails from last 48h&quot;);</span>
+<span class="pc" id="L98">		} catch (Exception e) {</span>
+<span class="nc" id="L99">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
 		}
-<span class="fc" id="L94">		return indicatorFilters;</span>
+<span class="fc" id="L101">		return indicatorFilters;</span>
 	}
 
 	/** 
@@ -105,34 +112,34 @@ import javax.swing.table.DefaultTableModel;
 	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLastWeek(DefaultTableModel modelTable, int indicatorFilters, ArrayList&lt;GenericMessage&gt; genericMessages) {
-<span class="fc" id="L108">		removeRows(modelTable, indicatorFilters);</span>
-<span class="fc" id="L109">		Calendar c = Calendar.getInstance();</span>
-<span class="fc" id="L110">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
-<span class="fc" id="L111">		indicatorFilters = 0;</span>
-<span class="fc" id="L112">		int count = 1;</span>
+<span class="fc" id="L115">		removeRows(modelTable, indicatorFilters);</span>
+<span class="fc" id="L116">		Calendar c = Calendar.getInstance();</span>
+<span class="fc" id="L117">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L118">		indicatorFilters = 0;</span>
+<span class="fc" id="L119">		int count = 1;</span>
 		try {
-<span class="fc bfc" id="L114" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
-<span class="fc" id="L115">				c.setTime(new Date());</span>
-<span class="fc" id="L116">				c.add(Calendar.DATE, -7);</span>
-<span class="fc" id="L117">				Date d = c.getTime();</span>
-<span class="fc" id="L118">				System.out.println(df.parse(m.getDateM()));</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">				if (df.parse(m.getDateM()).after(d)) {</span>
-<span class="fc" id="L120">					String dateM = m.getDateM();</span>
-<span class="fc" id="L121">					String channelM = m.getCanalM();</span>
-<span class="fc" id="L122">					String fromM = m.getFromM();</span>
-<span class="fc" id="L123">					String subjectM = m.getTitleM();</span>
-<span class="fc" id="L124">					String contentM = m.getContentM();</span>
-<span class="fc" id="L125">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
-<span class="fc" id="L126">					count++;</span>
-<span class="fc" id="L127">					indicatorFilters++;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
+<span class="fc" id="L122">				c.setTime(new Date());</span>
+<span class="fc" id="L123">				c.add(Calendar.DATE, -7);</span>
+<span class="fc" id="L124">				Date d = c.getTime();</span>
+<span class="fc" id="L125">				System.out.println(df.parse(m.getDateM()));</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">				if (df.parse(m.getDateM()).after(d)) {</span>
+<span class="fc" id="L127">					String dateM = m.getDateM();</span>
+<span class="fc" id="L128">					String channelM = m.getCanalM();</span>
+<span class="fc" id="L129">					String fromM = m.getFromM();</span>
+<span class="fc" id="L130">					String subjectM = m.getTitleM();</span>
+<span class="fc" id="L131">					String contentM = m.getContentM();</span>
+<span class="fc" id="L132">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L133">					count++;</span>
+<span class="fc" id="L134">					indicatorFilters++;</span>
 				}
 			}
-<span class="fc" id="L130">			System.out.println(&quot;Emails from last week&quot;);</span>
+<span class="fc" id="L137">			System.out.println(&quot;Emails from last week&quot;);</span>
 
-<span class="pc" id="L132">		} catch (Exception e) {</span>
-<span class="nc" id="L133">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
+<span class="pc" id="L139">		} catch (Exception e) {</span>
+<span class="nc" id="L140">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
 		}
-<span class="fc" id="L135">		return indicatorFilters;</span>
+<span class="fc" id="L142">		return indicatorFilters;</span>
 
 	}
 
@@ -147,35 +154,35 @@ import javax.swing.table.DefaultTableModel;
 	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int filterMessagesLastMonth(DefaultTableModel modelTable, int indicatorFilters, ArrayList&lt;GenericMessage&gt; genericMessages) {
-<span class="fc" id="L150">		removeRows(modelTable, indicatorFilters);</span>
-<span class="fc" id="L151">		Calendar c = Calendar.getInstance();</span>
-<span class="fc" id="L152">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L157">		removeRows(modelTable, indicatorFilters);</span>
+<span class="fc" id="L158">		Calendar c = Calendar.getInstance();</span>
+<span class="fc" id="L159">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
 
-<span class="fc" id="L154">		indicatorFilters = 0;</span>
-<span class="fc" id="L155">		int count = 1;</span>
+<span class="fc" id="L161">		indicatorFilters = 0;</span>
+<span class="fc" id="L162">		int count = 1;</span>
 
 		try {
-<span class="fc bfc" id="L158" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
-<span class="fc" id="L159">				c.setTime(new Date());</span>
-<span class="fc" id="L160">				c.add(Calendar.DATE, -30);</span>
-<span class="fc" id="L161">				Date d = c.getTime();</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">				if (df.parse(m.getDateM()).after(d)) {</span>
-<span class="fc" id="L163">					String dateM = m.getDateM();</span>
-<span class="fc" id="L164">					String channelM = m.getCanalM();</span>
-<span class="fc" id="L165">					String fromM = m.getFromM();</span>
-<span class="fc" id="L166">					String subjectM = m.getTitleM();</span>
-<span class="fc" id="L167">					String contentM = m.getContentM();</span>
-<span class="fc" id="L168">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
-<span class="fc" id="L169">					count++;</span>
-<span class="fc" id="L170">					indicatorFilters++;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
+<span class="fc" id="L166">				c.setTime(new Date());</span>
+<span class="fc" id="L167">				c.add(Calendar.DATE, -30);</span>
+<span class="fc" id="L168">				Date d = c.getTime();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">				if (df.parse(m.getDateM()).after(d)) {</span>
+<span class="fc" id="L170">					String dateM = m.getDateM();</span>
+<span class="fc" id="L171">					String channelM = m.getCanalM();</span>
+<span class="fc" id="L172">					String fromM = m.getFromM();</span>
+<span class="fc" id="L173">					String subjectM = m.getTitleM();</span>
+<span class="fc" id="L174">					String contentM = m.getContentM();</span>
+<span class="fc" id="L175">					modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L176">					count++;</span>
+<span class="fc" id="L177">					indicatorFilters++;</span>
 				}
 			}
-<span class="fc" id="L173">			System.out.println(&quot;Emails from last month&quot;);</span>
-<span class="pc" id="L174">		} catch (Exception e) {</span>
+<span class="fc" id="L180">			System.out.println(&quot;Emails from last month&quot;);</span>
+<span class="pc" id="L181">		} catch (Exception e) {</span>
 
-<span class="nc" id="L176">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
+<span class="nc" id="L183">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
 		}
-<span class="fc" id="L178">		return indicatorFilters;</span>
+<span class="fc" id="L185">		return indicatorFilters;</span>
 
 	}
 
@@ -190,25 +197,25 @@ import javax.swing.table.DefaultTableModel;
 	 * @return indicatorFilters, the number messages
 	 */
 	public int filterMessagesAll(DefaultTableModel modelTable, int indicatorFilters, ArrayList&lt;GenericMessage&gt; genericMessages) {
-<span class="fc" id="L193">		removeRows(modelTable, indicatorFilters);</span>
-<span class="fc" id="L194">		int count = 1;</span>
-<span class="fc" id="L195">		indicatorFilters = 0;</span>
+<span class="fc" id="L200">		removeRows(modelTable, indicatorFilters);</span>
+<span class="fc" id="L201">		int count = 1;</span>
+<span class="fc" id="L202">		indicatorFilters = 0;</span>
 		try {
-<span class="fc bfc" id="L197" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
-<span class="fc" id="L198">				String dateM = m.getDateM();</span>
-<span class="fc" id="L199">				String channelM = m.getCanalM();</span>
-<span class="fc" id="L200">				String fromM = m.getFromM();</span>
-<span class="fc" id="L201">				String subjectM = m.getTitleM();</span>
-<span class="fc" id="L202">				String contentM = m.getContentM();</span>
-<span class="fc" id="L203">				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
-<span class="fc" id="L204">				count++;</span>
-<span class="fc" id="L205">				indicatorFilters++;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">			for (GenericMessage m: genericMessages) {</span>
+<span class="fc" id="L205">				String dateM = m.getDateM();</span>
+<span class="fc" id="L206">				String channelM = m.getCanalM();</span>
+<span class="fc" id="L207">				String fromM = m.getFromM();</span>
+<span class="fc" id="L208">				String subjectM = m.getTitleM();</span>
+<span class="fc" id="L209">				String contentM = m.getContentM();</span>
+<span class="fc" id="L210">				modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L211">				count++;</span>
+<span class="fc" id="L212">				indicatorFilters++;</span>
 			}
-<span class="fc" id="L207">			System.out.println(&quot;All Emails&quot;);</span>
-<span class="pc" id="L208">		} catch (Exception e) {</span>
-<span class="nc" id="L209">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
+<span class="fc" id="L214">			System.out.println(&quot;All Emails&quot;);</span>
+<span class="pc" id="L215">		} catch (Exception e) {</span>
+<span class="nc" id="L216">			System.out.print(&quot;Error in filtering by hour: &quot; + e.toString());</span>
 		}
-<span class="fc" id="L211">		return indicatorFilters;</span>
+<span class="fc" id="L218">		return indicatorFilters;</span>
 
 	}
 
@@ -224,43 +231,43 @@ import javax.swing.table.DefaultTableModel;
 	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int sortByOldest(DefaultTableModel modelTable, JMenuBar gM, int indicatorFilters, ArrayList&lt;GenericMessage&gt; genericMessages) {
-<span class="nc" id="L227">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
-<span class="nc" id="L228">		ArrayList&lt;Date&gt; dateArray = new ArrayList&lt;Date&gt;();</span>
-<span class="nc" id="L229">		int count = 1;</span>
-<span class="nc" id="L230">		Date date = new Date();</span>
+<span class="fc" id="L234">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L235">		ArrayList&lt;Date&gt; dateArray = new ArrayList&lt;Date&gt;();</span>
+<span class="fc" id="L236">		int count = 1;</span>
+<span class="fc" id="L237">		Date date = new Date();</span>
 
-<span class="nc" id="L232">		System.out.println(&quot;Hello + &quot; + genericMessages.size());</span>
+<span class="fc" id="L239">		System.out.println(&quot;Hello + &quot; + genericMessages.size());</span>
 		try {
-<span class="nc bnc" id="L234" title="All 2 branches missed.">			for(GenericMessage m: genericMessages) {</span>
-<span class="nc" id="L235">				date = df.parse(m.getDateM());</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">				if(!dateArray.contains(date)) {</span>
-<span class="nc" id="L237">					dateArray.add(date);</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">			for(GenericMessage m: genericMessages) {</span>
+<span class="fc" id="L242">				date = df.parse(m.getDateM());</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">				if(!dateArray.contains(date)) {</span>
+<span class="fc" id="L244">					dateArray.add(date);</span>
 				}
 			}
-<span class="nc" id="L240">			Collections.sort(dateArray);</span>
-<span class="nc" id="L241">			System.out.println(&quot;Size&quot; + dateArray.size());</span>
-<span class="nc" id="L242">			removeRows(modelTable, indicatorFilters);</span>
-<span class="nc" id="L243">			indicatorFilters = 0;</span>
+<span class="fc" id="L247">			Collections.sort(dateArray);</span>
+<span class="fc" id="L248">			System.out.println(&quot;Size&quot; + dateArray.size());</span>
+<span class="fc" id="L249">			removeRows(modelTable, indicatorFilters);</span>
+<span class="fc" id="L250">			indicatorFilters = 0;</span>
 
-<span class="nc bnc" id="L245" title="All 2 branches missed.">			for(Date d: dateArray) {</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">				for(GenericMessage m: genericMessages) {</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">					if(df.parse(m.getDateM()).equals(d)) {</span>
-<span class="nc" id="L248">						String dateM = m.getDateM();</span>
-<span class="nc" id="L249">						String channelM = m.getCanalM();</span>
-<span class="nc" id="L250">						String fromM = m.getFromM();</span>
-<span class="nc" id="L251">						String subjectM = m.getTitleM();</span>
-<span class="nc" id="L252">						String contentM = m.getContentM();</span>
-<span class="nc" id="L253">						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
-<span class="nc" id="L254">						indicatorFilters++;</span>
-<span class="nc" id="L255">						count++;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">			for(Date d: dateArray) {</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">				for(GenericMessage m: genericMessages) {</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">					if(df.parse(m.getDateM()).equals(d)) {</span>
+<span class="fc" id="L255">						String dateM = m.getDateM();</span>
+<span class="fc" id="L256">						String channelM = m.getCanalM();</span>
+<span class="fc" id="L257">						String fromM = m.getFromM();</span>
+<span class="fc" id="L258">						String subjectM = m.getTitleM();</span>
+<span class="fc" id="L259">						String contentM = m.getContentM();</span>
+<span class="fc" id="L260">						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L261">						indicatorFilters++;</span>
+<span class="fc" id="L262">						count++;</span>
 					}
 				}
 			}
-<span class="nc" id="L259">			System.out.println(&quot;Sort by oldest&quot;);</span>
-<span class="nc" id="L260">		} catch (Exception e) {</span>
-<span class="nc" id="L261">			System.out.print(&quot;Error in sorting by oldest emails: &quot; + e.toString());</span>
+<span class="fc" id="L266">			System.out.println(&quot;Sort by oldest&quot;);</span>
+<span class="pc" id="L267">		} catch (Exception e) {</span>
+<span class="nc" id="L268">			System.out.print(&quot;Error in sorting by oldest emails: &quot; + e.toString());</span>
 		}
-<span class="nc" id="L263">		return indicatorFilters;</span>
+<span class="fc" id="L270">		return indicatorFilters;</span>
 	}
 
 	/** 
@@ -275,46 +282,46 @@ import javax.swing.table.DefaultTableModel;
 	 * @return indicatorFilters, the number of filtered messages
 	 */
 	public int sortByNewest(DefaultTableModel modelTable, JMenuBar gM, int indicatorFilters, ArrayList&lt;GenericMessage&gt; genericMessages) {
-<span class="fc" id="L278">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
-<span class="fc" id="L279">		ArrayList&lt;Date&gt; dateArray = new ArrayList&lt;Date&gt;();</span>
+<span class="fc" id="L285">		DateFormat df = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L286">		ArrayList&lt;Date&gt; dateArray = new ArrayList&lt;Date&gt;();</span>
 
-<span class="fc" id="L281">		int count = 1;</span>
-<span class="fc" id="L282">		Date date = new Date();</span>
+<span class="fc" id="L288">		int count = 1;</span>
+<span class="fc" id="L289">		Date date = new Date();</span>
 
 		try {
-<span class="fc bfc" id="L285" title="All 2 branches covered.">			for(GenericMessage m: genericMessages) {</span>
-<span class="fc" id="L286">				date = df.parse(m.getDateM());</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">				if(!dateArray.contains(date)) {</span>
-<span class="fc" id="L288">					dateArray.add(date);</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			for(GenericMessage m: genericMessages) {</span>
+<span class="fc" id="L293">				date = df.parse(m.getDateM());</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">				if(!dateArray.contains(date)) {</span>
+<span class="fc" id="L295">					dateArray.add(date);</span>
 				}
 			}
-<span class="fc" id="L291">			Collections.sort(dateArray, Collections.reverseOrder());</span>
-<span class="fc" id="L292">			removeRows(modelTable, indicatorFilters);</span>
-<span class="fc" id="L293">			indicatorFilters = 0;</span>
+<span class="fc" id="L298">			Collections.sort(dateArray, Collections.reverseOrder());</span>
+<span class="fc" id="L299">			removeRows(modelTable, indicatorFilters);</span>
+<span class="fc" id="L300">			indicatorFilters = 0;</span>
 
-<span class="fc bfc" id="L295" title="All 2 branches covered.">			for(Date d: dateArray) {</span>
-<span class="fc bfc" id="L296" title="All 2 branches covered.">				for(GenericMessage m: genericMessages) {</span>
-<span class="fc bfc" id="L297" title="All 2 branches covered.">					if(df.parse(m.getDateM()).equals(d)) {</span>
-<span class="fc" id="L298">						String dateM = m.getDateM();</span>
-<span class="fc" id="L299">						String channelM = m.getCanalM();</span>
-<span class="fc" id="L300">						String fromM = m.getFromM();</span>
-<span class="fc" id="L301">						String subjectM = m.getTitleM();</span>
-<span class="fc" id="L302">						String contentM = m.getContentM();</span>
-<span class="fc" id="L303">						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
-<span class="fc" id="L304">						count++;</span>
-<span class="fc" id="L305">						indicatorFilters++;</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">			for(Date d: dateArray) {</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">				for(GenericMessage m: genericMessages) {</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">					if(df.parse(m.getDateM()).equals(d)) {</span>
+<span class="fc" id="L305">						String dateM = m.getDateM();</span>
+<span class="fc" id="L306">						String channelM = m.getCanalM();</span>
+<span class="fc" id="L307">						String fromM = m.getFromM();</span>
+<span class="fc" id="L308">						String subjectM = m.getTitleM();</span>
+<span class="fc" id="L309">						String contentM = m.getContentM();</span>
+<span class="fc" id="L310">						modelTable.insertRow(count, new String[] { Integer.toString(count), dateM, channelM, fromM, subjectM, contentM });</span>
+<span class="fc" id="L311">						count++;</span>
+<span class="fc" id="L312">						indicatorFilters++;</span>
 					}
 				}
 			}
-<span class="fc" id="L309">			System.out.println(&quot;Sort by newest&quot;);</span>
-<span class="pc" id="L310">		} catch (Exception e) {</span>
-<span class="nc" id="L311">			System.out.print(&quot;Error in sorting by newest emails: &quot; + e.toString());</span>
+<span class="fc" id="L316">			System.out.println(&quot;Sort by newest&quot;);</span>
+<span class="pc" id="L317">		} catch (Exception e) {</span>
+<span class="nc" id="L318">			System.out.print(&quot;Error in sorting by newest emails: &quot; + e.toString());</span>
 		}
-<span class="fc" id="L313">		return indicatorFilters;</span>
+<span class="fc" id="L320">		return indicatorFilters;</span>
 	}
 
 	/** 
-	 * Utility method to remove rows from the table
+	 * Utility method to remove rows from the table everytime the table model shows different data caused by filtering
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
@@ -322,12 +329,12 @@ import javax.swing.table.DefaultTableModel;
 	 * @param indicatorFilters, is a counter
 	 */
 	private void removeRows(DefaultTableModel modelTable, int indicatorFilters) {
-<span class="fc" id="L325">		int linhasNaTabela = indicatorFilters;</span>
-<span class="pc bpc" id="L326" title="1 of 2 branches missed.">		for(int i = linhasNaTabela; i &gt; 0; i--) {</span>
-<span class="nc" id="L327">			modelTable.removeRow(i);</span>
-<span class="nc" id="L328">			System.out.println(&quot;Row &quot; + i + &quot; deleted.&quot;);</span>
+<span class="fc" id="L332">		int linhasNaTabela = indicatorFilters;</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">		for(int i = linhasNaTabela; i &gt; 0; i--) {</span>
+<span class="nc" id="L334">			modelTable.removeRow(i);</span>
+<span class="nc" id="L335">			System.out.println(&quot;Row &quot; + i + &quot; deleted.&quot;);</span>
 		}
-<span class="fc" id="L330">	}</span>
+<span class="fc" id="L337">	}</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReadXMLfile.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">ReadXMLfile.java</span></div><h1>ReadXMLfile.java</h1><pre class="source lang-java linenums">package BDA;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReadXMLfile.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">ReadXMLfile.java</span></div><h1>ReadXMLfile.java</h1><pre class="source lang-java linenums">package BDA;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,15 +15,22 @@ import org.xml.sax.SAXException;
 
 import java.util.List;
 
+/** 
+* Reads XML File
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class ReadXMLfile {
 
 	// VARIABLES
-<span class="fc" id="L21">	private static List&lt;Attributes&gt; usersList = new ArrayList&lt;Attributes&gt;();</span>
-<span class="fc" id="L22">	private List&lt;Attributes&gt; filtersList = new ArrayList&lt;Attributes&gt;();</span>
-<span class="fc" id="L23">	private static ArrayList&lt;GenericMessage&gt; messagesList = new ArrayList&lt;GenericMessage&gt;();</span>
-<span class="fc" id="L24">	public static String[] userData = new String[3];</span>
-<span class="fc" id="L25">	public static String[] twitterData = new String[4];</span>
-<span class="fc" id="L26">	public static String facebookData = new String();</span>
+<span class="fc" id="L28">	private List&lt;Attributes&gt; usersList = new ArrayList&lt;Attributes&gt;();</span>
+<span class="fc" id="L29">	private List&lt;Attributes&gt; filtersList = new ArrayList&lt;Attributes&gt;();</span>
+<span class="fc" id="L30">	private static ArrayList&lt;GenericMessage&gt; messagesList = new ArrayList&lt;GenericMessage&gt;();</span>
+<span class="fc" id="L31">	public static String[] userData = new String[3];</span>
+<span class="fc" id="L32">	public static String[] twitterData = new String[4];</span>
+<span class="fc" id="L33">	public static String facebookData = new String();</span>
 	
 	/** 
 	 * Constructor
@@ -31,37 +38,39 @@ public class ReadXMLfile {
 	 * @version 1.0
 	 * @since September
 	 */
-<span class="fc" id="L34">	public ReadXMLfile() {</span>
+<span class="fc" id="L41">	public ReadXMLfile() {</span>
 
-<span class="fc" id="L36">	}</span>
+<span class="fc" id="L43">	}</span>
 
+	public int getUsersListSize() {
+<span class="fc" id="L46">		return this.usersList.size();</span>
+	} 
+	
 	/** 
 	 * Read all users included in config.xml file
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
-	 * @return A list with all users attributes
 	 */
-	public static List&lt;Attributes&gt; readUsersXMLfile() {
+	public void readUsersXMLfile() {
 		// Make an  instance of the DocumentBuilderFactory
-<span class="fc" id="L47">		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L57">		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span>
 		try {
 			// Use the factory to take an instance of the document builder
-<span class="fc" id="L50">			DocumentBuilder db = dbf.newDocumentBuilder();</span>
+<span class="fc" id="L60">			DocumentBuilder db = dbf.newDocumentBuilder();</span>
 			// Parse using the builder to get the DOM mapping of the XML file
-<span class="fc" id="L52">			Document doc = db.parse(&quot;config.xml&quot;);</span>
-<span class="fc" id="L53">			doc.getDocumentElement().normalize();</span>
+<span class="fc" id="L62">			Document doc = db.parse(&quot;config.xml&quot;);</span>
+<span class="fc" id="L63">			doc.getDocumentElement().normalize();</span>
 
 			// Adds the user attributes to the array
-<span class="fc" id="L56">			NodeList userList = doc.getElementsByTagName(&quot;User&quot;);</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">			for (int i = 0; i &lt; userList.getLength(); i++) {</span>
-<span class="fc" id="L58">				usersList.add(getUserAttributes(userList.item(i)));</span>
+<span class="fc" id="L66">			NodeList userList = doc.getElementsByTagName(&quot;User&quot;);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			for (int i = 0; i &lt; userList.getLength(); i++) {</span>
+<span class="fc" id="L68">				usersList.add(getUserAttributes(userList.item(i)));</span>
 			}
-<span class="pc" id="L60">		} catch (SAXException | ParserConfigurationException | IOException e1) {</span>
-<span class="nc" id="L61">			e1.printStackTrace();</span>
+<span class="pc" id="L70">		} catch (SAXException | ParserConfigurationException | IOException e1) {</span>
+<span class="nc" id="L71">			e1.printStackTrace();</span>
 		}
-<span class="fc" id="L63">		return usersList;</span>
-	}
+<span class="fc" id="L73">	}</span>
 
 	/** 
 	 * Read all filters included in config.xml file
@@ -73,25 +82,25 @@ public class ReadXMLfile {
 	public List&lt;Attributes&gt; readFiltersXMLfile() {
 
 		// Make an  instance of the DocumentBuilderFactory
-<span class="fc" id="L76">		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L85">		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span>
 		try {
 
 			// Use the factory to take an instance of the document builder
-<span class="fc" id="L80">			DocumentBuilder db = dbf.newDocumentBuilder();</span>
+<span class="fc" id="L89">			DocumentBuilder db = dbf.newDocumentBuilder();</span>
 
 			// Parse using the builder to get the DOM mapping of the XML file
-<span class="fc" id="L83">			Document doc = db.parse(&quot;config.xml&quot;);</span>
-<span class="fc" id="L84">			doc.getDocumentElement().normalize();</span>
+<span class="fc" id="L92">			Document doc = db.parse(&quot;config.xml&quot;);</span>
+<span class="fc" id="L93">			doc.getDocumentElement().normalize();</span>
 
 			// Adds the filters to the array
-<span class="fc" id="L87">			NodeList filterList = doc.getElementsByTagName(&quot;Filter&quot;);</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">			for (int i = 0; i &lt; filterList.getLength(); i++) {</span>
-<span class="fc" id="L89">				filtersList.add(getFilterAttributes(filterList.item(i)));</span>
+<span class="fc" id="L96">			NodeList filterList = doc.getElementsByTagName(&quot;Filter&quot;);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			for (int i = 0; i &lt; filterList.getLength(); i++) {</span>
+<span class="fc" id="L98">				filtersList.add(getFilterAttributes(filterList.item(i)));</span>
 			}
-<span class="pc" id="L91">		} catch (SAXException | ParserConfigurationException | IOException e1) {</span>
-<span class="nc" id="L92">			e1.printStackTrace();</span>
+<span class="pc" id="L100">		} catch (SAXException | ParserConfigurationException | IOException e1) {</span>
+<span class="nc" id="L101">			e1.printStackTrace();</span>
 		}
-<span class="fc" id="L94">		return filtersList;</span>
+<span class="fc" id="L103">		return filtersList;</span>
 	}
 
 
@@ -105,32 +114,32 @@ public class ReadXMLfile {
 	 */
 	public ArrayList&lt;GenericMessage&gt; readMessagesXMLfile(String username) {
 		// Make an  instance of the DocumentBuilderFactory
-<span class="fc" id="L108">		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L117">		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span>
 		try {
 			// Use the factory to take an instance of the document builder
-<span class="fc" id="L111">			DocumentBuilder db = dbf.newDocumentBuilder();</span>
+<span class="fc" id="L120">			DocumentBuilder db = dbf.newDocumentBuilder();</span>
 
 			// test to see if a file exists
-<span class="fc" id="L114">			File tmpDir = new File(&quot;WorkOfflineBackup/userBackup_&quot; + username + &quot;.xml&quot;);</span>
-<span class="fc" id="L115">			boolean exists = tmpDir.exists();</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">			if (exists == true){</span>
+<span class="fc" id="L123">			File tmpDir = new File(&quot;WorkOfflineBackup/userBackup_&quot; + username + &quot;.xml&quot;);</span>
+<span class="fc" id="L124">			boolean exists = tmpDir.exists();</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (exists == true){</span>
 				{
 					// Parse using the builder to get the DOM mapping of the XML file
-<span class="fc" id="L119">					Document doc = db.parse(&quot;WorkOfflineBackup/userBackup_&quot; + username + &quot;.xml&quot;);</span>
-<span class="fc" id="L120">					doc.getDocumentElement().normalize();</span>
+<span class="fc" id="L128">					Document doc = db.parse(&quot;WorkOfflineBackup/userBackup_&quot; + username + &quot;.xml&quot;);</span>
+<span class="fc" id="L129">					doc.getDocumentElement().normalize();</span>
 
 					// Adds the user attributes to the array
-<span class="fc" id="L123">					NodeList gmList = doc.getElementsByTagName(&quot;GM&quot;);</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">					for (int i = 0; i &lt; gmList.getLength(); i++) {</span>
-<span class="fc" id="L125">						messagesList.add(getMessagesAttributes(gmList.item(i)));</span>
+<span class="fc" id="L132">					NodeList gmList = doc.getElementsByTagName(&quot;GM&quot;);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">					for (int i = 0; i &lt; gmList.getLength(); i++) {</span>
+<span class="fc" id="L134">						messagesList.add(getMessagesAttributes(gmList.item(i)));</span>
 						//System.out.println(messagesList.get(i).getTitleM());
 					}
 				}
 			}
-<span class="pc" id="L130">		} catch (SAXException | ParserConfigurationException | IOException e1) {</span>
-<span class="nc" id="L131">			e1.printStackTrace();</span>
+<span class="pc" id="L139">		} catch (SAXException | ParserConfigurationException | IOException e1) {</span>
+<span class="nc" id="L140">			e1.printStackTrace();</span>
 		}
-<span class="fc" id="L133">		return messagesList;</span>
+<span class="fc" id="L142">		return messagesList;</span>
 	}
 
 	/**
@@ -139,20 +148,20 @@ public class ReadXMLfile {
 	 * @return Returns user attributes
 	 */
 	private static Attributes getUserAttributes(Node node) {
-<span class="fc" id="L142">		Attributes user = new Attributes();</span>
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (node.getNodeType() == Node.ELEMENT_NODE) {</span>
-<span class="fc" id="L144">			Element element = (Element) node;</span>
-<span class="fc" id="L145">			user.setUsername(getTagValue(&quot;username&quot;, element));</span>
-<span class="fc" id="L146">			user.setPassword(getTagValue(&quot;password&quot;, element));</span>
-<span class="fc" id="L147">			user.setEmail(getTagValue(&quot;email&quot;, element));</span>
-<span class="fc" id="L148">			user.setPasswordEmail(getTagValue(&quot;passwordEmail&quot;, element));</span>
-<span class="fc" id="L149">			user.setOAuthConsumerKey(getTagValue(&quot;OAuthConsumerKey&quot;, element));</span>
-<span class="fc" id="L150">			user.setOAuthConsumerSecret(getTagValue(&quot;OAuthConsumerSecret&quot;, element));</span>
-<span class="fc" id="L151">			user.setOAuthAccessToken(getTagValue(&quot;OAuthAccessToken&quot;, element));</span>
-<span class="fc" id="L152">			user.setOAuthAccessTokenSecret(getTagValue(&quot;OAuthAccessTokenSecret&quot;, element));</span>
-<span class="fc" id="L153">			user.setUserAccessToken(getTagValue(&quot;userAccessToken&quot;, element));</span>
+<span class="fc" id="L151">		Attributes user = new Attributes();</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (node.getNodeType() == Node.ELEMENT_NODE) {</span>
+<span class="fc" id="L153">			Element element = (Element) node;</span>
+<span class="fc" id="L154">			user.setUsername(getTagValue(&quot;username&quot;, element));</span>
+<span class="fc" id="L155">			user.setPassword(getTagValue(&quot;password&quot;, element));</span>
+<span class="fc" id="L156">			user.setEmail(getTagValue(&quot;email&quot;, element));</span>
+<span class="fc" id="L157">			user.setPasswordEmail(getTagValue(&quot;passwordEmail&quot;, element));</span>
+<span class="fc" id="L158">			user.setOAuthConsumerKey(getTagValue(&quot;OAuthConsumerKey&quot;, element));</span>
+<span class="fc" id="L159">			user.setOAuthConsumerSecret(getTagValue(&quot;OAuthConsumerSecret&quot;, element));</span>
+<span class="fc" id="L160">			user.setOAuthAccessToken(getTagValue(&quot;OAuthAccessToken&quot;, element));</span>
+<span class="fc" id="L161">			user.setOAuthAccessTokenSecret(getTagValue(&quot;OAuthAccessTokenSecret&quot;, element));</span>
+<span class="fc" id="L162">			user.setUserAccessToken(getTagValue(&quot;userAccessToken&quot;, element));</span>
 		}
-<span class="fc" id="L155">		return user;</span>
+<span class="fc" id="L164">		return user;</span>
 	}
 
 	/**
@@ -161,16 +170,16 @@ public class ReadXMLfile {
 	 * @return Returns user attributes
 	 */
 	private static GenericMessage getMessagesAttributes(Node node) {
-<span class="fc" id="L164">		GenericMessage gm = new GenericMessage(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;);</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (node.getNodeType() == Node.ELEMENT_NODE) {</span>
-<span class="fc" id="L166">			Element element = (Element) node;</span>
-<span class="fc" id="L167">			gm.setDateM(getTagValue(&quot;date&quot;, element));</span>
-<span class="fc" id="L168">			gm.setCanalM(getTagValue(&quot;channel&quot;, element));</span>
-<span class="fc" id="L169">			gm.setTitleM(getTagValue(&quot;subject&quot;, element));</span>
-<span class="fc" id="L170">			gm.setFromM(getTagValue(&quot;from&quot;, element));</span>
-<span class="fc" id="L171">			gm.setContentM(getTagValue(&quot;content&quot;, element));</span>
+<span class="fc" id="L173">		GenericMessage gm = new GenericMessage(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (node.getNodeType() == Node.ELEMENT_NODE) {</span>
+<span class="fc" id="L175">			Element element = (Element) node;</span>
+<span class="fc" id="L176">			gm.setDateM(getTagValue(&quot;date&quot;, element));</span>
+<span class="fc" id="L177">			gm.setCanalM(getTagValue(&quot;channel&quot;, element));</span>
+<span class="fc" id="L178">			gm.setTitleM(getTagValue(&quot;subject&quot;, element));</span>
+<span class="fc" id="L179">			gm.setFromM(getTagValue(&quot;from&quot;, element));</span>
+<span class="fc" id="L180">			gm.setContentM(getTagValue(&quot;content&quot;, element));</span>
 		}
-<span class="fc" id="L173">		return gm;</span>
+<span class="fc" id="L182">		return gm;</span>
 	}
 
 	/**
@@ -179,12 +188,12 @@ public class ReadXMLfile {
 	 * @return Returns filter attributes
 	 */
 	private static Attributes getFilterAttributes(Node node) {
-<span class="fc" id="L182">		Attributes filter = new Attributes();</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (node.getNodeType() == Node.ELEMENT_NODE) {</span>
-<span class="fc" id="L184">			Element element = (Element) node;</span>
-<span class="fc" id="L185">			filter.setKeyword(getTagValue(&quot;keyword&quot;, element));</span>
+<span class="fc" id="L191">		Attributes filter = new Attributes();</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (node.getNodeType() == Node.ELEMENT_NODE) {</span>
+<span class="fc" id="L193">			Element element = (Element) node;</span>
+<span class="fc" id="L194">			filter.setKeyword(getTagValue(&quot;keyword&quot;, element));</span>
 		}
-<span class="fc" id="L187">		return filter;</span>
+<span class="fc" id="L196">		return filter;</span>
 	}
 
 	/**
@@ -194,9 +203,9 @@ public class ReadXMLfile {
 	 * @return Returns tag value
 	 */
 	static String getTagValue(String tag, Element element) {
-<span class="fc" id="L197">		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();</span>
-<span class="fc" id="L198">		Node node = (Node) nodeList.item(0);</span>
-<span class="fc" id="L199">		return node.getNodeValue();</span>
+<span class="fc" id="L206">		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();</span>
+<span class="fc" id="L207">		Node node = (Node) nodeList.item(0);</span>
+<span class="fc" id="L208">		return node.getNodeValue();</span>
 	}
 
 	/**
@@ -206,25 +215,25 @@ public class ReadXMLfile {
 	 * @return Returns true case user is successfully validated and false otherwise
 	 */
 	public boolean validateUserBDA(String username, String password) {
-<span class="fc" id="L209">		readUsersXMLfile();</span>
-<span class="fc" id="L210">		String user = new String();</span>
-<span class="fc" id="L211">		String pw = new String();</span>
-<span class="fc" id="L212">		String em = new String();</span>
-<span class="fc" id="L213">		String pwe = new String();</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">		for (int i=0;i &lt; usersList.size();i++)</span>
+<span class="fc" id="L218">		readUsersXMLfile();</span>
+<span class="fc" id="L219">		String user = new String();</span>
+<span class="fc" id="L220">		String pw = new String();</span>
+<span class="fc" id="L221">		String em = new String();</span>
+<span class="fc" id="L222">		String pwe = new String();</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		for (int i=0;i &lt; usersList.size();i++)</span>
 		{
-<span class="fc" id="L216">			user = usersList.get(i).getUsername();</span>
-<span class="fc" id="L217">			pw = usersList.get(i).getPassword();</span>
-<span class="fc" id="L218">			em = usersList.get(i).getEmail();</span>
-<span class="fc" id="L219">			pwe = usersList.get(i).getPasswordEmail();</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">			if(user.equals(username) &amp; pw.equals(password)){</span>
-<span class="fc" id="L221">				userData[0] = em;</span>
-<span class="fc" id="L222">				userData[1] = pwe;</span>
-<span class="fc" id="L223">				userData[2] = user;</span>
-<span class="fc" id="L224">				return true;</span>
+<span class="fc" id="L225">			user = usersList.get(i).getUsername();</span>
+<span class="fc" id="L226">			pw = usersList.get(i).getPassword();</span>
+<span class="fc" id="L227">			em = usersList.get(i).getEmail();</span>
+<span class="fc" id="L228">			pwe = usersList.get(i).getPasswordEmail();</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			if(user.equals(username) &amp; pw.equals(password)){</span>
+<span class="fc" id="L230">				userData[0] = em;</span>
+<span class="fc" id="L231">				userData[1] = pwe;</span>
+<span class="fc" id="L232">				userData[2] = user;</span>
+<span class="fc" id="L233">				return true;</span>
 			}
 		}
-<span class="fc" id="L227">		return false;</span>
+<span class="fc" id="L236">		return false;</span>
 	}
 
 	/**
@@ -233,28 +242,28 @@ public class ReadXMLfile {
 	 * @return Returns true case user is successfully validated and false otherwise
 	 */
 	public boolean validateUserTwitter(String username) {
-<span class="fc" id="L236">		readUsersXMLfile();</span>
-<span class="fc" id="L237">		String user = new String();</span>
-<span class="fc" id="L238">		String OAuthConsumerKey = new String();</span>
-<span class="fc" id="L239">		String OAuthConsumerSecret = new String();</span>
-<span class="fc" id="L240">		String AuthAccessToken = new String();</span>
-<span class="fc" id="L241">		String OAuthAccessTokenSecret = new String();</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">		for (int i=0;i &lt; usersList.size();i++)</span>
+<span class="fc" id="L245">		readUsersXMLfile();</span>
+<span class="fc" id="L246">		String user = new String();</span>
+<span class="fc" id="L247">		String OAuthConsumerKey = new String();</span>
+<span class="fc" id="L248">		String OAuthConsumerSecret = new String();</span>
+<span class="fc" id="L249">		String AuthAccessToken = new String();</span>
+<span class="fc" id="L250">		String OAuthAccessTokenSecret = new String();</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">		for (int i=0;i &lt; usersList.size();i++)</span>
 		{
-<span class="fc" id="L244">			user = usersList.get(i).getUsername();</span>
-<span class="fc" id="L245">			OAuthConsumerKey = usersList.get(i).getOAuthConsumerKey();</span>
-<span class="fc" id="L246">			OAuthConsumerSecret = usersList.get(i).getOAuthConsumerSecret();</span>
-<span class="fc" id="L247">			AuthAccessToken = usersList.get(i).getOAuthAccessToken();</span>
-<span class="fc" id="L248">			OAuthAccessTokenSecret = usersList.get(i).getOAuthAccessTokenSecret();</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">			if(user.equals(username)){</span>
-<span class="fc" id="L250">				twitterData[0] = OAuthConsumerKey;</span>
-<span class="fc" id="L251">				twitterData[1] = OAuthConsumerSecret;</span>
-<span class="fc" id="L252">				twitterData[2] = AuthAccessToken;</span>
-<span class="fc" id="L253">				twitterData[3] = OAuthAccessTokenSecret;</span>
-<span class="fc" id="L254">				return true;</span>
+<span class="fc" id="L253">			user = usersList.get(i).getUsername();</span>
+<span class="fc" id="L254">			OAuthConsumerKey = usersList.get(i).getOAuthConsumerKey();</span>
+<span class="fc" id="L255">			OAuthConsumerSecret = usersList.get(i).getOAuthConsumerSecret();</span>
+<span class="fc" id="L256">			AuthAccessToken = usersList.get(i).getOAuthAccessToken();</span>
+<span class="fc" id="L257">			OAuthAccessTokenSecret = usersList.get(i).getOAuthAccessTokenSecret();</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">			if(user.equals(username)){</span>
+<span class="fc" id="L259">				twitterData[0] = OAuthConsumerKey;</span>
+<span class="fc" id="L260">				twitterData[1] = OAuthConsumerSecret;</span>
+<span class="fc" id="L261">				twitterData[2] = AuthAccessToken;</span>
+<span class="fc" id="L262">				twitterData[3] = OAuthAccessTokenSecret;</span>
+<span class="fc" id="L263">				return true;</span>
 			}
 		}
-<span class="fc" id="L257">		return false;</span>
+<span class="fc" id="L266">		return false;</span>
 	}
 
 	/**
@@ -263,19 +272,19 @@ public class ReadXMLfile {
 	 * @return Returns true case user is successfully validated and false otherwise
 	 */
 	public boolean validateUserFacebook(String username) {
-<span class="fc" id="L266">		readUsersXMLfile();</span>
-<span class="fc" id="L267">		String user = new String();</span>
-<span class="fc" id="L268">		String userAccessToken = new String();</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		for (int i=0;i &lt; usersList.size();i++)</span>
+<span class="fc" id="L275">		readUsersXMLfile();</span>
+<span class="fc" id="L276">		String user = new String();</span>
+<span class="fc" id="L277">		String userAccessToken = new String();</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		for (int i=0;i &lt; usersList.size();i++)</span>
 		{
-<span class="fc" id="L271">			user = usersList.get(i).getUsername();</span>
-<span class="fc" id="L272">			userAccessToken = usersList.get(i).getUserAccessToken();</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">			if(user.equals(username)){</span>
-<span class="fc" id="L274">				facebookData = userAccessToken;</span>
-<span class="fc" id="L275">				return true;</span>
+<span class="fc" id="L280">			user = usersList.get(i).getUsername();</span>
+<span class="fc" id="L281">			userAccessToken = usersList.get(i).getUserAccessToken();</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">			if(user.equals(username)){</span>
+<span class="fc" id="L283">				facebookData = userAccessToken;</span>
+<span class="fc" id="L284">				return true;</span>
 			}
 		}
-<span class="nc" id="L278">		return false;</span>
+<span class="nc" id="L287">		return false;</span>
 	}
 
 	/**
@@ -284,38 +293,38 @@ public class ReadXMLfile {
 	 * @return Returns true case the setup is successful and false otherwise
 	 */
 	public boolean setupRegister(String username) {
-<span class="fc" id="L287">		readUsersXMLfile();</span>
-<span class="fc" id="L288">		String user = new String();</span>
-<span class="fc" id="L289">		String em = new String();</span>
-<span class="fc" id="L290">		String pwe = new String();</span>
-<span class="fc" id="L291">		String OAuthConsumerKey = new String();</span>
-<span class="fc" id="L292">		String OAuthConsumerSecret = new String();</span>
-<span class="fc" id="L293">		String AuthAccessToken = new String();</span>
-<span class="fc" id="L294">		String OAuthAccessTokenSecret = new String();</span>
-<span class="fc" id="L295">		String userAccessToken = new String();</span>
+<span class="fc" id="L296">		readUsersXMLfile();</span>
+<span class="fc" id="L297">		String user = new String();</span>
+<span class="fc" id="L298">		String em = new String();</span>
+<span class="fc" id="L299">		String pwe = new String();</span>
+<span class="fc" id="L300">		String OAuthConsumerKey = new String();</span>
+<span class="fc" id="L301">		String OAuthConsumerSecret = new String();</span>
+<span class="fc" id="L302">		String AuthAccessToken = new String();</span>
+<span class="fc" id="L303">		String OAuthAccessTokenSecret = new String();</span>
+<span class="fc" id="L304">		String userAccessToken = new String();</span>
 
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		for (int i=0;i &lt; usersList.size();i++)</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">		for (int i=0;i &lt; usersList.size();i++)</span>
 		{
-<span class="fc" id="L299">			user = usersList.get(i).getUsername();</span>
-<span class="fc" id="L300">			em = usersList.get(i).getEmail();</span>
-<span class="fc" id="L301">			pwe = usersList.get(i).getPasswordEmail();</span>
-<span class="fc" id="L302">			OAuthConsumerKey = usersList.get(i).getOAuthConsumerKey();</span>
-<span class="fc" id="L303">			OAuthConsumerSecret = usersList.get(i).getOAuthConsumerSecret();</span>
-<span class="fc" id="L304">			AuthAccessToken = usersList.get(i).getOAuthAccessToken();</span>
-<span class="fc" id="L305">			OAuthAccessTokenSecret = usersList.get(i).getOAuthAccessTokenSecret();</span>
-<span class="fc" id="L306">			userAccessToken = usersList.get(i).getUserAccessToken();</span>
-<span class="fc bfc" id="L307" title="All 2 branches covered.">			if(user.equals(username)){</span>
-<span class="fc" id="L308">				userData[0] = em;</span>
-<span class="fc" id="L309">				userData[1] = pwe;</span>
-<span class="fc" id="L310">				twitterData[0] = OAuthConsumerKey;</span>
-<span class="fc" id="L311">				twitterData[1] = OAuthConsumerSecret;</span>
-<span class="fc" id="L312">				twitterData[2] = AuthAccessToken;</span>
-<span class="fc" id="L313">				twitterData[3] = OAuthAccessTokenSecret;</span>
-<span class="fc" id="L314">				facebookData = userAccessToken;</span>
-<span class="fc" id="L315">				return true;</span>
+<span class="fc" id="L308">			user = usersList.get(i).getUsername();</span>
+<span class="fc" id="L309">			em = usersList.get(i).getEmail();</span>
+<span class="fc" id="L310">			pwe = usersList.get(i).getPasswordEmail();</span>
+<span class="fc" id="L311">			OAuthConsumerKey = usersList.get(i).getOAuthConsumerKey();</span>
+<span class="fc" id="L312">			OAuthConsumerSecret = usersList.get(i).getOAuthConsumerSecret();</span>
+<span class="fc" id="L313">			AuthAccessToken = usersList.get(i).getOAuthAccessToken();</span>
+<span class="fc" id="L314">			OAuthAccessTokenSecret = usersList.get(i).getOAuthAccessTokenSecret();</span>
+<span class="fc" id="L315">			userAccessToken = usersList.get(i).getUserAccessToken();</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">			if(user.equals(username)){</span>
+<span class="fc" id="L317">				userData[0] = em;</span>
+<span class="fc" id="L318">				userData[1] = pwe;</span>
+<span class="fc" id="L319">				twitterData[0] = OAuthConsumerKey;</span>
+<span class="fc" id="L320">				twitterData[1] = OAuthConsumerSecret;</span>
+<span class="fc" id="L321">				twitterData[2] = AuthAccessToken;</span>
+<span class="fc" id="L322">				twitterData[3] = OAuthAccessTokenSecret;</span>
+<span class="fc" id="L323">				facebookData = userAccessToken;</span>
+<span class="fc" id="L324">				return true;</span>
 			}
 		}
-<span class="nc" id="L318">		return false;</span>
+<span class="nc" id="L327">		return false;</span>
 	}
 
 	/**
@@ -324,16 +333,16 @@ public class ReadXMLfile {
 	 * @return Returns true case user already exists and false otherwise
 	 */
 	public boolean validateUserRegister(String username) {
-<span class="nc" id="L327">		readUsersXMLfile();</span>
-<span class="nc" id="L328">		String user = new String();</span>
-<span class="nc bnc" id="L329" title="All 2 branches missed.">		for (int i=0;i &lt; usersList.size();i++)</span>
+<span class="nc" id="L336">		readUsersXMLfile();</span>
+<span class="nc" id="L337">		String user = new String();</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">		for (int i=0;i &lt; usersList.size();i++)</span>
 		{
-<span class="nc" id="L331">			user = usersList.get(i).getUsername();</span>
-<span class="nc bnc" id="L332" title="All 2 branches missed.">			if(user.equals(username)){</span>
-<span class="nc" id="L333">				return true;</span>
+<span class="nc" id="L340">			user = usersList.get(i).getUsername();</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">			if(user.equals(username)){</span>
+<span class="nc" id="L342">				return true;</span>
 			}
 		}
-<span class="nc" id="L336">		return false;</span>
+<span class="nc" id="L345">		return false;</span>
 	}
 
 	/**
@@ -342,16 +351,16 @@ public class ReadXMLfile {
 	 * @return Returns true case filter already exists and false otherwise
 	 */
 	public boolean validateFilter(String keyword) {
-<span class="fc" id="L345">		readFiltersXMLfile();</span>
-<span class="fc" id="L346">		String k = new String();</span>
-<span class="fc bfc" id="L347" title="All 2 branches covered.">		for (int i=0;i &lt; filtersList.size();i++)</span>
+<span class="fc" id="L354">		readFiltersXMLfile();</span>
+<span class="fc" id="L355">		String k = new String();</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">		for (int i=0;i &lt; filtersList.size();i++)</span>
 		{
-<span class="fc" id="L349">			k = filtersList.get(i).getKeyword();</span>
-<span class="pc bpc" id="L350" title="1 of 2 branches missed.">			if(k.equals(keyword.toLowerCase())){</span>
-<span class="nc" id="L351">				return true;</span>
+<span class="fc" id="L358">			k = filtersList.get(i).getKeyword();</span>
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">			if(k.equals(keyword.toLowerCase())){</span>
+<span class="nc" id="L360">				return true;</span>
 			}
 		}
-<span class="fc" id="L354">		return false;</span>
+<span class="fc" id="L363">		return false;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</div></body></html>

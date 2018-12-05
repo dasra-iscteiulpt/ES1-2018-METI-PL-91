@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReadPosts.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">ReadPosts.java</span></div><h1>ReadPosts.java</h1><pre class="source lang-java linenums">package BDA;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReadPosts.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</a> &gt; <a href="../../index.html" class="el_group">ES1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">BDA</a> &gt; <span class="el_source">ReadPosts.java</span></div><h1>ReadPosts.java</h1><pre class="source lang-java linenums">package BDA;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,10 +11,16 @@ import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Post;
 
+/** 
+* Read Posts from Facebook
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
 
-<span class="fc" id="L15">public class ReadPosts {</span>
+<span class="fc" id="L21">public class ReadPosts {</span>
 
-<span class="fc" id="L17">	private static ReadXMLfile r = new ReadXMLfile();</span>
+<span class="fc" id="L23">	private static ReadXMLfile r = new ReadXMLfile();</span>
 
 	/**
 	 * Utility method to read posts that contain specific keywords 
@@ -25,30 +31,30 @@ import com.restfb.types.Post;
 	 * @return fbPosts, ArrayList of Posts
 	 */
 	public ArrayList&lt;Post&gt; readPosts(String username){
-<span class="fc" id="L28">		r.validateUserFacebook(username);</span>
-<span class="fc" id="L29">		FacebookClient fbClient = new DefaultFacebookClient(ReadXMLfile.facebookData, Version.VERSION_2_12);</span>
+<span class="fc" id="L34">		r.validateUserFacebook(username);</span>
+<span class="fc" id="L35">		FacebookClient fbClient = new DefaultFacebookClient(ReadXMLfile.facebookData, Version.VERSION_2_12);</span>
 		// Connections support paging and are iterable
-<span class="fc" id="L31">		Connection&lt;Post&gt; myFeed = fbClient.fetchConnection(&quot;me/feed&quot;, Post.class, Parameter.with(&quot;limit&quot;,10));</span>
-<span class="fc" id="L32">		ArrayList&lt;Post&gt; fbPosts = new ArrayList&lt;Post&gt;();</span>
-<span class="fc" id="L33">		SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
-<span class="fc" id="L34">		List&lt;Attributes&gt; filtersList = new ArrayList&lt;Attributes&gt;();</span>
-<span class="fc" id="L35">		filtersList = r.readFiltersXMLfile();	</span>
+<span class="fc" id="L37">		Connection&lt;Post&gt; myFeed = fbClient.fetchConnection(&quot;me/feed&quot;, Post.class, Parameter.with(&quot;limit&quot;,10));</span>
+<span class="fc" id="L38">		ArrayList&lt;Post&gt; fbPosts = new ArrayList&lt;Post&gt;();</span>
+<span class="fc" id="L39">		SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L40">		List&lt;Attributes&gt; filtersList = new ArrayList&lt;Attributes&gt;();</span>
+<span class="fc" id="L41">		filtersList = r.readFiltersXMLfile();	</span>
 
 		// Iterate over the feed to access the particular pages
-<span class="fc bfc" id="L38" title="All 2 branches covered.">		for (List&lt;Post&gt; myFeedPage : myFeed) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		for (List&lt;Post&gt; myFeedPage : myFeed) {</span>
 			// Iterate over the list of contained data to access the individual object
-<span class="fc bfc" id="L40" title="All 2 branches covered.">			for (Post post : myFeedPage) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">			for (Post post : myFeedPage) {</span>
 				// Filters only posts that contain the keyword
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">				if(post.getMessage() != null) {</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">					if (keywordValidation(post.getMessage(), filtersList)) {</span>
-<span class="fc" id="L44">						fbPosts.add(post);</span>
-<span class="fc" id="L45">						System.out.println(&quot;---- Post ----&quot;);</span>
-<span class="fc" id="L46">						System.out.println(&quot;Message: &quot;+ post.getMessage() + System.lineSeparator() + &quot;Id : &quot; + post.getId() + System.lineSeparator() + &quot;Created at : &quot; + sdf.format(post.getCreatedTime()));</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">				if(post.getMessage() != null) {</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">					if (keywordValidation(post.getMessage(), filtersList)) {</span>
+<span class="fc" id="L50">						fbPosts.add(post);</span>
+<span class="fc" id="L51">						System.out.println(&quot;---- Post ----&quot;);</span>
+<span class="fc" id="L52">						System.out.println(&quot;Message: &quot;+ post.getMessage() + System.lineSeparator() + &quot;Id : &quot; + post.getId() + System.lineSeparator() + &quot;Created at : &quot; + sdf.format(post.getCreatedTime()));</span>
 					}
 				}
 			}
 		}
-<span class="fc" id="L51">		return fbPosts;	</span>
+<span class="fc" id="L57">		return fbPosts;	</span>
 	}
 
 	/** 
@@ -61,14 +67,14 @@ import com.restfb.types.Post;
 	 * @return True if the post contains academic keywords
 	 */
 	public static boolean keywordValidation(String keyword, List&lt;Attributes&gt; list) {
-<span class="fc" id="L64">		String s = &quot;&quot;;</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		for (int i = 0; i &lt; list.size(); i++) {</span>
-<span class="fc" id="L66">			s =list.get(i).getKeyword();</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">			if (keyword.toLowerCase().contains(s.toLowerCase())) {</span>
-<span class="fc" id="L68">				return true; </span>
+<span class="fc" id="L70">		String s = &quot;&quot;;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc" id="L72">			s =list.get(i).getKeyword();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			if (keyword.toLowerCase().contains(s.toLowerCase())) {</span>
+<span class="fc" id="L74">				return true; </span>
 			}
 		}
-<span class="fc" id="L71">		return false; </span>
+<span class="fc" id="L77">		return false; </span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 3, 2018 8:31:04 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>JUnitTests (1) (Dec 5, 2018 8:20:11 PM)</div></body></html>
