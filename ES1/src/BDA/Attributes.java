@@ -12,16 +12,32 @@ public class Attributes {
 	private String email;
 	private String username;
 	private String password;
-	private String keyword;
+	private String keywordFilter;
 	private String passwordEmail;
 	
-	/** Twitter tokens */
-	private String OAuthConsumerKey;
-	private String OAuthConsumerSecret;
-	private String OAuthAccessToken;
-	private String OAuthAccessTokenSecret;
+	/**
+	 * Twitter tokens
+	 * "The OAuth 2.0 authorization framework enables third-party applications to obtain limited access to a web service.
+	 * An open protocol to allow secure authorization in a simple and standard method from web, mobile and desktop applications."
+	 * (Text source: https://oauth.net/ ).
+	 * 
+	 * Both oAuthConsumerKey and oAuthConsumerSecret are Client Credentials.
+	 * Both oAuthAccessToken and oAuthAccessTokenSecret are Token Credentials.
+	 * 
+	 * */
+	private String oAuthConsumerKey;
+	private String oAuthConsumerSecret;
+	private String oAuthAccessToken;
+	private String oAuthAccessTokenSecret;
 	
-	/** Facebook tokens */
+	/**
+	 * Facebook token
+	 * "The user token is the most commonly used type of token. 
+	 * This kind of access token is needed any time the app calls an API to read, modify or write a specific person's Facebook data on their behalf. 
+	 * User access tokens are generally obtained via a login dialog and require a person to permit your app to obtain one."
+	 * (Text source: https://developers.facebook.com/docs/facebook-login/access-tokens/)
+	 * 
+	 * */
 	private String userAccessToken;
 
 	public String getEmail() {
@@ -43,10 +59,10 @@ public class Attributes {
 		this.password = password;
 	}
 	public String getKeyword() {
-		return keyword;
+		return keywordFilter;
 	}
 	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+		this.keywordFilter = keyword;
 	}
 	public String getPasswordEmail() {
 		return passwordEmail;
@@ -55,28 +71,28 @@ public class Attributes {
 		this.passwordEmail = passwordEmail;
 	}
 	public String getOAuthConsumerKey() {
-		return OAuthConsumerKey;
+		return oAuthConsumerKey;
 	}
 	public void setOAuthConsumerKey(String OAuthConsumerKey) {
-		this.OAuthConsumerKey = OAuthConsumerKey;
+		this.oAuthConsumerKey = OAuthConsumerKey;
 	}
 	public String getOAuthConsumerSecret() {
-		return OAuthConsumerSecret;
+		return oAuthConsumerSecret;
 	}
 	public void setOAuthConsumerSecret(String OAuthConsumerSecret) {
-		this.OAuthConsumerSecret = OAuthConsumerSecret;
+		this.oAuthConsumerSecret = OAuthConsumerSecret;
 	}
 	public String getOAuthAccessToken() {
-		return OAuthAccessToken;
+		return oAuthAccessToken;
 	}
 	public void setOAuthAccessToken(String OAuthAccessToken) {
-		this.OAuthAccessToken = OAuthAccessToken;
+		this.oAuthAccessToken = OAuthAccessToken;
 	}
 	public String getOAuthAccessTokenSecret() {
-		return OAuthAccessTokenSecret;
+		return oAuthAccessTokenSecret;
 	}
 	public void setOAuthAccessTokenSecret(String OAuthAccessTokenSecret) {
-		this.OAuthAccessTokenSecret = OAuthAccessTokenSecret;
+		this.oAuthAccessTokenSecret = OAuthAccessTokenSecret;
 	}
 	public String getUserAccessToken() {
 		return userAccessToken;
