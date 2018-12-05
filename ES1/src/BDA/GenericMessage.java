@@ -1,17 +1,15 @@
 package BDA;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import javax.mail.Message;
-
 import com.restfb.types.Post;
-
 import twitter4j.Status;
 
-/** 
- * Generic Message 
+/**
+ * Generic Message
+ * 
  * @author GROUP 91
  * @version 1.0
  * @since September 2018
@@ -25,8 +23,9 @@ public class GenericMessage {
 	private String titleM;
 	private String contentM;
 
-	/** 
+	/**
 	 * Constructor
+	 * 
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
@@ -46,9 +45,10 @@ public class GenericMessage {
 
 	/**
 	 * Receive Mail Return Message
+	 * 
 	 * @param listMail, ArrayList of Message
 	 * @return genMessage, ArrayList of GenericMessage
-	 */	
+	 */
 	public static ArrayList<GenericMessage> receiveMailReturnMessage(ArrayList<Message> listMail) {
 		ArrayList<GenericMessage> genMessage = new ArrayList<GenericMessage>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -57,7 +57,7 @@ public class GenericMessage {
 		String fromM;
 		String titleM;
 		String contentM;
-		for(Message mail: listMail) {
+		for (Message mail : listMail) {
 			try {
 				dateM = sdf.format(mail.getReceivedDate());
 				canalM = "E-Mail";
@@ -74,9 +74,10 @@ public class GenericMessage {
 
 	/**
 	 * Receive Tweet Return Message
+	 * 
 	 * @param listTweets, List of Status
 	 * @return genMessage, ArrayList of GenericMessage
-	 */	
+	 */
 	public static ArrayList<GenericMessage> receiveTweetsReturnMessage(List<Status> listTweets) {
 		ArrayList<GenericMessage> genMessage = new ArrayList<GenericMessage>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -85,13 +86,13 @@ public class GenericMessage {
 		String fromM;
 		String titleM;
 		String contentM;
-		for(Status tweet: listTweets) {
+		for (Status tweet : listTweets) {
 			try {
 				dateM = sdf.format(tweet.getCreatedAt());
 				canalM = "Twitter";
 				fromM = tweet.getUser().getName();
 				titleM = Long.toString(tweet.getId());
-				contentM = tweet.getText(); 
+				contentM = tweet.getText();
 				genMessage.add(new GenericMessage(dateM, canalM, fromM, titleM, contentM));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -102,6 +103,7 @@ public class GenericMessage {
 
 	/**
 	 * Receive Posts Return Message
+	 * 
 	 * @param listPosts, List of Post
 	 * @return genMessage, ArrayList of GenericMessage
 	 */
@@ -113,13 +115,13 @@ public class GenericMessage {
 		String fromM;
 		String titleM;
 		String contentM;
-		for(Post post: listPosts) {
+		for (Post post : listPosts) {
 			try {
 				dateM = sdf.format(post.getCreatedTime());
 				canalM = "Facebook";
 				fromM = "Teste";
 				titleM = post.getId();
-				contentM = post.getMessage(); 
+				contentM = post.getMessage();
 				genMessage.add(new GenericMessage(dateM, canalM, fromM, titleM, contentM));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -147,6 +149,7 @@ public class GenericMessage {
 	public String getTitleM() {
 		return titleM;
 	}
+
 	public void setContentM(String content) {
 		this.contentM = content;
 	}
