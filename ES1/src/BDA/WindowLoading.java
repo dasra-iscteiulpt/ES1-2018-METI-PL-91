@@ -6,6 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 
+/** 
+* Loading window construction
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class WindowLoading extends Thread  {
 		
 	private JFrame window;

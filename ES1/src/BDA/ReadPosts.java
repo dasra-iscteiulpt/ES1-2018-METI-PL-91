@@ -11,6 +11,12 @@ import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Post;
 
+/** 
+* Read Posts from Facebook
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
 
 public class ReadPosts {
 

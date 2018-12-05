@@ -11,6 +11,13 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 
+/** 
+* Reads e-emails
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class ReadEmails {
 
 	// VARIABLES

@@ -5,6 +5,13 @@ import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
 
+/** 
+* Writes a comment in Facebook
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class WriteComment { 
 
 	private static ReadXMLfile r = new ReadXMLfile();

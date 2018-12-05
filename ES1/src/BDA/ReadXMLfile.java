@@ -15,6 +15,13 @@ import org.xml.sax.SAXException;
 
 import java.util.List;
 
+/** 
+* Reads XML File
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class ReadXMLfile {
 
 	// VARIABLES
@@ -44,7 +51,6 @@ public class ReadXMLfile {
 	 * @author GROUP 91
 	 * @version 1.0
 	 * @since September
-	 * @return A list with all users attributes
 	 */
 	public void readUsersXMLfile() {
 		// Make an  instance of the DocumentBuilderFactory

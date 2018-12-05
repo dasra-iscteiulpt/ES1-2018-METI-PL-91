@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/** 
+* GUI Window construction
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class WindowGUI {
 	
 	private JFrame windowFrame;

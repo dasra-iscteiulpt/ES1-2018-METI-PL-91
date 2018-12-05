@@ -10,6 +10,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/** 
+* Message window construction
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
 
 public class WindowMessage extends WindowGUI {
 

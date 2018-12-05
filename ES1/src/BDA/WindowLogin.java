@@ -14,6 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+/** 
+* Login window construction
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class WindowLogin extends WindowGUI {
 
 	// VARIABLES

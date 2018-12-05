@@ -9,6 +9,13 @@ import java.util.Date;
 import javax.swing.JMenuBar;
 import javax.swing.table.DefaultTableModel;
 
+/** 
+* Filters and sorts messages
+* @author GROUP 91
+* @version 1.0
+* @since September 2018 
+*/
+
 public class Filters {
 
 	/** 
