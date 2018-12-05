@@ -18,7 +18,7 @@ import java.util.List;
 public class ReadXMLfile {
 
 	// VARIABLES
-	private static List<Attributes> usersList = new ArrayList<Attributes>();
+	private List<Attributes> usersList = new ArrayList<Attributes>();
 	private List<Attributes> filtersList = new ArrayList<Attributes>();
 	private static ArrayList<GenericMessage> messagesList = new ArrayList<GenericMessage>();
 	public static String[] userData = new String[3];
@@ -35,6 +35,10 @@ public class ReadXMLfile {
 
 	}
 
+	public int getUsersListSize() {
+		return this.usersList.size();
+	} 
+	
 	/** 
 	 * Read all users included in config.xml file
 	 * @author GROUP 91
@@ -42,7 +46,7 @@ public class ReadXMLfile {
 	 * @since September
 	 * @return A list with all users attributes
 	 */
-	public static List<Attributes> readUsersXMLfile() {
+	public void readUsersXMLfile() {
 		// Make an  instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
@@ -60,7 +64,6 @@ public class ReadXMLfile {
 		} catch (SAXException | ParserConfigurationException | IOException e1) {
 			e1.printStackTrace();
 		}
-		return usersList;
 	}
 
 	/** 

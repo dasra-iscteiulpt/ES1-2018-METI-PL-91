@@ -172,9 +172,8 @@ class JUnitTests {
 	public void testXMLFile() {
 		boolean existFilter = rXML.validateFilter("universidade");
 		boolean existUser = rXML.validateUserBDA("dasra", "dasra123");
-		boolean existsFilters = (rXML.readFiltersXMLfile().size() > 0);
-		@SuppressWarnings("static-access")
-		boolean existsUsers = (rXML.readUsersXMLfile().size() > 0);
+		boolean existsFilters = (rXML.readFiltersXMLfile().size() > 0);		
+		boolean existsUsers = (rXML.getUsersListSize() > 0);
 		
 		assertFalse(existFilter);
 		assertTrue(existUser);
