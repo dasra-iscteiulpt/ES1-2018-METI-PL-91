@@ -10,7 +10,7 @@ A informação obtida a partir dos vários serviços (fontes de informação aca
 A aplicação deverá permitir o modo de funcionamento offline, ou seja, o utilizador poderá continuar a consultar os últimos conteúdos que a aplicação conseguiu obter dos vários serviços, mesmo que a aplicação tenha perdido a ligação de rede e o utilizador tenha fechado e voltado a abrir a aplicação.
 A aplicação BDA deve ser uma aplicação Java Desktop.
 
-## ESTRUTURA DO REPOSITÓRIO GIT
+## Estrutura do repostório GIT
 * Pasta src/BDA, contendo o código fonte desenvolvido pelo grupo para o projeto;
 * Pasta src/jUnitTests, contendo os ficheiros relacionados com os testes unitários (jUnit) desenvolvidos para o projeto;
 * Pasta JavaDoc, localizada na raiz do repositório, contendo os documentos JavaDoc gerados;
@@ -19,7 +19,6 @@ A aplicação BDA deve ser uma aplicação Java Desktop.
 * Pasta ReverseEngineeringModels, localizada na raiz do repositório, contendo ficheiros/imagens com nome começado por ClassesDiagram-*.jpg, correspondentes aos diagramas de classes do software desenvolvido pelo grupo, gerado com recurso a uma ferramenta de reverse engineering (v.g. plugin Eclipse ModelGoon), a partir do código fonte do projeto.
 
 ## Tecnologias
-
 * Ambiente de desenvolvimento: Eclipse IDE;
 * Linguagens de programação: JAVA;
 * APIs de integração com as várias fontes de informação/serviços: twitter4j, restfb, javax.mail;
@@ -28,7 +27,6 @@ A aplicação BDA deve ser uma aplicação Java Desktop.
 
 
 ## ES1-2018-METI-PL-91
-
 Grupo:
 68092 - Diana Salvador
 65799 - Ricardo Ferreira
